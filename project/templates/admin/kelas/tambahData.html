@@ -7,10 +7,24 @@
   <title>SI Tambah kelas | Admin</title>
 </head>
 <body>
-  <form action="" method="POST">
+  
+  <form action="{% url 'tambahkelas' %}" method="POST">
     {% csrf_token %}
-    <h1>Halaman Tambah Data kelas</h1>
-    
+    <h1>Form Tambah Kelas</h1>
+    <label>
+      Kelas ID : <br>
+      <input type="text" name="kelasid" id="kelasid" maxlength="4" required>
+    </label><br>
+    <label>
+      Nama Kelas : <br>
+      <input type="text" name="namakelas" id="namakelas" maxlength="255" required> 
+    </label><br>
+    <label>
+      NIP Wali Kelas : <br>
+      <input type="text" name="nipwalikelas" id="nipwalikelas" maxlength="4" required>
+    </label><br><br>
+
+    <button type="submit">SUBMIT</button>
   </form>
 </body>
 </html>
