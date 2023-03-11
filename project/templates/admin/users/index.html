@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  {% if messages %}
+      {% for message in messages %}
+          <h3>{{ message }}</h3>
+      {% endfor %}
+  {% endif %}
+  <h1>Daftar Data User</h1>
+  <a href="{% url 'tambahuser' %}">Tambah Data User</a>
+  <table border="1" width="50%">
+    <thead>
+      <tr>
+        <th>NO</th>
+        <th>ID User</th>
+        <th>Username</th>
+        <th>Password</th>
+        <th>Role</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in data_user %}
+      <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ user.id_user }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.password }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <a href="{% url 'updatedatauser' user.id_user %}">Edit</a> |
+          <a href="{% url 'deletedatauser' user.id_user %}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>

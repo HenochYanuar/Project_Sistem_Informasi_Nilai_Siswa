@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+  <form action="{% url 'postupdatedatauser' %}"  method="POST">
+    <h1>Tambah Data User</h1>
+    {% csrf_token %}
+    <label>
+      User ID : <br>
+      <input readonly value="{{ data_user.id_user }}" type="text" name="id_user" id="id_user" maxlength="4" required>
+    </label><br>
+    <label>
+      Username : <br>
+      <input value="{{ data_user.username }}" type="text" name="username" id="username" maxlength="10" required> 
+    </label><br>
+    <label>
+      Role : <br>
+      <input value="{{ data_user.role }}" type="radio" name="role" value="Admin">Admin <br>
+      <input value="{{ data_user.role }}" type="radio" name="role" value="Guru">Guru <br>
+      <input value="{{ data_user.role }}" type="radio" name="role" value="Siswa">Siswa <br>
+    </label><br>
+    <label>
+      Password : <br>
+      <input value="{{ data_user.password }}" type="password" name="password" id="password" maxlength="10" required>
+    </label><br>
+    <label>
+      Check Password : <br>
+      <input value="{{ data_user.password }}" type="password" name="password2" id="password2" maxlength="10" required>
+    </label><br><br>
+
+    <button type="submit">SUBMIT</button>
+  </form>
+</body>
+</html>
