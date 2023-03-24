@@ -7,22 +7,27 @@
   <title>SI Tambah kelas | Admin</title>
 </head>
 <body>
-  
+
+  <h1>Form Tambah Kelas</h1>
   <form action="{% url 'tambahkelas' %}" method="POST">
     {% csrf_token %}
-    <h1>Form Tambah Kelas</h1>
     <label>
       Kelas ID : <br>
-      <input type="text" name="kelasid" id="kelasid" maxlength="4" required>
+      <input type="text" name="id_kelas" id="id_kelas" maxlength="4" required>
     </label><br>
     <label>
       Nama Kelas : <br>
       <input type="text" name="namakelas" id="namakelas" maxlength="255" required> 
     </label><br>
     <label>
-      NIP Wali Kelas : <br>
-      <input type="text" name="nipwalikelas" id="nipwalikelas" maxlength="4" required>
-    </label><br><br>
+      NIP Wali Kelas :
+    </label><br>
+      <select required name="nip_waliKelas" id="">
+        <option value="" selected disabled>Pilih NIP Wali Kelas</option>
+        {% for guru in data_guru %}
+          <option value="{{guru.nip}}">{{ guru.nip }} | {{ guru.nama  }}</option>
+        {% endfor %}
+      </select><br><br>
 
     <button type="submit">SUBMIT</button>
   </form>

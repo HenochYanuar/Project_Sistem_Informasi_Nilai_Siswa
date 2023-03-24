@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Tambah Data Guru</h1>
+  <form action="{% url 'tambahguru' %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>
+      NIP Guru :<br> 
+      <input type="text" name="nip" maxlength="10" required>
+    </label><br>
+    <label>
+      Nama guru :<br>
+      <input type="text" name="nama" required>
+    </label><br>
+    <label>
+      Jenis Kelamin :<br>
+      <input required type="radio" name="jk" value='Laki-laki'>Laki-laki<br>
+      <input required type="radio" name="jk" value='Perempuan'>Perempuan<br>
+    </label>
+    <label>
+      Alamat :<br>
+      <input required type="text" name="alamat">
+    </label><br>
+    <label>
+      Agama :<br>
+      <select required name="agama" id="">
+        <option value="" disabled selected>Pilih Agama</option>
+        <option value="Islam">Islam</option>
+        <option value="Kristen">Kristen</option>
+        <option value="Katholik">Katholik</option>
+        <option value="Hindu">Hindu</option>
+        <option value="Budha">Budha</option>
+        <option value="Konghuchu">Konghuchu</option>
+      </select><br>
+    </label><br>
+    <label>
+      NO Telepon :<br>
+      <input type="text" name="no_tlpn" maxlength="20">
+    </label><br>
+    <label>
+      E-mail :<br>
+      <input type="email" name="email">
+    </label><br>
+    <label>
+      Tanggal Lahir :<br>
+      <input required type="date" name="tgl_lahir"><br>
+    </label><br>
+    <label>
+      ID User :<br>
+    </label>
+      <select required name="id_user" id="">
+        <option value="" disabled selected>Pilih ID User</option>
+        {% for data in data_guruUser %}
+            {% if data.role == 'Guru' and  data.id_user not in data_userGuru %}
+              <option value="{{ data.id_user }}">  {{ data.id_user }} | {{ data.username }} </option>
+            {% endif %}
+        {% endfor %}
+      </select><br><br>
+    <button type="button" onclick="location.href='/indexGuru'">Kembali</button>
+    <button type="submit">Simpan</button>
+  </form>
+</body>
+</html>

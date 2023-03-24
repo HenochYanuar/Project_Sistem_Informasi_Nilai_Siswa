@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>Detail Data Guru</h1>
+
+  <img src="" alt="">
+  <h2>{{ data_guru.nama }}</h2>
+  <p>NIP :{{ data_guru.nip }}</p>
+  <p>Jenis Kelamin :{{ data_guru.jk }}</p>
+  <p>Alamat :{{ data_guru.alamat }}</p>
+  <p>Agama :{{ data_guru.agama }}</p>
+  <p>NO Tlpn :{{ data_guru.no_tlpn }}</p>
+  <p>E-mail :{{ data_guru.email }}</p>
+  <p>Tgl Lahir : {{ data_guru.tgl_lahir }}</p>
+  <p>ID User : {{ data_guru.id_user }}</p>
+
+  <a href="{% url 'indexguru' %}">Kembali</a></body>
+</html>

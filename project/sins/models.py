@@ -7,7 +7,7 @@ class User(models.Model):
     role = models.CharField(max_length=5)
 
 class Guru(models.Model):
-    nip = models.CharField(max_length=4, primary_key=True)
+    nip = models.CharField(max_length=10, primary_key=True)
     nama = models.CharField(max_length=255)
     jk = models.CharField(max_length=10)
     alamat = models.TextField()
@@ -24,7 +24,7 @@ class Kelas(models.Model):
     nip_waliKelas = models.ForeignKey(Guru, on_delete=models.CASCADE)
 
 class Siswa(models.Model):
-    nis = models.CharField(max_length=4, primary_key=True)
+    nis = models.CharField(max_length=10, primary_key=True)
     nama = models.CharField(max_length=255)
     jk = models.CharField(max_length=10)
     alamat = models.TextField()

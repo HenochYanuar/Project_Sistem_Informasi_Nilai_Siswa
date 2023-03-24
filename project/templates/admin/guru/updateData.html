@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1> Form Update Data Guru</h1>
+  <form action="{% url 'updatedataguru' data_guru.nip %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <label>
+      NIP Guru :<br> 
+      <input value="{{ data_guru.nip }}" readonly type="text" name="nip" maxlength="4" required>
+    </label><br>
+    <label>
+      Nama guru :<br>
+      <input value="{{ data_guru.nama }}" type="text" name="nama" required>
+    </label><br>
+    <label>
+      Jenis Kelamin :<br>
+      <input  required type="radio" name="jk" value='Laki-laki'>Laki-laki<br>
+      <input  required type="radio" name="jk" value='Perempuan'>Perempuan<br>
+    </label>
+    <label>
+      Alamat :<br>
+      <input value="{{ data_guru.alamat }}" required type="text" name="alamat">
+    </label><br>
+    <label>
+      Agama :<br>
+      <select required name="agama" id="">
+        <option value="" disabled selected>Pilih Agama</option>
+        <option value="Islam">Islam</option>
+        <option value="Kristen">Kristen</option>
+        <option value="Katholik">Katholik</option>
+        <option value="Hindu">Hindu</option>
+        <option value="Budha">Budha</option>
+        <option value="Konghuchu">Konghuchu</option>
+      </select><br>
+    </label><br>
+    <label>
+      NO Telepon :<br>
+      <input value="{{ data_guru.no_tlpn }}" type="text" name="no_tlpn" maxlength="20">
+    </label><br>
+    <label>
+      E-mail :<br>
+      <input value="{{ data_guru.email }}" type="email" name="email">
+    </label><br>
+    <label>
+      Tanggal Lahir :<br>
+      <input value="{{ data_guru.tgl_lahir }}" required type="date" name="tgl_lahir"><br>
+    </label><br>
+    <label>
+      ID User :<br>
+    </label>
+      <select value="" required name="id_user" id="">
+        {% for user in users %}
+          {% if user.role == 'Guru' and user.id_user not in data_userGuru %}
+            <option  value="{{ user.id_user }}" {% if user.id_user == data_guru.id_user%} selected {% endif %}>  {{ user.id_user }} | {{ user.username }} </option>               
+          {% endif %}
+        {% endfor %}
+      </select><br><br>
+    <button type="button" onclick="location.href='/indexGuru'">Kembali</button>
+    <button type="submit">Simpan</button>
+  </form>
+</body>
+</html>
