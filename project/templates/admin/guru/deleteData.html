@@ -6,11 +6,11 @@
 <div class="card shadow-lg">
   <div class="card-header bg-info">
     <div class="text-center"><h2>Delete Data Guru</h2></div>
+    <div class="form-group">
+      <h3 class="text-center ml-5">Apakah Anda Yakin Ingin Menghapus Data Ini ?</h3>
+    </div>
   </div>
   <div class="card-body">
-    <div class="form-group">
-      <h4 class="text-center">Apakah Anda Yakin Ingin Menghapus Data Ini ?</h4>
-    </div>
     <div class="row">
       <div class="col-sm-6 ml-5">
         <div class="card bg-secondary shadow">
@@ -64,7 +64,7 @@
         <div class="card text-center shadow-lg" style="background-color: #cce7e8;">
           <div class="card-body">
             <div class="form-group">
-              <img class="img-fluid img-circle position-relative" style="width: 200px;" src="/static/assets/dist/img/user8-128x128.jpg" alt="">
+              <img class="img-fluid img-circle position-relative" style="width: 200px;" src="{{ data_guru.foto.url }}" alt="Foto : {{ data_guru.nama }}">
             </div>
             <div class="form-group">
               <h2>{{ data_guru.nama }}</h2>
