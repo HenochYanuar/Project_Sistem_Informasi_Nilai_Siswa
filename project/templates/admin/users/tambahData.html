@@ -2,40 +2,42 @@
 {% block title %}
 Tambah Data User Page
 {% endblock %}
-{% block head %}
-Tambah Data User
-{% endblock %}
 {% block content %}
-<div class="card">
+<div class="card shadow-lg">
+  <div class="card-header bg-info">
+    <div class="text-center"><h2>Tambah Data User</h2></div>
+  </div>
   <div class="card-body">
     <form action="{% url 'postdatauser' %}" method="POST">
       {% csrf_token %}
       <div class="form-group">
         <label>User ID </label>
-        <input class="form-control type="text" name="id_user" id="id_user"
+        <input class="form-control" type="text" name="id_user" id="id_user"
           maxlength="10" required>
       </div>
       <div class="form-group">
         <label>Username</label>
-        <input class="form-control type="text" name="username" id="username"
+        <input class="form-control" type="text" name="username" id="username"
           maxlength="255" required>
       </div>
-      <div class="form-check">
+      <div class="form-group">
         <label>User Role</label>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="role" id="role1"
-            value="Admin">
-          <label class="form-check-lable" for="role1">Admin</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="role" id="role2"
-            value="Guru">
-          <label class="form-check-lable" for="role2">Guru</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="radio" name="role" id="role3"
-            value="Siswa">
-          <label class="form-check-lable" for="role3">Siswa</label>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="role" id="role1"
+              value="Admin">
+            <label class="form-check-lable" for="role1">Admin</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="role" id="role2"
+              value="Guru">
+            <label class="form-check-lable" for="role2">Guru</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="role" id="role3"
+              value="Siswa">
+            <label class="form-check-lable" for="role3">Siswa</label>
+          </div>
         </div>
       </div>
       <div class="form-group">
@@ -48,8 +50,12 @@ Tambah Data User
         <input class="form-control" type="password" name="password2"
           id="password2" maxlength="10" required>
       </div>
-      <button class="btn btn-warning" type="button" onclick="location.href='/indexUsers'"><i class="fas fa-caret-left"></i> Kembali</button>
-      <button class="btn btn-success" type="submit"><i class="fa fa-save"></i> Simpan</button>
+      <button class="btn btn-warning" type="button" onclick="location.href='/indexUsers'">
+        <i class="fas fa-caret-left"></i> Kembali
+      </button>
+      <button class="btn btn-success" type="submit">
+        <i class="fa fa-save"></i> Simpan
+      </button>
     </form>
   </div>
 </div>

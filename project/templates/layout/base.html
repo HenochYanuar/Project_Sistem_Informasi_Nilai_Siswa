@@ -16,8 +16,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'assets/dist/css/adminlte.min.css' %}">
-  <link rel="stylesheet" href="{% static 'assets/plugins/toastr/toastr.css' %}">
-  <link rel="stylesheet" href="{% static 'assets/plugins/toastr/toastr.main.css' %}">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -164,8 +162,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <img src="/static/assets/dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">SI Nilai Siswa</span>
     </a>
 
     <!-- Sidebar -->
@@ -173,15 +171,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <img src="/static/assets/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+          <a href="#" class="d-block">Admin</a>
         </div>
       </div>
 
       <!-- SidebarSearch Form -->
-      <div class="form-inline">
+      {% comment %} <div class="form-inline">
         <div class="input-group" data-widget="sidebar-search">
           <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
           <div class="input-group-append">
@@ -190,7 +188,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </button>
           </div>
         </div>
-      </div>
+      </div> {% endcomment %}
 
       <!-- Sidebar Menu -->
       <nav class="mt-2 sidebar">
@@ -241,7 +239,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">{% block head %}{% endblock %}</h1>
+            <h1 class="m-0"></h1>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -287,7 +285,5 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <script src="{% static 'asstes/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 <!-- AdminLTE App -->
 <script src="{% static 'assets/dist/js/adminlte.min.js' %}"></script>
-<script src="{% static 'assets/plugins/toastr/toastr.js.map' %}"></script>
-<script src="{% static 'assets/plugins/toastr/toastr.min.js' %}"></script>
 </body>
 </html>

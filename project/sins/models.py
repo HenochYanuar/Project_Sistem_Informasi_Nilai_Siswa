@@ -14,14 +14,14 @@ class Guru(models.Model):
     agama = models.CharField(max_length=20)
     no_tlpn = models.CharField(max_length=20)
     email = models.EmailField(max_length=255)
-    foto = models.CharField(max_length=255)
-    tgl_lahir = models.DateTimeField()
+    foto = models.ImageField(upload_to= 'static/assets/dist/img', blank=True, null=True)
+    tgl_lahir = models.DateField()
     id_user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class Kelas(models.Model):
     id_kelas = models.CharField(max_length=4, primary_key=True)
     nama_kelas = models.CharField(max_length=255)
-    nip_waliKelas = models.ForeignKey(Guru, on_delete=models.CASCADE)
+    nip_waliKelas = models.ForeignKey(Guru, on_delete=models.SET_NULL, null=True)
 
 class Siswa(models.Model):
     nis = models.CharField(max_length=10, primary_key=True)
@@ -32,7 +32,7 @@ class Siswa(models.Model):
     no_tlpn = models.CharField(max_length=20)
     email = models.EmailField(max_length=255)
     foto = models.CharField(max_length=255)
-    tgl_lahir = models.DateTimeField()
+    tgl_lahir = models.DateField()
     id_kelas = models.ForeignKey(Kelas, on_delete=models.CASCADE)
     id_user = models.ForeignKey(User, on_delete=models.CASCADE)
 

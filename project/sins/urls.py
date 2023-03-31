@@ -2,7 +2,7 @@ from django.urls import path
 from . views import admin
 from . views import users, tambahUser, postDatauser, updateDatauser, postUpdateuser, deleteDatauser, postDeleteuser
 from . views import guru , tambahGuru, detailGuru, updateDataGuru, deleteDataGuru, postDeleteGuru
-from . views import kelas, tambahKelas, postDatakelas, updateDatakelas
+from . views import kelas, tambahKelas, updateDatakelas, deleteDataKelas, postDeleteKelas
 urlpatterns = [
    # path('',index,name='index'),
    
@@ -28,6 +28,7 @@ urlpatterns = [
 
    path('indexKelas',kelas, name="indexkelas"),
    path('tambahKelas', tambahKelas, name="tambahkelas"),
-   path('postDatakelas',postDatakelas, name="postdatakelas"),
-   path('updateDatakelas',updateDatakelas, name="updatedatakelas"),
+   path('updateDatakelas/<str:id_kelas>',updateDatakelas, name="updatedatakelas"),
+   path('deleteDatakelas/<str:id_kelas>',deleteDataKelas, name="deletedatakelas"),
+   path('postDeleteKelas/<str:id_kelas>',postDeleteKelas, name="postdeletekelas"),
 ]

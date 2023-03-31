@@ -1,18 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Delete Data Guru</h1>
-  <h3>Apakah Anda Yakin Ingin Menghapus Data Ini ?</h3>
-  <p>NIP : {{ data_guru.nip }}</p>
-  <p>Nama : {{ data_guru.nama }}</p>
-  <p>Tgl Lahir : {{ data_guru.tgl_lahir }}</p>
-  <p>E-mail : {{ data_guru.email }}</p>
-  <a href="{% url 'indexguru' %}">Cancele</a> | <a href="{% url 'postdeleteguru' data_guru.nip %}">Hapus</a>
-</body>
-</html>
+{% extends 'layout/base.html' %}
+{% block title %}
+  Delete Data Guru Page
+{% endblock %}
+{% block content %}
+<div class="card shadow-lg">
+  <div class="card-header bg-info">
+    <div class="text-center"><h2>Delete Data Guru</h2></div>
+  </div>
+  <div class="card-body">
+    <div class="form-group">
+      <h4 class="text-center">Apakah Anda Yakin Ingin Menghapus Data Ini ?</h4>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 ml-5">
+        <div class="card bg-secondary shadow">
+          <div class="card-body">
+            <table class="table">
+              <tbody>
+                <div class="form-group">
+                  <tr>
+                    <td><b>Nama</b></td>
+                    <td>: {{ data_guru.nama }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>NIP</b></td>
+                    <td>: {{ data_guru.nip }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Jenis Kelamin</b></td>
+                    <td>: {{ data_guru.jk }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Alamat</b></td>
+                    <td>: {{ data_guru.alamat }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Agama</b></td>
+                    <td>: {{ data_guru.agama }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>No.Tlpn</b></td>
+                    <td>: {{ data_guru.no_tlpn }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>E-mail</b></td>
+                    <td>: {{ data_guru.email }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Tgl Lahir</b></td>
+                    <td>: {{ data_guru.tgl_lahir }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>ID User</b></td>
+                    <td>: {{ data_guru.id_user.id_user }}</td>
+                  </tr>
+                </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5 mb-sm-0 mt-5">
+        <div class="card text-center shadow-lg" style="background-color: #cce7e8;">
+          <div class="card-body">
+            <div class="form-group">
+              <img class="img-fluid img-circle position-relative" style="width: 200px;" src="/static/assets/dist/img/user8-128x128.jpg" alt="">
+            </div>
+            <div class="form-group">
+              <h2>{{ data_guru.nama }}</h2>
+            </div><br>
+            <div class="form-group">
+              <a class="btn btn-outline-warning" href="{% url 'indexusers' %}">
+                <i class="fas fa-caret-left"></i> Cancele</a> |
+              <a class="btn btn-outline-danger" href="{% url 'postdeleteguru' data_guru.nip%}">
+                <i class="fa fa-trash"></i> Hapus</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

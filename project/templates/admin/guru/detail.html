@@ -1,24 +1,81 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <h1>Detail Data Guru</h1>
+{% extends 'layout/base.html' %}
+{% block title %}
+Detail Data Guru Page
+{% endblock %}
+{% block content %}
+<div class="card shadow-lg">
+  <div class="card-header bg-info">
+    <div class="text-center"><h2>Detail Data Guru</h2></div>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6 ml-5">
+        <div class="card bg-secondary shadow">
+          <div class="card-body">
+            <table class="table">
+              <tbody>
+                <div class="form-group">
+                  <tr>
+                    <td><b>Nama</b></td>
+                    <td>: {{ data_guru.nama }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>NIP</b></td>
+                    <td>: {{ data_guru.nip }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Jenis Kelamin</b></td>
+                    <td>: {{ data_guru.jk }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Alamat</b></td>
+                    <td>: {{ data_guru.alamat }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Agama</b></td>
+                    <td>: {{ data_guru.agama }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>No.Tlpn</b></td>
+                    <td>: {{ data_guru.no_tlpn }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>E-mail</b></td>
+                    <td>: {{ data_guru.email }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Tgl Lahir</b></td>
+                    <td>: {{ data_guru.tgl_lahir }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>ID User</b></td>
+                    <td>: {{ data_guru.id_user.id_user }}</td>
+                  </tr>
+                </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5 mb-sm-0 mt-5">
+        <div class="card text-center shadow-lg" style="background-color: #cce7e8;">
+          <div class="card-body">
+            <div class="form-group">
+              <img class="img-fluid img-circle" style="width: 200px;" src="{{ data_guru.foto.url }}" alt="Foto : {{ data_guru.nama }}">
+            </div>
+            <div class="form-group">
+              <h2>{{ data_guru.nama }}</h2>
+            </div><br>
+            <div class="form-group">
+              <a class="btn btn-outline-info" href="{% url 'indexguru' %}">
+                <i class="fas fa-caret-left"></i> Selesai
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
 
-  <img src="" alt="">
-  <h2>{{ data_guru.nama }}</h2>
-  <p>NIP :{{ data_guru.nip }}</p>
-  <p>Jenis Kelamin :{{ data_guru.jk }}</p>
-  <p>Alamat :{{ data_guru.alamat }}</p>
-  <p>Agama :{{ data_guru.agama }}</p>
-  <p>NO Tlpn :{{ data_guru.no_tlpn }}</p>
-  <p>E-mail :{{ data_guru.email }}</p>
-  <p>Tgl Lahir : {{ data_guru.tgl_lahir }}</p>
-  <p>ID User : {{ data_guru.id_user }}</p>
-
-  <a href="{% url 'indexguru' %}">Kembali</a></body>
-</html>

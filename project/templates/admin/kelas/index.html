@@ -1,38 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SI Niali Siswa | Data kelas</title>
-  </head>
-  <body>
-    <h1>ini data kelas</h1>
-    <a href="{% url 'tambahkelas' %}">Tambah Data Kelas</a>
-    <table border="1" width="50%">
-      <thead>
-        <tr>
+{% extends 'layout/base.html' %}
+{% block title %}
+  Data Kelas Page
+{% endblock %}
+{% block head %}
+  Data Kelas
+{% endblock %}
+{% block content %}
+<div class="card shadow-lg">
+  <div class="card-header bg-info">
+    <div class="text-center "><h2>Daftar Data Kelas</h2></div> 
+  </div>
+  <div class="card-body">
+    <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahkelas' %}"><i
+        class="fas fa-user-plus"></i> Tambah Data Kelas</a>
+    <table class="table table-bordered table-hover">
+      <thead class="table-hover" style="background-color: #819293;">
+        <tr style="color: white;">
           <th>NO</th>
-          <th>ID Kelas</th>
-          <th>Nama Kelas</th>
-          <th>NIP Wali kelas</th>
-          <th>Action</th>
+          <th class="col-lg-1">ID Kelas</th>
+          <th class="col-lg-2">Nama Kelas</th>
+          <th class="col-lg-3">NIP Wali kelas</th>
+          <th class="col-lg-3">Nama Wali Kelas</th>
+          <th class="col-lg-3">Action</th>
         </tr>
       </thead>
       <tbody>
         {% for kelas in data_kelas %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td>{{ kelas.kelas_id }}</td>
+          <td>{{ kelas.id_kelas }}</td>
           <td>{{ kelas.nama_kelas }}</td>
-          <td>{{ kelas.nip_waliKelas }}</td>
+          <td>{{ kelas.nip_waliKelas.nip }}</td>
+          <td>{{ kelas.nip_waliKelas.nama }}</td>
           <td>
-            <a href="">Edit</a> |
-            <a href="">Update</a>
+            <a class="btn btn-warning" href="{% url 'updatedatakelas' kelas.id_kelas %}">
+              <i class="fas fa-pencil-alt"></i> Edit</a> |
+            <a class="btn btn-danger" href="{% url 'deletedatakelas' kelas.id_kelas %}">
+            <i class="fas fa-trash-alt"></i> Delete</a>
           </td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-  </body>
-</html>
+  </div>
+</div>
+{% endblock %}

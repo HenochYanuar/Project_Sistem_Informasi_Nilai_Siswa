@@ -2,56 +2,43 @@
 {% block title %}
   Data User Page
 {% endblock %}
-{% block head %}
-  Data User
-{% endblock %}
 {% block content %}
-  {% if messages %}
-    {% for message in messages %}
-    <div>
-      <button type="button" class="btn btn-success swalDefaultSuccess">
-        <i class="far fa-check-circle"><h4>Info</h4></i>
-        {{ message }}
-      </button>
-  `</div>
-    {% endfor %}
-  {% endif %}
-    <a class="btn btn-primary mb-3 shadow-lg p-2 " href="{% url 'tambahuser' %}"><i class="fas fa-user-plus"></i> Tambah Data User</a>
-  <div class="card">
-    <div class="card-heder">
-      <div class="card-body">
-        <table class="table table-bordered table-hover">
-          <thead class="bg-dark table-hover">
-            <tr>
-              <th>NO</th>
-              <th class="col-2">ID User</th>
-              <th class="col-3">Username</th>
-              <th class="col-2">Password</th>
-              <th class="col-2">Role</th>
-              <th class="col-3">Action</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider">
-            {% for user in data_user %}
-            <tr>
-              <td>{{ forloop.counter }}</td>
-              <td>{{ user.id_user }}</td>
-              <td>{{ user.username }}</td>
-              <td>{{ user.password }}</td>
-              <td>{{ user.role }}</td>
-              <td>
-                <a class="btn btn-warning" href="{% url 'updatedatauser' user.id_user %}">
-                  <i class="fas fa-pencil-alt"></i> Edit</a> |
-                <a class="btn btn-danger" href="{% url 'deletedatauser' user.id_user %}">
-                  <i class="fas fa-trash-alt"></i> Delete</a>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
+<div class="card shadow-lg">
+  <div class="card-header bg-info">
+      <div class="text-center "><h2>Daftar Data User</h2></div> 
   </div>
+  <div class="card-body">
+    <a class="btn btn-primary mb-3 shadow-lg p-2 " href="{% url 'tambahuser' %}"><i
+      class="fas fa-user-plus"></i> Tambah Data User</a>
+    <table class="table table-bordered table-hover">
+      <thead class="table-hover" style="background-color: #819293;">
+        <tr style="color: white">
+          <th>NO</th>
+          <th class="col-2">ID User</th>
+          <th class="col-3">Username</th>
+          <th class="col-2">Password</th>
+          <th class="col-2">Role</th>
+          <th class="col-3">Action</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        {% for user in data_user %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ user.id_user }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.password }}</td>
+          <td>{{ user.role }}</td>
+          <td>
+            <a class="btn btn-warning" href="{% url 'updatedatauser' user.id_user %}">
+              <i class="fas fa-pencil-alt"></i> Edit</a> |
+            <a class="btn btn-danger" href="{% url 'deletedatauser' user.id_user %}">
+              <i class="fas fa-trash-alt"></i> Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}
-
-  

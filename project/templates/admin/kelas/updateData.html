@@ -1,34 +1,32 @@
 {% extends 'layout/base.html' %}
 {% block title %}
-Tambah Data Kelas Page
+Edit Data Kelas Page
 {% endblock %}
 {% block head %}
-Tambah Data Kelas
+Update Data Kelas
 {% endblock %}
 {% block content %}
 <div class="card shadow-lg">
   <div class="card-header bg-info">
-    <div class="text-center "><h2>Tambah Data Kelas</h2></div> 
+    <div class="text-center "><h2>Edit Data Kelas</h2></div> 
   </div>
   <div class="card-body">
-    <form action="{% url 'tambahkelas' %}" method="POST">
+    <form action="{% url 'updatedatakelas' data_kelas.id_kelas %}" method="POST">
       {% csrf_token %}
       <div class="form-group">
         <label>Kelas ID</label>
-        <input class="form-control" type="text" name="id_kelas" id="id_kelas" maxlength="4" required>
+        <input readonly value="{{ data_kelas.id_kelas }}" class="form-control" type="text" name="id_kelas" id="id_kelas" maxlength="4" required>
       </div>
       <div class="form-group">
         <label>Nama Kelas</label>
-        <input class="form-control" type="text" name="nama_kelas" id="nama_kelas" maxlength="255" required>
+        <input  value="{{ data_kelas.nama_kelas }}" class="form-control" type="text" name="nama_kelas" id="nama_kelas" maxlength="255" required>
       </div>
       <div class="form-group">
         <label>NIP Wali Kelas</label>
-        <select class="form-control" name="nip_waliKelas" id="">
-          <option value="" selected disabled>Pilih NIP Wali Kelas</option>
+        <select class="form-control" required name="nip_waliKelas" id="">
+          <option value="data_kelas.nip_waliKelas" disabled selected >Wali Kelas Saat Ini : {{ data_kelas.nip_waliKelas.nip }} | {{ data_kelas.nip_waliKelas.nama }}</option>
           {% for guru in data_guru %}
-            {% if guru.nip not in data_waliKelas %}
-              <option value="{{guru.nip}}">{{ guru.nip }} | {{ guru.nama }}</option>
-            {% endif %}
+            <option required value="{{ guru.nip }}">{{ guru.nip }} | {{ guru.nama }}</option>
           {% endfor %}
         </select>
       </div>

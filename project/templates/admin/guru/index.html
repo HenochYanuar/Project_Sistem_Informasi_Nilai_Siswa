@@ -2,21 +2,16 @@
 {% block title %}
   Data Guru Page
 {% endblock %}
-{% block head %}
-  Data Guru
-{% endblock %}
-  {% if messages %}
-    {% for message in messages %}
-      <h3>{{ message }}</h3>
-    {% endfor %}
-  {% endif %}
 {% block content %}
-  <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahguru' %}"><i class="fas fa-user-plus"></i> Tambah Data Guru</a>
-  <div class="card">
+  <div class="card shadow-lg">
+    <div class="card-header bg-info">
+      <div class="text-center "><h2>Daftar Data Guru</h2></div> 
+    </div>
     <div class="card-body">
+      <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahguru' %}"><i class="fas fa-user-plus"></i> Tambah Data Guru</a>
       <table class="table table-bordered table-hover">
-        <thead class="bg-dark table-hover">
-          <tr>
+        <thead class="table-hover" style="background-color: #819293;">
+          <tr style="color: white;">
             <th>NO</th>
             <th class="col-lg-3">Foto</th>
             <th class="col-lg-2">NIP</th>
@@ -28,7 +23,7 @@
           {% for guru in data_guru %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ guru.foto }}</td>
+            <td><img class="img-fluid" style="width: 100px;" src="{{ guru.foto }}" alt="Foto : {{ guru.nama }}"></td>
             <td>{{ guru.nip }}</td>
             <td>{{ guru.nama }}</td>
             <td>

@@ -26,12 +26,11 @@ def users(request):
     }
     return render(request, 'admin/users/index.html', context)
 
-
 def tambahUser(request):
     return render(request, 'admin/users/tambahData.html')
 
-
 def postDatauser(request):
+
     id_user = request.POST['id_user']
     username = request.POST['username']
     password = request.POST['password']
@@ -54,14 +53,12 @@ def postDatauser(request):
             messages.error(request, 'User do not match')
     return redirect('/indexUsers')
 
-
 def updateDatauser(request, id_user):
     data_user = User.objects.get(id_user=id_user)
     context = {
         'data_user': data_user
     }
     return render(request, 'admin/users/updateData.html', context)
-
 
 def postUpdateuser(request):
     id_user = request.POST['id_user']
@@ -81,14 +78,12 @@ def postUpdateuser(request):
         messages.error(request, 'User not do match password')
     return redirect('/indexUsers')
 
-
 def deleteDatauser(request, id_user):
     data_user = User.objects.get(id_user=id_user)
     context = {
         'data_user': data_user
     }
     return render(request, 'admin/users/deleteData.html', context)
-
 
 def postDeleteuser(request, id_user):
     data_user = User.objects.get(id_user=id_user).delete()
@@ -115,6 +110,7 @@ def tambahGuru(request):
         no_tlpn = request.POST['no_tlpn']
         email = request.POST['email']
         tgl_lahir = request.POST['tgl_lahir']
+        foto = request.FILES['foto']
         id_user = request.POST['id_user']
         
         user = User.objects.get(id_user = id_user)
@@ -131,23 +127,26 @@ def tambahGuru(request):
             no_tlpn = no_tlpn,
             email = email,
             tgl_lahir = tgl_lahir,
+            foto = foto,
             id_user = user,
             )
             data_guru.save()
             messages.success(request,  ' Data is successfully saved')
         return redirect('/indexGuru')
     else:
-        data_guru = User.objects.all()
+        users = User.objects.all()
         data_userGuru = Guru.objects.values_list('id_user', flat=True)
         context = {
-            'data_guruUser': data_guru,
+            'users': users,
             'data_userGuru' : data_userGuru
         }
         return render(request, 'admin/guru/tambahData.html', context)
     
 def detailGuru(request, nip):
-    data_guru = Guru.objects.get(nip = nip)
+    data_wali = Kelas.objects.values_list('nip_waliKelas', flat=True)
+    data_guru = Guru.objects.select_related('id_user').get(nip = nip)
     context = {
+        'data_wali' : data_wali,
         'data_guru':data_guru
     }
     return render(request, 'admin/guru/detail.html', context)
@@ -167,13 +166,14 @@ def updateDataGuru(request, nip):
         no_tlpn = request.POST['no_tlpn'],
         email = request.POST['email'],
         tgl_lahir = request.POST['tgl_lahir'],
+        foto = request.FILES['foto'],
         id_user = user,
         )
         data_guru.save()
         messages.success(request,  ' Data is successfully saved')
         return redirect('/indexGuru')
     else:
-        data_guru = Guru.objects.get(nip = nip)
+        data_guru = Guru.objects.select_related('id_user').get(nip = nip)
         users = User.objects.all()
         data_userGuru = Guru.objects.values_list('id_user', flat=True)
         context = {
@@ -197,7 +197,6 @@ def postDeleteGuru(request, nip):
     return redirect('/indexGuru')
     
 
-
 # Create Views For Kelas CRUD
 
 def kelas(request):
@@ -207,12 +206,13 @@ def kelas(request):
     }
     return render(request, 'admin/kelas/index.html', context)
 
-
 def tambahKelas(request):
     if request.method == 'POST':
         id_kelas = request.POST['id_kelas']
         nama_kelas = request.POST['nama_kelas']
         nip_waliKelas = request.POST['nip_waliKelas']
+
+        wali_kelas = Guru.objects.get(nip = nip_waliKelas)
 
         if Kelas.objects.filter(id_kelas = id_kelas).exists():
             messages.error(request, 'ID Kelas is already exists')
@@ -220,39 +220,56 @@ def tambahKelas(request):
             data_kelas = Kelas(
                 id_kelas = id_kelas,
                 nama_kelas = nama_kelas,
-                nip_waliKelas = nip_waliKelas,
+                nip_waliKelas = wali_kelas
             )
             data_kelas.save()
             messages.success(request, 'Kelas saved successfully')
-    
+
+        kelas_guru = Kelas.objects.select_related('nip_waliKelas').all()
+        return redirect('/indexKelas')
     else:
         data_guru = Guru.objects.all()
+        data_waliKelas = Kelas.objects.values_list('nip_waliKelas', flat=True)
         context = {
-            'data_guru': data_guru
+            'data_guru': data_guru,
+            'data_waliKelas': data_waliKelas
         }
         return render(request, 'admin/kelas/tambahData.html', context)
 
-def postDatakelas(request):
-    id_kelas = request.POST['id_kelas']
-    nama_kelas = request.POST['nama_kelas']
-    nip_waliKelas = request.POST['nip_waliKelas']
+def updateDatakelas(request, id_kelas): 
+    if request.method == 'POST':
+        nip_waliKelas = request.POST['nip_waliKelas']
 
-    if Kelas.objects.filter(id_kelas=id_kelas).exists():
-        messages.error(request, 'Kelas already exists')
-    else:
-        tambah_kelas = Kelas(
-            id_kelas=id_kelas,
-            nama_kelas=nama_kelas,
-            nip_waliKelas=nip_waliKelas,
+        wali_kelas = Guru.objects.get(nip = nip_waliKelas)
+
+        data_kelas = Kelas(
+            id_kelas = request.POST['id_kelas'],
+            nama_kelas = request.POST['nama_kelas'],
+            nip_waliKelas = wali_kelas
         )
-        tambah_kelas.save()
-        messages.success(request, 'Kelas successfully saved')
-    return redirect('/admin/kelas/index')
+        data_kelas.save()
+        messages.success(request,  ' Data is successfully saved')
+        return redirect('/indexKelas')
+    else:
+        data_kelas = Kelas.objects.select_related('nip_waliKelas').get(id_kelas = id_kelas)
+        data_guru = Guru.objects.all()
+        data_wali = Kelas.objects.values_list('nip_waliKelas', flat=True)
+        context = {
+            'data_kelas': data_kelas,
+            'data_wali': data_wali,
+            'data_guru': data_guru,
+        }
+        return render(request, 'admin/kelas/updateData.html', context)
 
-
-def updateDatakelas(request, kelas_id):
-    data_kelas = Kelas.objects.all(kelas_id=kelas_id)
+def deleteDataKelas(request, id_kelas):
+    data_kelas = Kelas.objects.select_related('nip_waliKelas').get(id_kelas = id_kelas)
     context = {
         'data_kelas': data_kelas
     }
-    return render(request, 'admin/kelas/updateData.html', context)
+    return render(request, 'admin/kelas/deleteData.html', context)
+
+def postDeleteKelas(request, id_kelas):
+    data_kelas = Kelas.objects.select_related('nip_waliKelas').get(id_kelas = id_kelas).delete()
+    messages.success(request, 'Data Kelas deleted successfully')
+
+    return redirect('/indexKelas')
