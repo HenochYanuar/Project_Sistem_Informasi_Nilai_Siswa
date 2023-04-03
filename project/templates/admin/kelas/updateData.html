@@ -1,4 +1,4 @@
-{% extends 'layout/base.html' %}
+{% extends 'layout/baseAdmin.html' %}
 {% block title %}
 Edit Data Kelas Page
 {% endblock %}
@@ -24,9 +24,9 @@ Update Data Kelas
       <div class="form-group">
         <label>NIP Wali Kelas</label>
         <select class="form-control" required name="nip_waliKelas" id="">
-          <option value="data_kelas.nip_waliKelas" disabled selected >Wali Kelas Saat Ini : {{ data_kelas.nip_waliKelas.nip }} | {{ data_kelas.nip_waliKelas.nama }}</option>
+          <option value="" Disabled Selected >Pilih Wali Kelas</option>
           {% for guru in data_guru %}
-            <option required value="{{ guru.nip }}">{{ guru.nip }} | {{ guru.nama }}</option>
+            <option required value="{{ guru.nip }}" {% if guru.nip == data_kelas.nip_waliKelas.nip %} selected {% endif %}>{{ guru.nip }} | {{ guru.nama }}</option>
           {% endfor %}
         </select>
       </div>

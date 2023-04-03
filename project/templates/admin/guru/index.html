@@ -1,8 +1,15 @@
-{% extends 'layout/base.html' %}
+{% extends 'layout/baseAdmin.html' %}
 {% block title %}
   Data Guru Page
 {% endblock %}
 {% block content %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="location.href='/indexGuru'">×</button>
+  <h5><i class="icon fas fa-check"></i> Success!</h5>
+  {{ message }}
+</div>
+{% endfor %}
   <div class="card shadow-lg">
     <div class="card-header bg-info">
       <div class="text-center "><h2>Daftar Data Guru</h2></div> 

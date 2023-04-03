@@ -1,0 +1,50 @@
+{% extends 'layout/baseAdmin.html' %}
+{% block title %}
+  Data Mata Pelajaran Page
+{% endblock %}
+{% block head %}
+  Data Mata Pelajaran
+{% endblock %}
+{% block content %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="location.href='/indexKelas'">×</button>
+  <h5><i class="icon fas fa-check"></i> Success!</h5>
+  {{ message }}
+</div>
+{% endfor %}
+<div class="card shadow-lg">
+  <div class="card-header bg-info">
+    <div class="text-center "><h2>Daftar Data Mata Pelajaran</h2></div> 
+  </div>
+  <div class="card-body">
+    <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahmapel' %}"><i
+        class="fas fa-user-plus"></i> Tambah Data Mapel</a>
+    <table class="table table-bordered table-hover">
+      <thead class="table-hover" style="background-color: #819293;">
+        <tr style="color: white;">
+          <th>NO</th>
+          <th class="col-lg-2">ID Mapel</th>
+          <th class="col-lg-6">Nama Mata Pelajaran</th>
+          <th class="col-lg-4">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for mapel in data_mapel %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ mapel.id_mapel }}</td>
+          <td>{{ mapel.nama_mapel }}</td>
+          <td>
+            <a class="btn btn-warning" href="#">
+              <i class="fas fa-pencil-alt"></i> Edit</a> |
+            <a class="btn btn-danger" href="#">
+            <i class="fas fa-trash-alt"></i> Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

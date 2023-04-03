@@ -1,4 +1,4 @@
-{% extends 'layout/base.html' %}
+{% extends 'layout/baseAdmin.html' %}
 {% block title %}
 Tambah Data Kelas Page
 {% endblock %}
@@ -11,19 +11,26 @@ Tambah Data Kelas
     <div class="text-center "><h2>Tambah Data Kelas</h2></div> 
   </div>
   <div class="card-body">
+    {% if message %}
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5><i class="icon fas fa-exclamation"></i> Warning!</h5>
+      {{ message }}
+    </div>
+    {% endif %}
     <form action="{% url 'tambahkelas' %}" method="POST">
       {% csrf_token %}
       <div class="form-group">
         <label>Kelas ID</label>
-        <input class="form-control" type="text" name="id_kelas" id="id_kelas" maxlength="4" required>
+        <input class="form-control" type="text" name="id_kelas" id="id_kelas" maxlength="4">
       </div>
       <div class="form-group">
         <label>Nama Kelas</label>
-        <input class="form-control" type="text" name="nama_kelas" id="nama_kelas" maxlength="255" required>
+        <input class="form-control" type="text" name="nama_kelas" id="nama_kelas" maxlength="255">
       </div>
       <div class="form-group">
         <label>NIP Wali Kelas</label>
-        <select class="form-control" name="nip_waliKelas" id="">
+        <select required class="form-control" name="nip_waliKelas" id="">
           <option value="" selected disabled>Pilih NIP Wali Kelas</option>
           {% for guru in data_guru %}
             {% if guru.nip not in data_waliKelas %}

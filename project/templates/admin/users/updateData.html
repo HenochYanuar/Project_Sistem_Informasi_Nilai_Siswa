@@ -1,4 +1,4 @@
-{% extends 'layout/base.html' %}
+{% extends 'layout/baseAdmin.html' %}
 {% block title %}
 Edit Data User Page
 {% endblock %}
@@ -8,39 +8,46 @@ Edit Data User Page
     <div class="text-center"><h2>Edit Data User</h2></div>
   </div>
   <div class="card-body">
+    {% if message %}
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+      <h5><i class="icon fas fa-exclamation"></i> Warning!</h5>
+      {{ message }}
+    </div>
+    {% endif %}
     <form action="{% url 'postupdatedatauser' %}" method="POST">
       {% csrf_token %}
       <div class="form-group">
         <label>User ID </label>
         <input readonly value="{{ data_user.id_user }}" class="form-control" type="text" name="id_user" id="id_user"
-          maxlength="10" required>
+          maxlength="10" >
       </div>
       <div class="form-group">
         <label>Username</label>
-        <input value="{{ data_user.username }}" class="form-control" type="text" name="username" id="username" maxlength="255" required>
+        <input required value="{{ data_user.username }}" class="form-control" type="text" name="username" id="username" maxlength="255">
       </div>
       <div class="form-check">
         <label>User Role</label>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="role" id="role1" value="Admin">
+          <input required class="form-check-input" type="radio" name="role" id="role1" value="Admin">
           <label class="form-check-lable" for="role1">Admin</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="role" id="role2" value="Guru">
+          <input required class="form-check-input" type="radio" name="role" id="role2" value="Guru">
           <label class="form-check-lable" for="role2">Guru</label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="radio" name="role" id="role3" value="Siswa">
+          <input required class="form-check-input" type="radio" name="role" id="role3" value="Siswa">
           <label class="form-check-lable" for="role3">Siswa</label>
         </div>
       </div>
       <div class="form-group">
         <label>Password</label>
-        <input value="{{ data_user.password }}" class="form-control" type="password" name="password" id="password" maxlength="10" required>
+        <input required value="{{ data_user.password }}" class="form-control" type="password" name="password" id="password" maxlength="10">
       </div>
       <div class="form-group">
         <label>Chack Password</label>
-        <input value="{{ data_user.password }}" class="form-control" type="password" name="password2" id="password2" maxlength="10" required>
+        <input required value="{{ data_user.password }}" class="form-control" type="password" name="password2" id="password2" maxlength="10">
       </div>
 
       <button class="btn btn-warning" type="button" onclick="location.href='/indexUsers'"><i class="fas fa-caret-left"></i> Kembali</button>

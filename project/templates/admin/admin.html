@@ -1,44 +1,46 @@
-{% extends 'layout/base.html' %}
+{% extends 'layout/baseAdmin.html' %}
 {% block title %}
-  Dashboard Admin
-{% endblock %}
-{% block head %}
-  Dashboard Admin
+Dashboard Admin
 {% endblock %}
 {% block content %}
+
+<div class="text-center mb-4 bg-info shadow-lg">
+  <h1>Dashboard Admin</h1>
+</div>
 <div class="row">
   <div class="col-sm-4">
-      <div class="card bg-info shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-        <div class="card-header">
-          <h1 class="m-0">Jumlah Guru</h1>
-        </div>
-        <div class="card-body">
-          <h2>{{ data_guru }} Guru</h2>
-          <p class="card-text">Tercatat sejumlah {{ data_guru }} orang guru terdaftar pada sistem.</p>
-        </div>
+    <div class="card bg-info shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <div class="card-header">
+        <h1 class="m-0">Jumlah Guru</h1>
       </div>
+      <div class="card-body">
+        <h2>{{ data_guru }} Guru</h2>
+        <p class="card-text">Tercatat sejumlah {{ data_guru }} orang guru terdaftar pada sistem.</p>
+      </div>
+    </div>
   </div>
   <div class="col-sm-4">
-      <div class="card bg-danger shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-        <div class="card-header">
-          <h1 class="m-0">Jumlah Siswa</h1>
-        </div>
-        <div class="card-body">
-          <h2>{{ data_siswa }} Siswa</h2>
-          <p class="card-text">Tercatat sejumlah {{ data_siswa }} orang siswa terdaftar pada sistem.</p>
-        </div>
+    <div class="card bg-danger shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <div class="card-header">
+        <h1 class="m-0">Jumlah Siswa</h1>
       </div>
+      <div class="card-body">
+        <h2>{{ data_siswa }} Siswa</h2>
+        <p class="card-text">Tercatat sejumlah {{ data_siswa }} orang siswa terdaftar pada sistem.</p>
+      </div>
+    </div>
   </div>
 
   <div class="col-sm-4">
-      <div class="card bg-success shadow-lg p-3 mb-5 bg-body-tertiary rounded">
-        <div class="card-header  text-white">
-          <h1 class="m-0">Jumlah Kelas</h1>
-        </div>
-        <div class="card-body  text-white">
-          <h2>{{ data_kelas }} Kelas</h2>
-          <p class="card-text">Tercatat sejumlah {{ data_kelas }} buah kelas terdaftar pada sistem.</p>
-        </div>
+    <div class="card bg-success shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <div class="card-header  text-white">
+        <h1 class="m-0">Jumlah Kelas</h1>
       </div>
+      <div class="card-body  text-white">
+        <h2>{{ data_kelas }} Kelas</h2>
+        <p class="card-text">Tercatat sejumlah {{ data_kelas }} buah kelas terdaftar pada sistem.</p>
+      </div>
+    </div>
   </div>
+</div>
 {% endblock %}

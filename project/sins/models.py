@@ -1,7 +1,9 @@
 from django.db import models
+import os
+from django.conf import settings
 
 class User(models.Model):
-    id_user = models.CharField(max_length=4, primary_key=True)
+    id_user = models.CharField(max_length=5, primary_key=True)
     username = models.CharField(max_length=255)
     password = models.CharField(max_length=10)
     role = models.CharField(max_length=5)
@@ -17,6 +19,25 @@ class Guru(models.Model):
     foto = models.ImageField(upload_to= 'static/assets/dist/img', blank=True, null=True)
     tgl_lahir = models.DateField()
     id_user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def delete(self, *args, **kwargs):
+        # hapus foto yang terkait dengan instance Guru saat dihapus
+        if self.foto:
+            os.remove(self.foto.path)
+        super().delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        # cek apakah terdapat foto baru yang diunggah
+        if self.nip:
+            try:
+                old_image = Guru.objects.get(nip=self.nip).foto
+            except Guru.DoesNotExist:
+                old_image = None
+
+            if old_image and self.foto and old_image != self.foto:
+                os.remove(os.path.join(settings.MEDIA_ROOT, old_image.name))
+
+        super().save(*args, **kwargs)
 
 class Kelas(models.Model):
     id_kelas = models.CharField(max_length=4, primary_key=True)
@@ -38,8 +59,7 @@ class Siswa(models.Model):
 
 class Mapel(models.Model):
     id_mapel = models.CharField(max_length=4, primary_key=True)
-    nama_maple = models.CharField(max_length=255)
-    nip_guru = models.ForeignKey(Guru, on_delete=models.CASCADE)
+    nama_mapel = models.CharField(max_length=255)
 
 class Nilai(models.Model):
     id_nilai = models.CharField(max_length=4, primary_key=True)

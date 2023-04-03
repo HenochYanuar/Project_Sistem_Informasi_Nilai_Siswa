@@ -3,6 +3,7 @@ from . views import admin
 from . views import users, tambahUser, postDatauser, updateDatauser, postUpdateuser, deleteDatauser, postDeleteuser
 from . views import guru , tambahGuru, detailGuru, updateDataGuru, deleteDataGuru, postDeleteGuru
 from . views import kelas, tambahKelas, updateDatakelas, deleteDataKelas, postDeleteKelas
+from . views import mapel, tambahMapel
 urlpatterns = [
    # path('',index,name='index'),
    
@@ -26,9 +27,14 @@ urlpatterns = [
    path('deleteDataGuru/<str:nip>', deleteDataGuru, name="deletedataguru"),
    path('postDeleteGuru/<str:nip>', postDeleteGuru, name="postdeleteguru"),
 
+   #Url For admin/kelas page
    path('indexKelas',kelas, name="indexkelas"),
    path('tambahKelas', tambahKelas, name="tambahkelas"),
    path('updateDatakelas/<str:id_kelas>',updateDatakelas, name="updatedatakelas"),
    path('deleteDatakelas/<str:id_kelas>',deleteDataKelas, name="deletedatakelas"),
    path('postDeleteKelas/<str:id_kelas>',postDeleteKelas, name="postdeletekelas"),
+
+   #Url For admin/mapel page
+   path('indexMapel', mapel, name="indexmapel"),
+   path('tambahMapel',tambahMapel, name="tambahmapel"),
 ]
