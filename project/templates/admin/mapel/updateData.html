@@ -1,29 +1,29 @@
 {% extends 'layout/baseAdmin.html' %}
 {% block title %}
-Tambah Data Mata Pelajaran Page
+Edit Data Mata Pelajaran Page
 {% endblock %}
 {% block content %}
 <div class="card shadow-lg">
   <div class="card-header bg-info">
-    <div class="text-center "><h2>Tambah Data Mata Pelajaran</h2></div> 
+    <div class="text-center "><h2>Edit Data Mata Pelajaran</h2></div> 
   </div>
   <div class="card-body">
     {% if message %}
     <div class="alert alert-danger alert-dismissible">
-      <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="location.href='/indexGuru'">×</button>
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
       <h5><i class="icon fas fa-exclamation"></i> Warning!</h5>
       {{ message }}
     </div>
     {% endif %}
-    <form action="{% url 'tambahmapel' %}" method="POST">
+    <form action="{% url 'updatedatamapel' data_mapel.id_mapel %}" method="POST">
       {% csrf_token %}
       <div class="form-group">
         <label>ID Mata Pelajaran</label>
-        <input class="form-control" type="text" name="id_mapel" id="id_mapel" maxlength="4">
+        <input readonly value="{{ data_mapel.id_mapel }}" class="form-control" type="text" name="id_mapel" id="id_mapel" maxlength="4">
       </div>
       <div class="form-group">
         <label>Nama Mata Pelajaran</label>
-        <input class="form-control" type="text" name="nama_mapel" id="nama_mapel" maxlength="255">
+        <input value="{{ data_mapel.nama_mapel }}" class="form-control" type="text" name="nama_mapel" id="nama_mapel" maxlength="255">
       </div>
       <div class="form-group">
         <button class="btn btn-warning" type="button" onclick="location.href='/indexMapel'">

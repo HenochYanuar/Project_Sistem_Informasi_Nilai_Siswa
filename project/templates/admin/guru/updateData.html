@@ -12,7 +12,7 @@
       {% csrf_token %}
       <div class="form-group">
         <label>NIP Guru</label>
-        <input class="form-control" value="{{ data_guru.nip }}" readonly type="text" name="nip" maxlength="4" required>
+        <input class="form-control" value="{{ data_guru.nip }}" readonly type="text" name="nip" maxlength="10" required>
       </div>
       <div class="form-group">
         <label>Nama guru</label>
@@ -49,11 +49,11 @@
       </div>
       <div class="form-group">
         <label>NO Telepon</label>
-        <input class="form-control" value="{{ data_guru.no_tlpn }}" type="text" name="no_tlpn" maxlength="20">
+        <input required class="form-control" value="{{ data_guru.no_tlpn }}" type="text" name="no_tlpn" maxlength="20">
       </div>
       <div class="form-group">
         <label>E-mail</label>
-        <input class="form-control" value="{{ data_guru.email }}" type="email" name="email">
+        <input required class="form-control" value="{{ data_guru.email }}" type="email" name="email">
       </div>
       <div class="form-group">
         <label>Tanggal Lahir</label>
@@ -61,7 +61,7 @@
       </div>
       <label>Foto</label>
       <div class="input-group mb-3">
-        <input type="file" class="form-control" id="inputGroupFile02" name="foto">
+        <input required type="file" class="form-control" id="inputGroupFile02" name="foto">
         <label class="input-group-text" for="inputGroupFile02">*jpg,*png,*jpeg</label>
       </div>
       <div class="form-group">

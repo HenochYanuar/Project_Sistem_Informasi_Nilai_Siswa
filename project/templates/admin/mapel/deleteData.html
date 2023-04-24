@@ -1,11 +1,11 @@
 {% extends 'layout/baseAdmin.html' %}
 {% block title %}
-Delete Data User Page
+Delete Data Mata Pelajaran Page
 {% endblock %}
 {% block content %}
 <div class="card shadow-lg">
   <div class="card-header bg-info">
-    <div class="text-center"><h2>Delete Data User</h2></div>
+    <div class="text-center"><h2>Delete Data Mata Pelajaran</h2></div>
   </div>
   <div class="card-body">
     <div class="form-group">
@@ -15,27 +15,22 @@ Delete Data User Page
       <table class="table">
         <tbody>
             <tr>
-              <td class="col-4"><h5>ID User</h5></td>
-              <td><h5> : {{ data_user.id_user }}</h5></td>
+              <td class="col-4"><h5>ID Kelas</h5></td>
+              <td><h5> : {{ data_mapel.id_mapel }}</h5></td>
             </tr>
             <tr>
-              <td><h5>Username</h5></td>
-              <td><h5> : {{ data_user.username }}</h5></td>
-            </tr>
-            <tr>
-              <td><h5>Role</h5></td>
-              <td><h5> : {{ data_user.role }}</h5></td>
+              <td><h5>Nama Kelas</h5></td>
+              <td><h5> : {{ data_mapel.nama_mapel }}</h5></td>
             </tr>
         </tbody>
       </table>  
     </div>
     <div class="form-group">
-      <a class="btn btn-warning ml-4" href="{% url 'indexusers' %}">
+      <a class="btn btn-warning ml-4" href="{% url 'indexmapel' %}">
         <i class="fas fa-caret-left"></i> Cancele</a> |
-      <a class="btn btn-danger" href="{% url 'postdeleteuser' data_user.id_user %}">
+      <a class="btn btn-danger" href="{% url 'postdeletemapel' data_mapel.id_mapel %}">
         <i class="fa fa-trash"></i> Hapus</a>
     </div>
   </div>
 </div>
 {% endblock %}
-

@@ -1,0 +1,58 @@
+{% extends 'layout/baseAdmin.html' %}
+{% block title %}
+Detail Data Kelas Page
+{% endblock %}
+{% block content %}
+<div class="card">
+  <div class="card-header bg-info">
+    <div class="text-center"><h2>Detail Data Kelas</h2></div>
+  </div>
+  <div class="card-body">
+    <table class="table">
+      <tbody>
+        <div class="form-group">
+          <tr>
+            <td><b>Nama Kelas</b></td>
+            <td>: {{ kelas.nama_kelas }}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><b>ID Kelas</b></td>
+            <td>: {{ kelas.id_kelas }}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><b>Wali Kelas</b></td>
+            <td>: {{ kelas.nip_waliKelas.nama }}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="bg-secondary"><b>Siswa</b></td>
+            <th class="bg-secondary">: Nama Siswa</th>
+            <th class="bg-secondary">NIS Siswa</th>
+          </tr>
+          {% for s in data_siswa %}
+          <tr>
+            <td></td>
+            <td> - {{  s.nis_siswa.nama }}</td>
+            <td> {{  s.nis_siswa.nis }}</td> 
+          </tr>
+          {% endfor %}
+          <tr>
+            <td class="bg-secondary"><b>Mata Pelajaran</b></td>
+            <th class="bg-secondary">: Nama Mapel</th>
+            <th class="bg-secondary">Guru Pengampu</th>
+          </tr>
+          {% for m in data_mapel %}
+          <tr>
+            <td></td>
+            <td> - {{ m.id_mapel.nama_mapel }}</td>
+            <td>{{ m.nip_guru.nama }}</td>
+          </tr>
+          {% endfor %}
+        </div>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

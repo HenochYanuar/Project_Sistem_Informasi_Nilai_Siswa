@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>TAMBAH SISWA KELAS</h1>
+  <form action="{% url 'siswakelas' %}" method="POST">
+    {% csrf_token %}
+    <select name="id_kelas" id="">
+      {% for data in data_kelas %}
+        <option value="{{ data.id_kelas }}">{{ data.nama_kelas }}</option>
+      {% endfor %}
+    </select>
+    <div class="card col-6">
+      <div class="card-body">
+        <h2>Pilih Siswa</h2>
+        <table id="table-siswa" class="table">
+          <thead>
+            <tr>
+              <th>Pilih</th>
+              <th>Nama Siswa</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for siswa in data_siswa %}
+            <tr>
+              <td><input name="siswa[]" value="{{ siswa.nis }}"
+                  type="checkbox"></td>
+              <td>{{ siswa.nama }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% comment %} <input type="checkbox" name="siswa[]" id="siswa" value="adi"> ADI
+    <input type="checkbox" name="siswa[]" id="siswa" value="ari"> ARI
+    <input type="checkbox" name="siswa[]" id="siswa" value="ani"> ANI
+    <input type="checkbox" name="siswa[]" id="siswa" value="budi"> BUDI
+    <input type="checkbox" name="siswa[]" id="siswa" value="bagus"> BAGUS {% endcomment %}
+    <button type="submit">SUBMIT</button>
+  </form>
+</body>
+
+</html>

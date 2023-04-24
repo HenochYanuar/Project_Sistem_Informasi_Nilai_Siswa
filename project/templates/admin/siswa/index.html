@@ -1,0 +1,54 @@
+{% extends 'layout/baseAdmin.html' %}
+{% block title %}
+Data Siswa Page
+{% endblock %}
+{% block content %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible">
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true"
+    onclick="location.href='/indexSiswa'">×</button>
+  <h5><i class="icon fas fa-check"></i> Success!</h5>
+  {{ message }}
+</div>
+{% endfor %}
+<div class="card shadow-lg">
+  <div class="card-header bg-info">
+    <div class="text-center "><h2>Daftar Data Siswa</h2></div>
+  </div>
+  <div class="card-body">
+    <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahsiswa'%}"><i class="fas fa-user-plus"></i> Tambah Data Siswa</a>
+    <table class="table table-bordered table-hover">
+      <thead class="table-hover" style="background-color: #819293;">
+        <tr style="color: white;">
+          <th>NO</th>
+          <th class="col-lg-3">Foto</th>
+          <th class="col-lg-3">NIS</th>
+          <th class="col-lg-2">Nama Siswa</th>
+          <th class="col-lg-4">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for siswa in data_siswa %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td><img style="width: 100px;" src="{{ siswa.foto }}" alt="Foto : {{ siswa.nama }}"> </td>
+          <td>{{ siswa.nis }}</td>
+          <td>{{ siswa.nama }}</td>
+          <td>
+            <a class="btn btn-info" href="{% url 'detailsiswa' siswa.nis %}">
+              <i class="fas fa-eye"></i> Detail
+            </a> |
+            <a class="btn btn-warning" href="{% url 'updatedatasiswa' siswa.nis %}">
+              <i class="fas fa-pencil-alt"></i> Edit
+            </a> |
+            <a class="btn btn-danger" href="{% url 'deletedatasiswa' siswa.nis %}">
+              <i class="fas fa-trash"></i> Delete
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

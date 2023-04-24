@@ -1,11 +1,11 @@
 {% extends 'layout/baseAdmin.html' %}
 {% block title %}
-  Delete Data Guru Page
+Detail Data Siswa Page
 {% endblock %}
 {% block content %}
 <div class="card shadow-lg">
   <div class="card-header bg-info">
-    <div class="text-center"><h2>Delete Data Guru</h2></div>
+    <div class="text-center"><h2>Delete Data Siswa</h2></div>
     <div class="form-group">
       <h3 class="text-center ml-5">Apakah Anda Yakin Ingin Menghapus Data Ini ?</h3>
     </div>
@@ -20,39 +20,43 @@
                 <div class="form-group">
                   <tr>
                     <td><b>Nama</b></td>
-                    <td>: {{ data_guru.nama }}</td>
+                    <td>: {{ data_siswa.nama }}</td>
                   </tr>
                   <tr>
                     <td><b>NIP</b></td>
-                    <td>: {{ data_guru.nip }}</td>
+                    <td>: {{ data_siswa.nis }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Semester</b></td>
+                    <td>: {{ data_siswa.semester }}</td>
                   </tr>
                   <tr>
                     <td><b>Jenis Kelamin</b></td>
-                    <td>: {{ data_guru.jk }}</td>
+                    <td>: {{ data_siswa.jk }}</td>
                   </tr>
                   <tr>
                     <td><b>Alamat</b></td>
-                    <td>: {{ data_guru.alamat }}</td>
+                    <td>: {{ data_siswa.alamat }}</td>
                   </tr>
                   <tr>
                     <td><b>Agama</b></td>
-                    <td>: {{ data_guru.agama }}</td>
+                    <td>: {{ data_siswa.agama }}</td>
                   </tr>
                   <tr>
                     <td><b>No.Tlpn</b></td>
-                    <td>: {{ data_guru.no_tlpn }}</td>
+                    <td>: {{ data_siswa.no_tlpn }}</td>
                   </tr>
                   <tr>
                     <td><b>E-mail</b></td>
-                    <td>: {{ data_guru.email }}</td>
+                    <td>: {{ data_siswa.email }}</td>
                   </tr>
                   <tr>
                     <td><b>Tgl Lahir</b></td>
-                    <td>: {{ data_guru.tgl_lahir }}</td>
+                    <td>: {{ data_siswa.tgl_lahir }}</td>
                   </tr>
                   <tr>
                     <td><b>ID User</b></td>
-                    <td>: {{ data_guru.id_user.id_user }}</td>
+                    <td>: {{ data_siswa.id_user.id_user }}</td>
                   </tr>
                 </div>
               </tbody>
@@ -64,16 +68,17 @@
         <div class="card text-center shadow-lg" style="background-color: #cce7e8;">
           <div class="card-body">
             <div class="form-group">
-              <img class="img-fluid img-circle position-relative" style="width: 200px;" src="{{ data_guru.foto.url }}" alt="Foto : {{ data_guru.nama }}">
+              <img class="img-fluid img-circle position-relative" style="width: 200px;" src="{{ data_siswa.foto.url }}" alt="Foto : {{ data_guru.nama }}">
             </div>
             <div class="form-group">
-              <h2>{{ data_guru.nama }}</h2>
+              <h2>{{ data_siswa.nama }}</h2>
             </div><br>
             <div class="form-group">
-              <a class="btn btn-outline-warning" href="{% url 'indexguru' %}">
+              <a class="btn btn-outline-warning" href="{% url 'indexsiswa' %}">
                 <i class="fas fa-caret-left"></i> Cancele</a> |
-              <a class="btn btn-outline-danger" href="{% url 'postdeleteguru' data_guru.nip%}">
-                <i class="fa fa-trash"></i> Hapus</a>
+              <a class="btn btn-outline-danger" href="{% url 'postdeletesiswa' data_siswa.nis %}">
+                <i class="fas fa-trash"></i> Delete
+              </a>
             </div>
           </div>
         </div>
@@ -82,3 +87,4 @@
   </div>
 </div>
 {% endblock %}
+

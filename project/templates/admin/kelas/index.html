@@ -2,9 +2,6 @@
 {% block title %}
   Data Kelas Page
 {% endblock %}
-{% block head %}
-  Data Kelas
-{% endblock %}
 {% block content %}
 {% for message in messages %}
 <div class="alert alert-success alert-dismissible">
@@ -19,16 +16,15 @@
   </div>
   <div class="card-body">
     <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahkelas' %}"><i
-        class="fas fa-user-plus"></i> Tambah Data Kelas</a>
+        class="fas fa-plus"></i> Tambah Data Kelas</a>
     <table class="table table-bordered table-hover">
       <thead class="table-hover" style="background-color: #819293;">
         <tr style="color: white;">
           <th>NO</th>
-          <th class="col-lg-1">ID Kelas</th>
+          <th class="col-lg-2">ID Kelas</th>
           <th class="col-lg-2">Nama Kelas</th>
-          <th class="col-lg-3">NIP Wali kelas</th>
-          <th class="col-lg-3">Nama Wali Kelas</th>
-          <th class="col-lg-3">Action</th>
+          <th class="col-lg-4">Nama Wali Kelas</th>
+          <th class="col-lg-4">Action</th>
         </tr>
       </thead>
       <tbody>
@@ -37,9 +33,10 @@
           <td>{{ forloop.counter }}</td>
           <td>{{ kelas.id_kelas }}</td>
           <td>{{ kelas.nama_kelas }}</td>
-          <td>{{ kelas.nip_waliKelas.nip }}</td>
           <td>{{ kelas.nip_waliKelas.nama }}</td>
           <td>
+            <a class="btn btn-info" href="{% url 'detailkelas' kelas.id_kelas %}">
+              <i class="fas fa-eye"></i> Detail</a> |
             <a class="btn btn-warning" href="{% url 'updatedatakelas' kelas.id_kelas %}">
               <i class="fas fa-pencil-alt"></i> Edit</a> |
             <a class="btn btn-danger" href="{% url 'deletedatakelas' kelas.id_kelas %}">

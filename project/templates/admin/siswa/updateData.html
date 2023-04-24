@@ -1,0 +1,108 @@
+{% extends 'layout/baseAdmin.html' %}
+{% block title %}
+  Edit Data Siswa Page
+{% endblock %}
+{% block content %}
+<div class="card shadow-lg">
+  <div class="card-header bg-info">
+    <div class="text-center"><h2>Edit Data Siswa</h2></div>
+  </div>
+  <div class="card-body">
+    {% if message %}
+    <div class="alert alert-danger alert-dismissible">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="location.href='/tambahSiswa'">×</button>
+      <h5><i class="icon fas fa-exclamation"></i> Warning!</h5>
+      {{ message }}
+    </div>
+    {% endif %}
+    <form action="{% url 'updatedatasiswa' data_siswa.nis %}" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label>NIS Siswa</label>
+        <input value="{{ data_siswa.nis }}" readonly class="form-control" type="text" name="nis" id="nis" maxlength="10" required> 
+      </div>
+      <div class="form-group">
+        <label>Nama Siswa</label>
+        <input value="{{ data_siswa.nama }}" class="form-control" type="text" name="nama" id="nama" required> 
+      </div>
+      <div class="form-group">
+        <label>Semester</label>
+        <select required class="form-control"  name="semester" id="">
+          <option value="{{ data_siswa.semester }}" {% if users.semester == data_siswa.id_user.semester %} selected {% endif %}>{{ data_siswa.semester }}</option>
+          <option value="Semester 1">Semester 1</option>
+          <option value="Semester 2">Semester 2 </option>
+          <option value="Semester 3">Semester 3 </option>
+          <option value="Semester 4">Semester 4 </option>
+          <option value="Semester 5">Semester 5 </option>
+          <option value="Semester 6">Semester 6 </option>
+        </select><br>
+      </div>
+      <div class="form-group">
+        <label>Jenis Kelamin</label>
+        <div class="form-check">
+          <div class="form-check">
+            <input required class="form-check-input" type="radio" name="jk" id="laki" value="Laki-laki">
+            <label class="form-check-lable" for="laki">Laki-laki</label>
+          </div>
+          <div class="form-check">
+            <input required class="form-check-input" type="radio" name="jk" id="perempuan" value="Perempuan">
+            <label class="form-check-lable" for="perempuan">Perempuan</label>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Alamat</label>
+        <input value="{{ data_siswa.alamat }}" class="form-control"  type="text" name="alamat">
+      </div>
+      <div class="form-group">
+        <label>Agama </label>
+        <select required class="form-control"  name="agama" id="">
+          <option value="{{ data_siswa.agama }}" {% if users.agama == data_siswa.id_user.agama %} selected {% endif %}>{{ data_siswa.agama }}</option>
+          <option value="Islam">Islam</option>
+          <option value="Kristen">Kristen</option>
+          <option value="Katholik">Katholik</option>
+          <option value="Hindu">Hindu</option>
+          <option value="Budha">Budha</option>
+          <option value="Konghuchu">Konghuchu</option>
+        </select><br>
+      </div>
+      <div class="form-group">
+        <label>NO Telepon</label>
+        <input value="{{ data_siswa.no_tlpn }}" class="form-control" type="text" name="no_tlpn" maxlength="20">
+      </div>
+      <div class="form-group">
+        <label>E-mail</label>
+        <input value="{{ data_siswa.email }}" class="form-control" type="email" name="email">
+      </div>
+      <div class="form-group">
+        <label>Tanggal Lahir</label>
+        <input value="{{ data_siswa.tgl_lahir }}" class="form-control" type="date" name="tgl_lahir"><br>
+      </div>
+      <label>Foto</label>
+      <div class="input-group mb-3">
+        <input required type="file" class="form-control" id="inputGroupFile02" name="foto">
+        <label class="input-group-text" for="inputGroupFile02">*jpg,*png,*jpeg</label>
+      </div>
+      <div class="form-group">
+        <label>ID User</label>
+        <select class="form-control" value="" required name="id_user" id=""> 
+          {% comment %} <option value="" disabled selected>Pilih ID User</option> {% endcomment %}
+          {% for user in users %}
+            {% if user.role == 'Siswa' %}   
+              <option value="{{ user.id_user }}" {% if user.id_user == data_siswa.id_user.id_user %} selected {% endif %}>{{ user.id_user }} | {{ user.username }}</option>            
+            {% endif %}
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <button class="btn btn-warning" type="button" onclick="location.href='/indexSiswa'">
+          <i class="fas fa-caret-left"></i> Kembali
+        </button>
+        <button class="btn btn-success" type="submit">
+          <i class="fa fa-save"></i> Simpan
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -2,13 +2,10 @@
 {% block title %}
   Data Mata Pelajaran Page
 {% endblock %}
-{% block head %}
-  Data Mata Pelajaran
-{% endblock %}
 {% block content %}
 {% for message in messages %}
 <div class="alert alert-success alert-dismissible">
-  <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="location.href='/indexKelas'">×</button>
+  <button type="button" class="close" data-dismiss="alert" aria-hidden="true" onclick="location.href='/indexMapel'">×</button>
   <h5><i class="icon fas fa-check"></i> Success!</h5>
   {{ message }}
 </div>
@@ -19,7 +16,11 @@
   </div>
   <div class="card-body">
     <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahmapel' %}"><i
-        class="fas fa-user-plus"></i> Tambah Data Mapel</a>
+        class="fas fa-plus"></i> Tambah Data Mapel
+    </a>
+    {% comment %} <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahmapel' %}"><i
+      class="fas fa-user-plus"></i> Tambah Pengampu Mapel
+    </a> {% endcomment %}
     <table class="table table-bordered table-hover">
       <thead class="table-hover" style="background-color: #819293;">
         <tr style="color: white;">
@@ -36,9 +37,9 @@
           <td>{{ mapel.id_mapel }}</td>
           <td>{{ mapel.nama_mapel }}</td>
           <td>
-            <a class="btn btn-warning" href="#">
+            <a class="btn btn-warning" href="{% url 'updatedatamapel' mapel.id_mapel %}">
               <i class="fas fa-pencil-alt"></i> Edit</a> |
-            <a class="btn btn-danger" href="#">
+            <a class="btn btn-danger" href="{% url 'deletedatamapel' mapel.id_mapel %}">
             <i class="fas fa-trash-alt"></i> Delete</a>
           </td>
         </tr>
