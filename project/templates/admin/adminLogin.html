@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+  <!--begin::Head-->
+  <head>
+    <meta charset="utf-8"/>
+    <title>SI Nilai Siswa | Admin Login Page</title>
+    <!--begin::Fonts-->
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+    <!--end::Fonts-->
+    <!--begin::Page Custom Styles(used by this page)-->
+    <link
+      href="https://mhs.ukrim.ac.id/assets/css/pages/login/classic/login-4.css"
+      rel="stylesheet" type="text/css"/>
+    <!--end::Page Custom Styles-->
+    <!--begin::Global Theme Styles(used by all pages)-->
+    <link
+      href="https://mhs.ukrim.ac.id/assets/plugins/global/plugins.bundle.css"
+      rel="stylesheet" type="text/css"/>
+    <link
+      href="https://mhs.ukrim.ac.id/assets/plugins/custom/prismjs/prismjs.bundle.css"
+      rel="stylesheet" type="text/css"/>
+    <link href="https://mhs.ukrim.ac.id/assets/css/style.bundle.css"
+      rel="stylesheet" type="text/css"/>
+    <!--end::Global Theme Styles-->
+    <!--begin::Layout Themes(used by all pages)-->
+    <link
+      href="https://mhs.ukrim.ac.id/assets/css/themes/layout/header/base/light.css"
+      rel="stylesheet" type="text/css"/>
+    <link
+      href="https://mhs.ukrim.ac.id/assets/css/themes/layout/header/menu/light.css"
+      rel="stylesheet" type="text/css"/>
+    <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/brand/dark.css"
+      rel="stylesheet" type="text/css"/>
+    <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/aside/dark.css"
+      rel="stylesheet" type="text/css"/>
+    <!--end::Layout Themes-->
+    <link rel="shortcut icon" href="https://mhs.ukrim.ac.id/images/ukrim.png"/>
+
+    <link rel="stylesheet" href="/static/assets/dist/css/main.css">
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- Theme style -->
+    {% comment %} <link rel="stylesheet" href="{% static 'assets/dist/css/adminlte.min.css' %}">                   {% endcomment %}
+    </head>
+  <!--end::Head-->
+  <!--begin::Body-->
+  <body id="kt_body"
+    class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed
+    aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+
+ <!--begin::Main-->
+    <div class="d-flex flex-column flex-root">
+      <!--begin::Login-->
+      <div class="login login-4 login-signin-on d-flex flex-row-fluid"
+        id="kt_login">
+        <div class="d-flex flex-center flex-row-fluid bgi-size-cover
+          bgi-position-top bgi-no-repeat"
+          style="background : linear-gradient(to bottom,#157e8c, #17a2b8); ">
+          <div class="login-form text-center p-7 position-relative
+            overflow-hidden">
+            <!--begin::Login Header-->
+            <div class="d-flex flex-center mb-15">
+                <img src="/static/assets/dist/img/f2399a3c-e44e-4e2a-82d0-520696ffad1b.png"
+                  class="max-h-150px" alt=""/>
+            </div>
+            <!--end::Login Header-->
+            <!--begin::Login Sign in form-->
+            <div class="login-signin">
+              <div class="mb-20">
+                <h2>SMP Negeri Sinar Jaya</h2>
+                <div class="text-muted font-weight-bold"><h3>Login Admin</h3></div>
+              </div>
+              {% for message in messages %}
+              <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h5><i class="icon fas fa-exclamation"></i> Warning!</h5>
+                {{ message }}
+              </div>
+              {% endfor %}
+              <form class="form" action="{% url 'adminlogin' %}"
+                method="post" id="kt_login_signin_form">
+                {% csrf_token %}
+                <div class="form-group mb-5">
+                  <input class="form-control h-auto form-control-solid py-4
+                    px-8" type="text"
+                    placeholder="Username" name="username" required
+                    autocomplete="off"/>
+                </div>
+                <div class="form-group mb-5">
+                  <input class="form-control h-auto form-control-solid py-4
+                    px-8" type="password"
+                    placeholder="Password" required name="password"/>
+                </div>
+                <button type="submit" id="kt_login_signin_submit"
+                  class="btn btn-outline-white font-weight-bold px-9 py-4 my-3 mx-4">Masuk
+                </button>
+              </form>
+              <div class="mt-10">
+
+              </div>
+            </div>
+    </div>
+    <!--end::Main-->
+    <!--end::Global Config-->
+     <!--begin::Global Theme Bundle(used by all pages)-->
+     <script
+     src="https://mhs.ukrim.ac.id/assets/plugins/global/plugins.bundle.js"></script>
+   <script
+     src="https://mhs.ukrim.ac.id/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
+   <script src="https://mhs.ukrim.ac.id/assets/js/scripts.bundle.js"></script>
+   <script
+     src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+   <!--end::Global Theme Bundle-->
+   <!--begin::Page Scripts(used by this page)-->
+   <script src="{% static 'assets/plugins/jquery/jquery.min.js' %}"></script>
+   <!-- Bootstrap 4 -->
+   <script src="{% static 'asstes/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+   <!-- AdminLTE App -->
+   {% comment %} <script src="{% static 'assets/dist/js/adminlte.min.js' %}"></script> {% endcomment %}
+   <script>
+   $(function () {
+       $('#kt_login_forgot').on('click', function (e) {
+           $('.login-signin').animate({height: 'hide'});
+           $('.login-forgot').animate({height: 'show'});
+       });
+       $('#kt_login_forgot_cancel').click(function () {
+           $('.login-forgot').animate({height: 'hide'});
+           $('.login-signin').animate({height: 'show'});
+       });
+       $('#kt_login_forgot_submit').on('click', function () {
+           let data = {
+               _token: 'bV6KlINpENEnBCIOSXKcPZnAXizOV6lnmD8r8wAq',
+               data_kirim: $('#data_kirim').val()
+           };
+           $.LoadingOverlay('show');
+           $.ajax({
+               url: 'https://mhs.ukrim.ac.id/forgot',
+               type: 'POST',
+               dataType: 'json',
+               data: data,
+               success: function (result) {
+                   $.LoadingOverlay('hide');
+                   swal.fire({
+                       html: result,
+                       icon: "success",
+                       buttonsStyling: false,
+                       confirmButtonText: "Ok, got it!",
+                       customClass: {
+                           confirmButton: "btn font-weight-bold btn-light-primary"
+                       }
+                   });
+               },
+               error: function (request, status, error) {
+                   $.LoadingOverlay('hide');
+                   swal.fire({
+                       text: request.responseJSON,
+                       icon: "error",
+                       buttonsStyling: false,
+                       confirmButtonText: "Ok, got it!",
+                       customClass: {
+                           confirmButton: "btn font-weight-bold btn-light-primary"
+                       }
+                   });
+               }
+           });
+       });
+   })
+</script>
+   <!--end::Page Scripts-->
+ </body>
+ <!--end::Body-->
+</html>
+

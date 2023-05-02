@@ -1,16 +1,19 @@
 from django.urls import path
-from . views import admin
+from . views import admin, adminLogin, adminLogout
 from . views import users, tambahUser, postDatauser, updateDatauser, postUpdateuser, deleteDatauser, postDeleteuser
 from . views import guru , tambahGuru, detailGuru, updateDataGuru, deleteDataGuru, postDeleteGuru
 from . views import kelas, tambahKelas, updateDatakelas, deleteDataKelas, postDeleteKelas, detailKelas
 from . views import mapel, tambahMapel, updateDataMapel, deleteDataMapel, postDeleteMapel
 from . views import siswa , tambahSiswa, detailSiswa, updateDataSiswa, deleteDataSiswa, postDeleteSiswa
+from . views import guruProfile
 from . views import siswakelas
 urlpatterns = [
    # path('',index,name='index'),
    
    
    path('admin',admin, name="admin"),
+   path('adminLogin',adminLogin, name="adminlogin"),
+   path('adminLogout', adminLogout, name="adminlogout"),
 
    # Url For admin/user page
    path('indexUsers',users, name="indexusers"),
@@ -53,5 +56,8 @@ urlpatterns = [
    path('deleteDataSiswa/<str:nis>', deleteDataSiswa, name="deletedatasiswa"),
    path('postDeleteSiswa/<str:nis>', postDeleteSiswa, name="postdeletesiswa"),
 
-   path('siswakelas',siswakelas, name="siswakelas")
+   path('siswakelas',siswakelas, name="siswakelas"),
+
+   #Url For gutu/dashboard page
+   path('guru', guruProfile, name="guru")
 ]

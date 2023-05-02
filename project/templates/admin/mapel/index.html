@@ -2,6 +2,9 @@
 {% block title %}
   Data Mata Pelajaran Page
 {% endblock %}
+{% block name_profile %}
+{{ user.username }}
+{% endblock %}
 {% block content %}
 {% for message in messages %}
 <div class="alert alert-success alert-dismissible">

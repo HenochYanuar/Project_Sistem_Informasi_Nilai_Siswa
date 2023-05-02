@@ -1,0 +1,60 @@
+{% extends 'layout/baseGuru.html' %}
+{% block title %}
+Dashboard Guru
+{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-4">
+    <div class="card card-custom card-stretch">
+      <div class="card-body box-profile">
+          <div class="text-center">
+              <div class="image-input image-input-outline" id="kt_profile_avatar"
+                   style="background-image: url(https://mhs.ukrim.ac.id/profile/picture)">
+                   <img src="/static/assets/dist/img/user6-128x128.jpg" alt="">
+                  <!-- <div class="image-input-wrapper"
+                       style="background-image: url(https://mhs.ukrim.ac.id/profile/picture)"></div>
+                  <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                         data-action="change" data-toggle="tooltip" title=""
+                         data-original-title="Ganti Foto Anda">
+                      <i class="fa fa-pen icon-sm text-muted"></i>
+                      <form id="form-ganti-dp" enctype="multipart/form-data" method="post"
+                            action="https://mhs.ukrim.ac.id/profile/gambar/update">
+                          <input id="file" type="file" name="foto_profil"
+                                 accept=".jpg, .jpeg"/>
+                          <input type="hidden" name="_token" value="4soRoUMLFmiYtHmnbjYHlcQLzBidAY5l2CgKLKyR">                                </form>
+                  </label>
+              </div> -->
+          </div>
+    
+          <h3 class="profile-username text-center">Henoch Yanuar Ari Swasono</h3>
+    
+          <p class="text-muted text-center">2142101951</p>
+          <style>
+              .list-group-item {
+                  border: none !important;
+              }
+          </style>
+          <ul class="list-group list-group-unbordered mb-3">
+              <li class="list-group-item">
+                  <i class="fas fa-envelope float-left mr-2"></i> <a
+                      class="float-left">henochyanuar13@gmail.com</a>
+              </li>
+              <li class="list-group-item">
+                  <i class="fas fa-envelope float-left mr-2"> </i> <a  style="max-width: 90%;" class="float-left d-inline-block text-truncate">asdasdasdasdasdashenoch.yanuar.a@mail.ukrim.ac.id</a>
+              </li>
+              <li class="list-group-item">
+                  <i class="fab fa-whatsapp float-left mr-2"> </i> <a class="float-left">085703257890</a>
+              </li>
+    
+          </ul>
+    
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+    <!-- /.card -->
+    </div>
+
+  </div>
+</div>
+{% endblock %}

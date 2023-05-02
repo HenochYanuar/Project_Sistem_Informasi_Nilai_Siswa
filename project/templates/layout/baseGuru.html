@@ -11,11 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SI Nilia Siswa | {% block title %}{% endblock %}</title>
 
-  <style>
-    ul li a .active {
-      color: aqua;
-    }
-  </style>
+  
   <link rel="stylesheet" href="/static/assets/dist/css/main.css">
 
   <!-- Google Font: Source Sans Pro -->
@@ -24,6 +20,36 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'assets/dist/css/adminlte.min.css' %}">
+  {% comment %} <link rel="canonical" href="https://keenthemes.com/metronic"/>
+  <!--begin::Fonts-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700"/>
+  <!--end::Fonts-->
+
+  <link href="https://mhs.ukrim.ac.id/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
+        type="text/css"/>
+  <!--begin::Page Vendors Styles(used by this page)-->
+  <link href="https://mhs.ukrim.ac.id/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css"
+        rel="stylesheet"
+        type="text/css"/>
+  <!--end::Page Vendors Styles-->
+  <!--begin::Global Theme Styles(used by all pages)-->
+  <link href="https://mhs.ukrim.ac.id/assets/plugins/global/plugins.bundle.css" rel="stylesheet"
+        type="text/css"/>
+  <link href="https://mhs.ukrim.ac.id/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet"
+        type="text/css"/>
+  <link href="https://mhs.ukrim.ac.id/assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
+  <!--end::Global Theme Styles-->
+  <!--begin::Layout Themes(used by all pages)-->
+  <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/header/base/light.css" rel="stylesheet"
+        type="text/css"/>
+  <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/header/menu/light.css" rel="stylesheet"
+        type="text/css"/>
+  <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/brand/dark.css" rel="stylesheet" type="text/css"/>
+  <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css"/>
+  <!--end::Layout Themes-->
+  <link rel="shortcut icon" href="https://mhs.ukrim.ac.id/images/ukrim.png"/>
+  <link rel="stylesheet" href="{% static 'assets/dist/css/guruStyle.css' %}"> {% endcomment %}
 </head>
 
 <body class="hold-transition sidebar-mini layout-navbar-fixed sidebar-closed sidebar-collapse">
@@ -46,6 +72,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
+        
         <!-- Navbar Search -->
         {% comment %} <li class="nav-item">
           <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -159,8 +186,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </a>
         </li> {% endcomment %}
         <li class="nav-item">
-          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="" role="button">
-            <i class="fas fa-door-open"></i>
+          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+            <i class="fas fa-th-large"></i>
           </a>
         </li>
       </ul>
@@ -181,10 +208,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="/static/assets/dist/img/AdminLTELogo.png" class="img-circle elevation-2" alt="User Image">
+            <img src="/static/assets/dist/img/man.png" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">{% block name_profile %}{% endblock %}</a>
+            <a href="#" class="d-block">Admin</a>
           </div>
         </div>
 
@@ -214,33 +241,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <li class="nav-item active">
               <a href="{% url 'indexusers' %}" class="nav-link">
                 <i class="nav-icon fas fa-user-alt"></i>
-                <p>User</p>
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="{% url 'indexguru' %}" class="nav-link">
-                <i class="nav-icon fas fa-user-tie"></i>
-                <p>Guru</p>
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="{% url 'indexsiswa' %}" class="nav-link">
-                <i class="nav-icon fas fa-user-graduate"></i>
-                <p>Siswa</p>
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="{% url 'indexmapel' %}" class="nav-link">
-                <i class="nav-icon fas fa-book"></i>
-                <p>Mata Pelajaran
-                  {% comment %} <i class="right fas fa-angle-left"></i> {% endcomment %}
-                </p>
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="{% url 'indexkelas' %}" class="nav-link">
-                <i class="nav-icon fas fa-school"></i>
-                <p>kelas</p>
+                <p>Penilaian</p>
               </a>
             </li>
           </ul>
@@ -275,15 +276,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- /.content-wrapper -->
     </div>
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark" style="display: block";>
+    <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
       <div class="p-3">
-        <h4>Log Out</h4><br>
-        <h6>Click For LogOut</h6>
-        <a href="{% url 'adminlogout' %}" class="btn btn-danger font-weight-bolder ">
-          <i class="nav-icon fas fa-door-open"></i>
-          Log Out
-        </a>
+        <h5>Title</h5>
+        <p>Sidebar content</p>
       </div>
     </aside>
     <!-- /.control-sidebar -->
@@ -311,15 +308,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- AdminLTE App -->
   <script src="{% static 'assets/dist/js/adminlte.min.js' %}"></script>
 
-  <script>
-    $(document).ready(function () {
-        // Mendapatkan path dari URL
-        var current_path = window.location.pathname.split('/').pop();
-
-        // Menambahkan kelas "active" ke elemen "li" yang sesuai dengan path
-        $('#sidebar-menu a[href="' + current_path + '"]').parents('li').addClass('active');
-    });
-</script>
+  
 </body>
 
 </html>

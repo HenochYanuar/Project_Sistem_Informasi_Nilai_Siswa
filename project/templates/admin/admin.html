@@ -2,6 +2,10 @@
 {% block title %}
 Dashboard Admin
 {% endblock %}
+{% block name_profile %}
+{{ user.username }}
+{% endblock %}
+{% if user.is_autentication %}
 {% block content %}
 <div class="text-center bg-info mb-4 shadow-lg card-header">
   <h1>Dashboard Admin</h1>
@@ -59,3 +63,4 @@ Dashboard Admin
   </div>
 </div>
 {% endblock %}
+{% endif %}

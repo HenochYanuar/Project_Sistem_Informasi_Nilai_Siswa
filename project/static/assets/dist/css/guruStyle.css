@@ -1,0 +1,77 @@
+.header-fixed.subheader-fixed.subheader-enabled .wrapper {
+  padding-top: 60px !important;
+}
+
+.label.label-sm.label-inline {
+  width: auto;
+  min-height: 25px;
+  height: auto;
+  max-height: 40px;
+}
+
+.label.label-inline.label-lg {
+  padding: 5px 10px !important;
+}
+
+label {
+  margin-top: 10px;
+}
+
+.card-custom {
+  margin-bottom: 10px;
+}
+
+/*.card.card-custom > .card-header {*/
+/*    min-height: 55px !important;*/
+/*}*/
+
+/*.card.card-custom > .card-body {*/
+/*    padding: 10px !important;*/
+/*}*/
+
+.bg-diagonal {
+  margin-bottom: 20px !important;
+}
+
+.btn-icon {
+  margin-bottom: 5px !important;
+}
+
+/* ***** buttons ********/
+
+
+a.btn-aqua {
+  color: #FFF;
+}
+
+.btn-aqua {
+  background: #74b9ff;
+  color: #FFF;
+}
+
+.btn-aqua:hover,
+.btn-aqua:focus,
+.btn-aqua:active,
+.btn-aqua.active,
+.open .dropdown-toggle.btn-aqua {
+  background: #0984e3;
+  color: #FFF;
+}
+
+.btn.btn-aqua i {
+  color: #ffffff;
+}
+
+.label-aqua {
+  background: #74b9ff;
+  color: #FFF;
+}
+
+#ukrim-header {
+  -webkit-box-flex: 0;
+  -ms-flex: 0 0 auto!important;
+  flex: 0  auto !important;
+}
+.text-monospace {
+  font-family: "Fira Code", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
