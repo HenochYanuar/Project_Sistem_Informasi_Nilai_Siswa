@@ -20,23 +20,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'assets/dist/css/adminlte.min.css' %}">
-  {% comment %} <link rel="canonical" href="https://keenthemes.com/metronic"/>
+  <link rel="canonical" href="https://keenthemes.com/metronic"/>
   <!--begin::Fonts-->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700"/>
   <!--end::Fonts-->
 
-  <link href="https://mhs.ukrim.ac.id/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
-        type="text/css"/>
-  <!--begin::Page Vendors Styles(used by this page)-->
-  <link href="https://mhs.ukrim.ac.id/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css"
-        rel="stylesheet"
-        type="text/css"/>
-  <!--end::Page Vendors Styles-->
+  {% comment %} <link href="https://mhs.ukrim.ac.id/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
+        type="text/css"/> {% endcomment %}
   <!--begin::Global Theme Styles(used by all pages)-->
-  <link href="https://mhs.ukrim.ac.id/assets/plugins/global/plugins.bundle.css" rel="stylesheet"
-        type="text/css"/>
-  <link href="https://mhs.ukrim.ac.id/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet"
+  {% comment %} <link href="https://mhs.ukrim.ac.id/assets/plugins/global/plugins.bundle.css" rel="stylesheet"
+        type="text/css"/> {% endcomment %}
+  {% comment %} <link href="https://mhs.ukrim.ac.id/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet"
         type="text/css"/>
   <link href="https://mhs.ukrim.ac.id/assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
   <!--end::Global Theme Styles-->
@@ -46,10 +41,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/header/menu/light.css" rel="stylesheet"
         type="text/css"/>
   <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/brand/dark.css" rel="stylesheet" type="text/css"/>
-  <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css"/>
+  <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css"/> {% endcomment %}
   <!--end::Layout Themes-->
   <link rel="shortcut icon" href="https://mhs.ukrim.ac.id/images/ukrim.png"/>
-  <link rel="stylesheet" href="{% static 'assets/dist/css/guruStyle.css' %}"> {% endcomment %}
+  {% comment %} <link rel="stylesheet" href="{% static 'assets/dist/css/guruStyle.css' %}"> {% endcomment %}
 </head>
 
 <body class="hold-transition sidebar-mini layout-navbar-fixed sidebar-closed sidebar-collapse">
@@ -61,6 +56,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="navbar-nav menu-item menu-item-submenu menu-item-rel menu-item-active"data-menu-toggle="click" aria-haspopup="true">
+          <a href="javascript:;" class="btn btn-outline-warning menu-link menu-toggle">
+            <span class="menu-text">Hi, {{ user.nama }}</span>
+            <i class="menu-arrow"></i>
+          </a>
         </li>
         {% comment %} <li class="nav-item d-none d-sm-inline-block">
           <a href="index3.html" class="nav-link">Home</a>
@@ -185,9 +186,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <i class="fas fa-expand-arrows-alt"></i>
           </a>
         </li> {% endcomment %}
+        <li class="navbar-nav menu-item menu-item-submenu menu-item-rel menu-item-active"data-menu-toggle="click" aria-haspopup="true">
+          <a href="javascript:;" class="btn btn-primary menu-link menu-toggle">
+            <span class="menu-text">Welcome</span>
+            <i class="menu-arrow"></i>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-            <i class="fas fa-th-large"></i>
+            <i class="fas fa-door-open"></i> Logout
           </a>
         </li>
       </ul>
@@ -208,10 +215,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="/static/assets/dist/img/man.png" class="img-circle elevation-2" alt="User Image">
+            <img src="{% block foto_profile %}{% endblock %}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block">Admin</a>
+            <a href="#" class="d-block">{% block name_profile %}{% endblock %}</a>
           </div>
         </div>
 
@@ -233,14 +240,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item active">
-              <a href="{% url 'admin' %}" class="nav-link">
+              <a href="{% url 'gurudashboard' %}" class="nav-link">
                 <i class="nav-icon fas fa-house-user"></i>
                 <p>Dashboard</p>
               </a>
             </li>
             <li class="nav-item active">
-              <a href="{% url 'indexusers' %}" class="nav-link">
-                <i class="nav-icon fas fa-user-alt"></i>
+              <a href="{% url 'penilaian' %}" class="nav-link">
+                <i class="nav-icon fas fa-pencil-alt"></i>
                 <p>Penilaian</p>
               </a>
             </li>
@@ -279,8 +286,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
       <div class="p-3">
-        <h5>Title</h5>
-        <p>Sidebar content</p>
+        <h4>Log Out</h4><br>
+        <h6>Click For LogOut</h6>
+        <a href="{% url 'gurulogout' %}" class="btn btn-danger font-weight-bolder ">
+          <i class="nav-icon fas fa-door-open"></i>
+          Log Out
+        </a>
       </div>
     </aside>
     <!-- /.control-sidebar -->

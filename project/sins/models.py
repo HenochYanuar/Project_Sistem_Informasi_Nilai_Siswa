@@ -3,13 +3,13 @@ import os
 from django.conf import settings
 
 class User(models.Model):
-    id_user = models.CharField(max_length=5, primary_key=True)
+    id_user = models.CharField(max_length=10, primary_key=True)
     username = models.CharField(max_length=255)
     password = models.CharField(max_length=10)
     role = models.CharField(max_length=5)
 
 class Guru(models.Model):
-    nip = models.CharField(max_length=10, primary_key=True)
+    nip = models.CharField(max_length=118, primary_key=True)
     nama = models.CharField(max_length=255)
     jk = models.CharField(max_length=10)
     alamat = models.TextField()
@@ -89,16 +89,11 @@ class Jadwal(models.Model):
     id_kelas = models.ForeignKey(Kelas, on_delete=models.CASCADE)
     id_mapel = models.ForeignKey(Mapel, on_delete=models.CASCADE)
 
-class Ulangan(models.Model):
-    id_ulangan = models.CharField(max_length=5, primary_key=True)
-    nama_ulangan = models.CharField(max_length=255)
-    nilai_ulangan = models.IntegerField()
-
 class Nilai(models.Model):
-    id_nilai = models.CharField(max_length=4, primary_key=True)
-    nil_uts = models.IntegerField()
-    nil_uas = models.IntegerField()
-    nil_rata_rata = models.IntegerField()
-    id_ulangan = models.ForeignKey(Ulangan, on_delete=models.CASCADE)
+    nil_uts = models.FloatField()
+    nil_uas = models.FloatField()
+    nil_rata_ul = models.FloatField()
+    nil_rata_tg = models.FloatField()
+    nil_rata_rata = models.FloatField()
     id_siswa = models.ForeignKey(Siswa, on_delete=models.CASCADE)
     id_mapel = models.ForeignKey(Mapel, on_delete=models.CASCADE)

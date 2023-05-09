@@ -1,13 +1,14 @@
 from django.shortcuts import render, redirect
-from .models import User, Guru, Kelas, Siswa, Mapel, Jadwal, Siswa_Kelas
+from .models import User, Guru, Kelas, Siswa, Mapel, Jadwal, Siswa_Kelas, Nilai
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import get_object_or_404
 
 # Views For Admin Pages
 
-@login_required
+
 def admin(request):
     data_guru = Guru.objects.count()
     data_siswa = Siswa.objects.count()
@@ -54,7 +55,7 @@ def adminLogout(request):
 
 # Create Views For Users CRUD
 
-@login_required
+
 def users(request):
     data_user = User.objects.all()
     id_user = request.session['id_user']
@@ -65,13 +66,13 @@ def users(request):
     }
     return render(request, 'admin/users/index.html', context)
 
-@login_required
+
 def tambahUser(request):
     id_user = request.session['id_user']
     user = User.objects.get(id_user = id_user)
     return render(request, 'admin/users/tambahData.html', {'user' : user})
 
-@login_required
+
 def postDatauser(request):
 
     id_user = request.POST['id_user']
@@ -110,7 +111,7 @@ def postDatauser(request):
                 messages.error(request, 'User do not match')
         return redirect('/indexUsers')
 
-@login_required
+
 def updateDatauser(request, id_user):
     data_user = User.objects.get(id_user=id_user)
     id_user = request.session['id_user']
@@ -121,7 +122,7 @@ def updateDatauser(request, id_user):
     }
     return render(request, 'admin/users/updateData.html', context)
 
-@login_required
+
 def postUpdateuser(request):
     id_user = request.POST['id_user']
     username = request.POST['username']
@@ -140,7 +141,7 @@ def postUpdateuser(request):
         messages.error(request, 'User not do match password')
     return redirect('/indexUsers')
 
-@login_required
+
 def deleteDatauser(request, id_user):
     data_user = User.objects.get(id_user=id_user)
     id_user = request.session['id_user']
@@ -151,7 +152,7 @@ def deleteDatauser(request, id_user):
     }
     return render(request, 'admin/users/deleteData.html', context)
 
-@login_required
+
 def postDeleteuser(request, id_user):
     data_user = User.objects.get(id_user=id_user).delete()
     messages.success(request, 'Data User Berhasil Dihapus')
@@ -160,7 +161,7 @@ def postDeleteuser(request, id_user):
 
 
 # Cerate Views For Guru CRUD
-@login_required
+
 def guru(request):
     data_guru = Guru.objects.all()
     id_user = request.session['id_user']
@@ -171,7 +172,7 @@ def guru(request):
     }
     return render(request, 'admin/guru/index.html', context)
 
-@login_required
+
 def tambahGuru(request):
     if request.method == 'POST':
         nip = request.POST['nip']
@@ -242,7 +243,7 @@ def tambahGuru(request):
         }
         return render(request, 'admin/guru/tambahData.html', context)
 
-@login_required
+
 def detailGuru(request, nip):
     data_guru = Guru.objects.select_related('id_user').get(nip=nip)
     id_user = request.session['id_user']
@@ -253,7 +254,7 @@ def detailGuru(request, nip):
     }
     return render(request, 'admin/guru/detail.html', context)
 
-@login_required
+
 def updateDataGuru(request, nip):
     if request.method == 'POST':
         id_user = request.POST['id_user']
@@ -289,7 +290,7 @@ def updateDataGuru(request, nip):
         }
         return render(request, 'admin/guru/updateData.html', context)
 
-@login_required
+
 def deleteDataGuru(request, nip):
     data_guru = Guru.objects.get(nip=nip)
     id_user = request.session['id_user']
@@ -300,7 +301,7 @@ def deleteDataGuru(request, nip):
     }
     return render(request, 'admin/guru/deleteData.html', context)
 
-@login_required
+
 def postDeleteGuru(request, nip):
     data_guru = Guru.objects.get(nip=nip).delete()
     messages.success(request, 'Data Guru Berhasil Dihapus')
@@ -310,7 +311,7 @@ def postDeleteGuru(request, nip):
 
 # Create Views For Kelas CRUD
 
-@login_required
+
 def kelas(request):
     jumlahSiswa = Siswa_Kelas.objects.values('id_kelas').annotate(jumlah_siswa=Count('nis_siswa'))
     data_kelas = Kelas.objects.all()
@@ -324,7 +325,7 @@ def kelas(request):
     return render(request, 'admin/kelas/index.html', context)
 
 
-@login_required
+
 def tambahKelas(request):
     if request.method == 'POST':
             id_kelas = request.POST['id_kelas']
@@ -392,38 +393,40 @@ def tambahKelas(request):
         }
         return render(request, 'admin/kelas/tambahData.html', context)
 
-@login_required
+
 def updateDatakelas(request, id_kelas):
     if request.method == 'POST':
         nip_waliKelas = request.POST['nip_waliKelas']
 
         wali_kelas = Guru.objects.get(nip=nip_waliKelas)
 
-        data_kelas = Kelas(
-            id_kelas=request.POST['id_kelas'],
-            nama_kelas=request.POST['nama_kelas'],
-            nip_waliKelas=wali_kelas
-        )
+        data_kelas = Kelas.objects.get(id_kelas=id_kelas)
+        data_kelas.id_kelasi=request.POST['id_kelas']
+        data_kelas.nama_kelas=request.POST['nama_kelas']
+        data_kelas.nip_waliKelas=wali_kelas
         data_kelas.save()
+
         list_siswa = request.POST.getlist('siswa[]')
+
         for nis_siswa in list_siswa:
             siswa = Siswa.objects.get(nis=nis_siswa)
-            siswaKelas = Siswa_Kelas(
-                nis_siswa=siswa,
-                id_kelas=data_kelas,
-            )
+            siswaKelas = Siswa_Kelas.objects.get(nis_siswa=siswa)
+            siswaKelas.nis_siswa =siswa
+            siswaKelas.id_kelas=data_kelas
             siswaKelas.save()
+
         list_mapel = request.POST.getlist('mapel[]')
         list_guru = request.POST.getlist('guru[]')
+
         for m_id, g_nip in zip(list_mapel, list_guru):
             mapel = Mapel.objects.get(id_mapel=m_id)
             guru = Guru.objects.get(nip=g_nip)
-            jadwal = Jadwal(
-                nip_guru = guru,
-                id_kelas = data_kelas,
-                id_mapel = mapel
-            )
+            jadwal = Jadwal.objects.get(id_mapel=mapel)
+            jadwal.nip_guru =guru
+            jadwal.id_kelas=data_kelas
+            jadwal.id_mapel=mapel
             jadwal.save()
+
         messages.success(request,  'Data Kelas Berhasil Diupdate')
         return redirect('/indexKelas')
     else:
@@ -446,7 +449,7 @@ def updateDatakelas(request, id_kelas):
         }
         return render(request, 'admin/kelas/updateData.html', context)
 
-@login_required
+
 def deleteDataKelas(request, id_kelas):
     data_kelas = Kelas.objects.select_related('nip_waliKelas').get(id_kelas=id_kelas)
     id_user = request.session['id_user']
@@ -457,14 +460,14 @@ def deleteDataKelas(request, id_kelas):
     }
     return render(request, 'admin/kelas/deleteData.html', context)
 
-@login_required
+
 def postDeleteKelas(request, id_kelas):
     data_kelas = Kelas.objects.select_related('nip_waliKelas').get(id_kelas=id_kelas).delete()
     messages.success(request, 'Data Kelas Berhasil Dihapus')
 
     return redirect('/indexKelas')
 
-@login_required
+
 def detailKelas(request, id_kelas):
     data_mapel = Jadwal.objects.select_related('id_mapel').filter(id_kelas=id_kelas)
     siswa = Siswa_Kelas.objects.select_related('id_kelas').filter(id_kelas=id_kelas)
@@ -483,7 +486,7 @@ def detailKelas(request, id_kelas):
 
 # Create Views For Mapel CRUD
 
-@login_required
+
 def mapel(request):
     data_mapel = Mapel.objects.all()
     id_user = request.session['id_user']
@@ -494,7 +497,7 @@ def mapel(request):
     }
     return render(request, 'admin/mapel/index.html', context)
 
-@login_required
+
 def tambahMapel(request):
     if request.method == 'POST':
         id_mapel = request.POST['id_mapel']
@@ -525,7 +528,7 @@ def tambahMapel(request):
         user = User.objects.get(id_user = id_user)
         return render(request, 'admin/mapel/tambahData.html', {'user' : user})
 
-@login_required
+
 def updateDataMapel(request, id_mapel):
     if request.method == 'POST':
         data_kelas = Mapel(
@@ -545,7 +548,7 @@ def updateDataMapel(request, id_mapel):
         }
         return render(request, 'admin/mapel/updateData.html', context)
 
-@login_required
+
 def deleteDataMapel(request, id_mapel):
     data_mapel = Mapel.objects.get(id_mapel=id_mapel)
     id_user = request.session['id_user']
@@ -556,7 +559,7 @@ def deleteDataMapel(request, id_mapel):
     }
     return render(request, 'admin/mapel/deleteData.html', context)
 
-@login_required
+
 def postDeleteMapel(request, id_mapel):
     Mapel.objects.get(id_mapel=id_mapel).delete()
     messages.success(request, 'Data Mata pelajaran Berhasil Dihpaus')
@@ -565,7 +568,7 @@ def postDeleteMapel(request, id_mapel):
 
 # Cerate Views For Siswa CRUD
 
-@login_required
+
 def siswa(request):
     data_siswa = Siswa.objects.all()
     id_user = request.session['id_user']
@@ -576,7 +579,7 @@ def siswa(request):
     }
     return render(request, 'admin/siswa/index.html', context)
 
-@login_required
+
 def tambahSiswa(request):
     if request.method == 'POST':
         nis = request.POST['nis']
@@ -625,7 +628,7 @@ def tambahSiswa(request):
         }
     return render(request, 'admin/siswa/tambahData.html', context)
 
-@login_required
+
 def detailSiswa(request, nis):
     data_siswa = Siswa.objects.select_related('id_user').get(nis=nis)
     id_user = request.session['id_user']
@@ -636,7 +639,7 @@ def detailSiswa(request, nis):
     }
     return render(request, 'admin/siswa/detail.html', context)
 
-@login_required
+
 def updateDataSiswa(request, nis):
     if request.method == 'POST':
         id_user = request.POST['id_user']
@@ -673,7 +676,7 @@ def updateDataSiswa(request, nis):
         }
         return render(request, 'admin/siswa/updateData.html', context)
 
-@login_required
+
 def deleteDataSiswa(request, nis):
     data_siswa = Siswa.objects.get(nis=nis)
     id_user = request.session['id_user']
@@ -684,14 +687,14 @@ def deleteDataSiswa(request, nis):
     }
     return render(request, 'admin/siswa/deleteData.html', context)
 
-@login_required
+
 def postDeleteSiswa(request, nis):
     data_siswa = Siswa.objects.get(nis=nis).delete()
     messages.success(request, 'Data Siswa deleted successfully')
 
     return redirect('/indexSiswa')
 
-@login_required
+
 def postDatasiswa(request):
     nis = request.POST['nis']
     nama = request.POST['nama']
@@ -721,7 +724,7 @@ def postDatasiswa(request):
         messages.success(request, 'Siswa successfully saved')
     return redirect('/admin/siswa/index')
 
-@login_required
+
 def siswakelas(request):
     if request.method == 'POST':
         id_kelas = request.POST.get('id_kelas')
@@ -752,9 +755,147 @@ def siswakelas(request):
 #Create Views For Guru Pages
 #Create Viewa For Guru Dashboard
 
-def guruProfile(request):
+def guruLogin(request):
+    if request.method == 'POST':
+        nip = request.POST['nip']
+        password = request.POST['password']
+
+        try:
+            guru = Guru.objects.get(nip=nip)
+
+        except Guru.DoesNotExist:
+            messages.error(request, 'NIP Tidak Ditemukan')
+            return render(request, 'guru/guruLogin.html')
+        
+        try:
+            user = User.objects.get(password=password, id_user=guru.id_user.id_user)
+            gr_pss = user.password
+
+        except User.DoesNotExist:
+            messages.error(request, 'Passwoord Tidak Valid')
+            return render(request, 'guru/guruLogin.html')
+        
+        if password == gr_pss and user.role == 'Guru':
+            request.session['nip'] = guru.nip
+            return redirect('/guruDashboard')
+        else:
+            messages.error(request, 'Hanya Guru yang Dapat Mengakses Halaman Ini')
+            return render(request, 'guru/guruLogin.html')
+    else:
+        return render(request, 'guru/guruLogin.html')
+    
+def guruLogout(request):
+    del request.session['nip']
+    return redirect('/guruLogin')
+
+def guruDashboard(request):
     guru = Guru.objects.all()
+    nip = request.session['nip']
+    user = Guru.objects.get(nip = nip)
     context = {
-        'guru' : guru
+        'guru' : guru,
+        'user' : user
     }
     return render(request, 'guru/guru.html', context)
+
+    
+def guruProfile(request):
+    nip = request.session['nip']
+    user = Guru.objects.get(nip = nip)
+    return render(request, 'guru/guruProfile.html', {'user': user})
+
+def penilaian(request):
+    nip = request.session['nip']
+    user = Guru.objects.get(nip = nip)
+    jadwal = Jadwal.objects.filter(nip_guru=user).select_related('id_mapel', 'id_kelas')
+
+    context = {
+        'user': user,
+        'jadwal': jadwal
+    }
+    return render(request, 'guru/penilaian.html', context)
+
+def nilaiSiswa(request, id_kelas, id_mapel):
+    nip = request.session['nip']
+    user = Guru.objects.get(nip = nip)
+    siswa = Siswa_Kelas.objects.all()
+    kelas = Kelas.objects.get(id_kelas=id_kelas)
+    mapel = Mapel.objects.get(id_mapel=id_mapel)
+    jadwal = Jadwal.objects.filter(nip_guru=user, id_mapel=id_mapel, id_kelas=id_kelas)
+
+    context = {
+        'user' : user,
+        'siswa': siswa,
+        'kelas': kelas,
+        'jadwal' : jadwal,
+        'mapel' : mapel,
+
+    }
+    return render(request, 'guru/nilaiSiswa.html', context)
+
+def detailNilai(request, nis_siswa, id_mapel):
+    nip = request.session['nip']
+    user = Guru.objects.get(nip = nip)
+    nilai = Nilai.objects.filter(id_siswa=nis_siswa, id_mapel=id_mapel)
+    siswa = Siswa.objects.get(nis=nis_siswa)
+    mapel = Mapel.objects.get(id_mapel=id_mapel)
+
+    context = {
+        'nilai' : nilai,
+        'user' : user,
+        'siswa' : siswa,
+        'mapel' : mapel
+    }
+    return render(request, 'guru/detailNilai.html', context)
+
+def uploadNilai(request, nis_siswa, id_mapel):
+    if request.method == 'POST':
+        pelajaran = request.POST['id_mapel']
+        nis = request.POST['nis_siswa']
+        tugas = request.POST['tugas']
+        ulangan = request.POST['ulangan']
+        uts = request.POST['uts']
+        uas = request.POST['uas']
+        rata_rata = (float(tugas) + float(ulangan) + float(uts) + float(uas)) / 4.0
+
+        siswa = Siswa.objects.get(nis=nis)
+        matapel = Mapel.objects.get(id_mapel=pelajaran)
+
+        nilai = Nilai(
+            nil_uts=uts,
+            nil_uas=uas,
+            nil_rata_tg=tugas,
+            nil_rata_ul=ulangan,
+            nil_rata_rata=rata_rata,
+            id_siswa=siswa,
+            id_mapel=matapel
+        )
+
+        nilai.save()
+        messages.success(request,  ' Nilai Berhasil Disimpan')
+        return redirect('/uploadNilai/')
+    else:
+        nip = request.session['nip']
+        user = Guru.objects.get(nip = nip)
+        siswa = Siswa.objects.get(nis=nis_siswa)
+        mapel = Mapel.objects.get(id_mapel=id_mapel)
+
+        context ={
+            'user' : user,
+            'siswa' :siswa,
+            'mapel' : mapel,
+        }
+        return render(request, 'guru/uploadNilai.html', context)
+    
+# def pushUploadNilai(request):
+    
+
+    # nilai = Nilai.objects.get(id_siswa=nis)
+
+    # nilai.nil_uts=uts
+    # nilai.nil_uas=uas
+    # nilai.nil_rata_tg=tugas
+    # nilai.nil_rata_ul=ulangan
+    # nilai.nil_rata_rata=rata_rata
+    # nilai.id_siswa=siswa
+    # nilai.id_mapel=matapel

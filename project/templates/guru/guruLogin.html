@@ -5,7 +5,7 @@
   <!--begin::Head-->
   <head>
     <meta charset="utf-8"/>
-    <title>SI Nilai Siswa | Admin Login Page</title>
+    <title>SI Nilai Siswa | Guru Login Page</title>
     <!--begin::Fonts-->
     <link rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
@@ -61,7 +61,7 @@
         id="kt_login">
         <div class="d-flex flex-center flex-row-fluid bgi-size-cover
           bgi-position-top bgi-no-repeat"
-          style="background : linear-gradient(to bottom,#157e8c, #17a2b8); ">
+          style="background : linear-gradient(to bottom, whitesmoke, white); ">
           <div class="login-form text-center p-7 position-relative
             overflow-hidden">
             <!--begin::Login Header-->
@@ -74,7 +74,7 @@
             <div class="login-signin">
               <div class="mb-20">
                 <h2>SMP Negeri Sinar Jaya</h2>
-                <div class="text-muted font-weight-bold"><h3>Login Admin</h3></div>
+                <div class="text-muted font-weight-bold"><h3>Login Guru</h3></div>
               </div>
               {% for message in messages %}
               <div class="alert alert-danger alert-dismissible">
@@ -83,13 +83,13 @@
                 {{ message }}
               </div>
               {% endfor %}
-              <form class="form" action="{% url 'adminlogin' %}"
+              <form class="form" action="{% url 'gurulogin' %}"
                 method="POST" id="kt_login_signin_form">
                 {% csrf_token %}
                 <div class="form-group mb-5">
                   <input class="form-control h-auto form-control-solid py-4
                     px-8" type="text"
-                    placeholder="Username" name="username" required
+                    placeholder="NIP" name="nip" required
                     autocomplete="off"/>
                 </div>
                 <div class="form-group mb-5">
@@ -98,7 +98,7 @@
                     placeholder="Password" required name="password"/>
                 </div>
                 <button type="submit" id="kt_login_signin_submit"
-                  class="btn btn-outline-white font-weight-bold px-9 py-4 my-3 mx-4">Masuk
+                  class="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">Masuk
                 </button>
               </form>
               <div class="mt-10">

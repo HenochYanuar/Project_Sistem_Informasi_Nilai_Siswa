@@ -1,60 +1,66 @@
 {% extends 'layout/baseGuru.html' %}
 {% block title %}
-Dashboard Guru
+Dashboard Guru Page
+{% endblock %}
+{% block name_profile %}
+{{ user.nama }}
+{% endblock %}
+{% block foto_profile %}
+{{ user.foto }}
 {% endblock %}
 {% block content %}
+<h4>Dashboard Profile Guru</h4><br>
 <div class="row">
-  <div class="col-4">
-    <div class="card card-custom card-stretch">
-      <div class="card-body box-profile">
-          <div class="text-center">
-              <div class="image-input image-input-outline" id="kt_profile_avatar"
-                   style="background-image: url(https://mhs.ukrim.ac.id/profile/picture)">
-                   <img src="/static/assets/dist/img/user6-128x128.jpg" alt="">
-                  <!-- <div class="image-input-wrapper"
-                       style="background-image: url(https://mhs.ukrim.ac.id/profile/picture)"></div>
-                  <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-                         data-action="change" data-toggle="tooltip" title=""
-                         data-original-title="Ganti Foto Anda">
-                      <i class="fa fa-pen icon-sm text-muted"></i>
-                      <form id="form-ganti-dp" enctype="multipart/form-data" method="post"
-                            action="https://mhs.ukrim.ac.id/profile/gambar/update">
-                          <input id="file" type="file" name="foto_profil"
-                                 accept=".jpg, .jpeg"/>
-                          <input type="hidden" name="_token" value="4soRoUMLFmiYtHmnbjYHlcQLzBidAY5l2CgKLKyR">                                </form>
-                  </label>
-              </div> -->
-          </div>
-    
-          <h3 class="profile-username text-center">Henoch Yanuar Ari Swasono</h3>
-    
-          <p class="text-muted text-center">2142101951</p>
-          <style>
-              .list-group-item {
-                  border: none !important;
-              }
-          </style>
-          <ul class="list-group list-group-unbordered mb-3">
-              <li class="list-group-item">
-                  <i class="fas fa-envelope float-left mr-2"></i> <a
-                      class="float-left">henochyanuar13@gmail.com</a>
-              </li>
-              <li class="list-group-item">
-                  <i class="fas fa-envelope float-left mr-2"> </i> <a  style="max-width: 90%;" class="float-left d-inline-block text-truncate">asdasdasdasdasdashenoch.yanuar.a@mail.ukrim.ac.id</a>
-              </li>
-              <li class="list-group-item">
-                  <i class="fab fa-whatsapp float-left mr-2"> </i> <a class="float-left">085703257890</a>
-              </li>
-    
-          </ul>
-    
-      </div>
-      <!-- /.card-body -->
-    </div>
-    <!-- /.card -->
-    <!-- /.card -->
-    </div>
+    <div class="col-3 ml-5">
+        <div class="card card-custom card-stretch">
+            <div class="card-body box-profile shadow" style="background-color: whitesmoke;">
+                <div class="text-center">
+                    <div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(https://mhs.ukrim.ac.id/profile/picture)">
+                        <img class="img-fluid img-circle position-relative shadow" src="{{ user.foto }}" style="width: 150px;" alt="">
+                        <!-- <div class="image-input-wrapper" style="background-image: url(https://mhs.ukrim.ac.id/profile/picture)"></div>
+                            <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-original-title="Ganti Foto Anda">
+                                <i class="fa fa-pen icon-sm text-muted"></i>
+                                <form id="form-ganti-dp" enctype="multipart/form-data" method="post" action="https://mhs.ukrim.ac.id/profile/gambar/update">
+                                <input id="file" type="file" name="foto_profil" accept=".jpg, .jpeg"/>
+                                <input type="hidden" name="_token" value="4soRoUMLFmiYtHmnbjYHlcQLzBidAY5l2CgKLKyR">                                </form>
+                            </label>
+                        </div>  -->
+                    </div>
 
-  </div>
+                    <h3 class="profile-username text-center">{{ user.nama }}</h3>
+                    <p class="text-muted text-center">{{ user.nip }}</p>
+                    <style>
+                        .list-group-item {
+                            border: none !important;
+                        }
+                    </style>
+                    <ul class="list-group list-group-unbordered mb-3">
+                        <li class="list-group-item" style="background-color: whitesmoke;">
+                            <i class="fas fa-envelope float-left mr-2"></i> <a
+                                class="float-left">{{ user.email }}</a>
+                        </li>
+                        <li class="list-group-item" style="background-color: whitesmoke;">
+                            <i class="fas fa-map-marker-alt float-left mr-2"></i> <a
+                                class="float-left">{{ user.alamat }}</a>
+                        </li>
+                        <li class="list-group-item" style="background-color: whitesmoke;">
+                            <i class="fab fa-whatsapp float-left mr-2"> </i> <a
+                                class="float-left">{{ user.no_tlpn }}</a>
+                        </li>
+
+                    </ul>
+
+                    <div>
+                        <a href="{% url 'guruprofile' %}" class="btn btn-outline-primary shadow"><i class="fas fa-eye"></i> Detail</a>
+                    </div>
+
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+            <!-- /.card -->
+        </div>
+
+    </div>
 </div>
 {% endblock %}
