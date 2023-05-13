@@ -2,6 +2,9 @@
 {% block title %}
 Dashboard Guru Page
 {% endblock %}
+{% block head %}
+Dashboard
+{% endblock %}
 {% block name_profile %}
 {{ user.nama }}
 {% endblock %}
@@ -9,7 +12,6 @@ Dashboard Guru Page
 {{ user.foto }}
 {% endblock %}
 {% block content %}
-<h4>Dashboard Profile Guru</h4><br>
 <div class="row">
     <div class="col-3 ml-5">
         <div class="card card-custom card-stretch">
@@ -62,5 +64,37 @@ Dashboard Guru Page
         </div>
 
     </div>
+    <!-- <div class="col-8">
+        <div class="card">
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>NO</th>
+                            <th>Nama Siswa</th>
+                            <th>NIS</th>
+                            <th>Tugas</th>
+                            <th>Ulangan</th>
+                            <th>UTS</th>
+                            <th>UAS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for s in siswa %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ s.nis_siswa.nama }}</td>
+                            <td>{{ s.nis_siswa.nis }}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> -->
 </div>
 {% endblock %}

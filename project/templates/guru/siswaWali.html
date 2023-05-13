@@ -1,0 +1,65 @@
+{% extends 'layout/baseGuru.html' %}
+{% block title %}
+Daftar Siswa Wali Page
+{% endblock %}
+{% block head %}
+Daftar Nilai Siswa Wali
+{% endblock %}
+{% block name_profile %}
+{{ user.nama }}
+{% endblock %}
+{% block foto_profile %}
+{{ user.foto.url }}
+{% endblock %}
+{% block content %}
+{% if message %}
+<div class="card-header bg-danger ml-5" style="width: 92%;">
+    <h4 class="text-center text-bold">{{ message }} <br>Hubungi Tata Usaha Jika Ini Sebuah Kesalahan !</h4>
+</div>
+{% endif %}
+{% for m in mapel %}
+<div class="card ml-5 " style="width: 92%;">
+    <div class="card-header bg-secondary">
+        <h4 class="text-center ">-- Nilai {{ m.nama_mapel }} --</h4>
+    </div>
+  <div class="card-body">
+    <a class="btn btn-danger" href=""><h5 class="mt-2"><i class="fas fa-file-pdf"></i> Export PDF</h5></a>
+      <table class="table">
+          <thead class="">
+              <tr class="text-center">
+                  <th></th>
+                  <th>Nama Siswa</th>
+                  <th>NIS</th>
+                  <th>Tugas</th>
+                  <th>Ulangan</th>
+                  <th>UTS</th>
+                  <th>UAS</th>
+                  <th>Rata-rata</th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for s in siswa %}
+              {% for n in nilai %}
+              {% if n.id_mapel.id_mapel == m.id_mapel %}
+              {% if n.id_siswa.nis == s.nis_siswa.nis %}
+              <tr>
+                  <td class="text-center text-monospace text-bold">-</td>
+                  <td>{{ n.id_siswa.nama }}</td>
+                  <td class="text-center text-monospace">{{ n.id_siswa.nis }}</td>
+                  <td class="text-center text-monospace">{{ n.nil_rata_tg }}</td>
+                  <td class="text-center text-monospace">{{ n.nil_rata_ul }}</td>
+                  <td class="text-center text-monospace">{{ n.nil_uts }}</td>
+                  <td class="text-center text-monospace">{{ n.nil_uas }}</td>
+                  <td class="text-center text-monospace">{{ n.nil_rata_rata }}</td>
+              </tr>
+              {% endif %}
+              {% endif %}
+              {% empty %}
+              {% endfor %}
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
+</div><br>
+{% endfor %}
+{% endblock %}

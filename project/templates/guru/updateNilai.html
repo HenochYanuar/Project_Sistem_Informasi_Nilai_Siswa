@@ -1,9 +1,9 @@
 {% extends 'layout/baseGuru.html' %}
 {% block title %}
-Form Upload Nilai Page
+Form Update Nilai Page
 {% endblock %}
 {% block head %}
-Upload Nilai Siswa
+Update Nilai Siswa
 {% endblock %}
 {% block name_profile %}
 {{ user.nama }}
@@ -13,6 +13,12 @@ Upload Nilai Siswa
 {% endblock %}
 {% block content %}
 <div class="card shadow-lg">
+  {% comment %} <div class="card-header bg-dark">
+    <div class="text-center">
+      <h2>Tambah Ulangan</h2>
+    </div>
+  </div> {% endcomment %}
+  {% comment %} <h4 class="text-bold ml-4 mt-4">Upload Nilai</h4> {% endcomment %}
   <div class="card-body">
     {% if message %}
     <div class="alert alert-danger alert-dismissible">
@@ -22,27 +28,28 @@ Upload Nilai Siswa
     </div>
     {% endif %}
     <div class="form-group" style="color: red">
-      <p><b>PERHATIAN !!!,</b><br>*Isi nilai dengan angka <b>0</b> sebagai nilai sementara, apabila nilai belum tersedia <br>*Nilai Tidak Boleh Lebih Dari <b>100</b></p>
+      <p><b>PERHATIAN !!!,</b><br>*Isi nilai dengan angka <b>0</b> sebagai nilai sementara, apabila nilai belum tersedia <br>* Nilai Tidak Boleh Lebih Dari <b>100</b></p>
     </div><br>
-    <form action="{% url 'uploadnilai' siswa.nis mapel.id_mapel %}" method="POST">
+    {% for n in nilai %}
+    <form action="{% url 'updatenilai' siswa.nis mapel.id_mapel %}" method="POST">
       {% csrf_token %}
       <input type="text" hidden name="nis_siswa" value="{{ siswa.nis }}">
       <input type="text" hidden name="id_mapel" value="{{ mapel.id_mapel }}">
       <div class="form-group">
         <label>Rata-rata Nilia Tugas </label>
-        <input class="form-control" type="number" name="tugas" id="tugas">
+        <input class="form-control" type="number" name="tugas" id="tugas" value="{{ n.nil_rata_tg }}">
       </div>
       <div class="form-group">
         <label>Rata-rata Nilai Ulangan </label>
-        <input class="form-control" type="number" name="ulangan" id="ulangan">
+        <input class="form-control" type="number" name="ulangan" id="ulangan" value="{{ n.nil_rata_ul }}">
       </div>
       <div class="form-group">
         <label>Nilai UTS </label>
-        <input class="form-control" type="number" name="uts" id="uts">
+        <input class="form-control" type="number" name="uts" id="uts" value="{{ n.nil_uts }}">
       </div>
       <div class="form-group">
         <label>Nilai UAS </label>
-        <input class="form-control" type="number" name="uas" id="uas">
+        <input class="form-control" type="number" name="uas" id="uas" value="{{ n.nil_uas }}">
       </div>
       <!-- <div class="form-group">
         <label>Rata-rata Nilai </label>
@@ -52,6 +59,7 @@ Upload Nilai Siswa
         <i class="fa fa-save"></i> Simpan
       </button>
     </form>
+    {% endfor %}
   </div>
 </div>
 {% endblock %}

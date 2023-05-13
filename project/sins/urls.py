@@ -5,7 +5,7 @@ from . views import guru , tambahGuru, detailGuru, updateDataGuru, deleteDataGur
 from . views import kelas, tambahKelas, updateDatakelas, deleteDataKelas, postDeleteKelas, detailKelas
 from . views import mapel, tambahMapel, updateDataMapel, deleteDataMapel, postDeleteMapel
 from . views import siswa , tambahSiswa, detailSiswa, updateDataSiswa, deleteDataSiswa, postDeleteSiswa
-from . views import guruDashboard, guruProfile, penilaian, nilaiSiswa, uploadNilai, detailNilai
+from . views import guruDashboard, guruProfile, penilaian, nilaiSiswa, uploadNilai, detailNilai, updateNilai, deleteNilai, pushDeleteNilai, siswaWali
 from . views import siswakelas
 urlpatterns = [
    # path('',index,name='index'),
@@ -67,5 +67,9 @@ urlpatterns = [
    path('nilaiSiswa/<str:id_kelas>/<str:id_mapel>', nilaiSiswa, name="nilaisiswa"),
    path('detailNilai/<str:nis_siswa>/<str:id_mapel>', detailNilai, name="detailnilai"),
    path('uploadNilai/<str:nis_siswa>/<str:id_mapel>', uploadNilai, name="uploadnilai"),
+   path('updateNilai/<str:nis_siswa>/<str:id_mapel>', updateNilai, name="updatenilai"),
+   path('deleteNilai/<str:nis_siswa>/<str:id_mapel>', deleteNilai, name="deletenilai"),
+   path('pushDeleteNilai/<str:nis_siswa>/<str:id_mapel>', pushDeleteNilai, name="pushdeletenilai"),
+   path('siswaWali', siswaWali, name="siswawali"),
    # path('pushUploadNilai', pushUploadNilai, name="pushuploadnilai"),
 ]

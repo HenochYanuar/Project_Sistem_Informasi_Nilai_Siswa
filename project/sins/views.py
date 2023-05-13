@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from .models import User, Guru, Kelas, Siswa, Mapel, Jadwal, Siswa_Kelas, Nilai
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 
 # Views For Admin Pages
@@ -792,9 +793,13 @@ def guruDashboard(request):
     guru = Guru.objects.all()
     nip = request.session['nip']
     user = Guru.objects.get(nip = nip)
+    # kelas = Kelas.objects.get(nip_waliKelas=user.nip)
+    # siswa = Siswa_Kelas.objects.filter(id_kelas=kelas.id_kelas)
     context = {
         'guru' : guru,
-        'user' : user
+        'user' : user,
+        # 'kelas' : kelas,
+        # 'siswa' : siswa
     }
     return render(request, 'guru/guru.html', context)
 
@@ -837,7 +842,7 @@ def detailNilai(request, nis_siswa, id_mapel):
     nip = request.session['nip']
     user = Guru.objects.get(nip = nip)
     nilai = Nilai.objects.filter(id_siswa=nis_siswa, id_mapel=id_mapel)
-    siswa = Siswa.objects.get(nis=nis_siswa)
+    siswa = Siswa_Kelas.objects.get(nis_siswa=nis_siswa)
     mapel = Mapel.objects.get(id_mapel=id_mapel)
 
     context = {
@@ -861,19 +866,25 @@ def uploadNilai(request, nis_siswa, id_mapel):
         siswa = Siswa.objects.get(nis=nis)
         matapel = Mapel.objects.get(id_mapel=pelajaran)
 
-        nilai = Nilai(
-            nil_uts=uts,
-            nil_uas=uas,
-            nil_rata_tg=tugas,
-            nil_rata_ul=ulangan,
-            nil_rata_rata=rata_rata,
-            id_siswa=siswa,
-            id_mapel=matapel
-        )
+        if float(tugas) > 100 or float(ulangan) > 100 or float(uts) > 100 or float(uas) > 100 :
+            messages.error(request, ' Nilai Tidak Boleh Lebih Dari 100')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-        nilai.save()
-        messages.success(request,  ' Nilai Berhasil Disimpan')
-        return redirect('/uploadNilai/')
+        else:
+            nilai = Nilai(
+                nil_uts=uts,
+                nil_uas=uas,
+                nil_rata_tg=tugas,
+                nil_rata_ul=ulangan,
+                nil_rata_rata=rata_rata,
+                id_siswa=siswa,
+                id_mapel=matapel
+            )
+
+            nilai.save()
+            messages.success(request,  ' Nilai Berhasil Disimpan')
+            url = reverse('detailnilai', args=[nis_siswa, id_mapel])
+            return redirect(url)
     else:
         nip = request.session['nip']
         user = Guru.objects.get(nip = nip)
@@ -887,15 +898,107 @@ def uploadNilai(request, nis_siswa, id_mapel):
         }
         return render(request, 'guru/uploadNilai.html', context)
     
-# def pushUploadNilai(request):
+def updateNilai(request, nis_siswa, id_mapel):
+    if request.method == 'POST':
+        pelajaran = request.POST['id_mapel']
+        nis = request.POST['nis_siswa']
+        tugas = request.POST['tugas']
+        ulangan = request.POST['ulangan']
+        uts = request.POST['uts']
+        uas = request.POST['uas']
+        rata_rata = (float(tugas) + float(ulangan) + float(uts) + float(uas)) / 4.0
+
+        siswa = Siswa.objects.get(nis=nis)
+        matapel = Mapel.objects.get(id_mapel=pelajaran)
+
+        if float(tugas) > 100 or float(ulangan) > 100 or float(uts) > 100 or float(uas) > 100 :
+            messages.error(request, ' Nilai Tidak Boleh Lebih Dari 100')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+        else:
+
+            nilai = Nilai.objects.get(id_siswa=nis_siswa, id_mapel=id_mapel)
+
+            nilai.nil_uts=uts
+            nilai.nil_uas=uas
+            nilai.nil_rata_tg=tugas
+            nilai.nil_rata_ul=ulangan
+            nilai.nil_rata_rata=rata_rata
+            nilai.id_siswa=siswa
+            nilai.id_mapel=matapel
+
+            nilai.save()
+            messages.success(request,  ' Nilai Berhasil Disimpan')
+            url = reverse('detailnilai', args=[nis_siswa, id_mapel])
+            return redirect(url)
+    else:
+        nip = request.session['nip']
+        user = Guru.objects.get(nip = nip)
+        siswa = Siswa.objects.get(nis=nis_siswa)
+        mapel = Mapel.objects.get(id_mapel=id_mapel)
+        nilai = Nilai.objects.filter(id_siswa=nis_siswa, id_mapel=id_mapel)
+
+        context = {
+            'user' : user,
+            'siswa' : siswa,
+            'mapel' : mapel,
+            'nilai' : nilai
+        }
+        return render(request, 'guru/updateNilai.html', context)
     
+def deleteNilai(request, nis_siswa, id_mapel):
+    nip = request.session['nip']
+    user = Guru.objects.get(nip = nip)
+    siswa = Siswa.objects.get(nis=nis_siswa)
+    mapel = Mapel.objects.get(id_mapel=id_mapel)
+    nilai = Nilai.objects.filter(id_siswa=nis_siswa, id_mapel=id_mapel)
 
-    # nilai = Nilai.objects.get(id_siswa=nis)
+    context = {
+        'user' : user,
+        'siswa' : siswa,
+        'mapel' : mapel,
+        'nilai' : nilai
+    }
+    return render(request, 'guru/deleteNilai.html', context)
 
-    # nilai.nil_uts=uts
-    # nilai.nil_uas=uas
-    # nilai.nil_rata_tg=tugas
-    # nilai.nil_rata_ul=ulangan
-    # nilai.nil_rata_rata=rata_rata
-    # nilai.id_siswa=siswa
-    # nilai.id_mapel=matapel
+def pushDeleteNilai(request, nis_siswa, id_mapel):
+    nilai = Nilai.objects.filter(id_siswa=nis_siswa, id_mapel=id_mapel)
+    nilai.delete()
+    messages.success(request,  ' Nilai Berhasil Dihapus')
+    url = reverse('detailnilai', args=[nis_siswa, id_mapel])
+    return redirect(url)
+
+def siswaWali(request):
+    nip = request.session['nip']
+    user = Guru.objects.get(nip = nip)
+    wali = Jadwal.objects.values_list('nip_guru', flat=True)
+
+    if nip in wali:
+        kelas = Kelas.objects.get(nip_waliKelas=user.nip)
+        mapel = Mapel.objects.all()
+        siswa = Siswa_Kelas.objects.filter(id_kelas=kelas)
+        nilai = Nilai.objects.select_related('id_siswa', 'id_mapel')
+
+        context = {
+            'user' : user,
+            'kelas' : kelas,
+            'siswa' : siswa,
+            'mapel' : mapel,
+            'wali' : wali,
+            'nilai' : nilai
+        }
+    else:
+        message = '-- Anda Bukan Guru Wali Kelas --'
+        context = {
+            'user' : user,
+            'message' : message
+        }
+    return render(request, 'guru/siswaWali.html', context)
+
+# def printNilaiWali(request, id_mapel):
+#     template = get_template('guru/printNilaiWali.html')
+#     html = template.render({'data': 'Some Data'})
+#     response = HttpResponse(content_type='application/pdf')
+#     response['Content-Disposition'] = 'attachment; filename="report.pdf"'
+#     HTML(string=html).write_pdf(response)
+#     return response

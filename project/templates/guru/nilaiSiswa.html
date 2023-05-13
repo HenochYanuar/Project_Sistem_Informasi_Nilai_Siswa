@@ -2,6 +2,9 @@
 {% block title %}
 Nilai Siswa Page
 {% endblock %}
+{% block head %}
+Daftar Siswa 
+{% endblock %}
 {% block name_profile %}
 {{ user.nama }}
 {% endblock %}
@@ -9,7 +12,7 @@ Nilai Siswa Page
 {{ user.foto.url }}
 {% endblock %}
 {% block content %}
-<div class="card shadow-lg">
+<div class="card shadow-lg ml-5" style="width: 92%">
 <table class="ml-4 mt-4">
   <tbody>
     <div >
@@ -40,10 +43,10 @@ Nilai Siswa Page
       {{ message }}
     </div>
     {% endif %}
-    <table class="table table-bordered table-sm table-striped table-hover" style="width: 70%" >
+    <table class="table table-bordered table-sm table-striped table-hover">
       <thead class="table-hover" style="background-color: #819293;">
         <tr class="text-center " style="color: whitesmoke">
-          <th>No</th>
+          <th>#</th>
           <th>Nama Siswa</th>
           <th>NIS Siswa</th>
           <th>Nilai</th>
@@ -54,7 +57,7 @@ Nilai Siswa Page
         {% for s in siswa %}
           {% if s.id_kelas.id_kelas == kelas.id_kelas %}
           <tr>
-              <td class="text-monospace text-center">{{ forloop.counter }}</td>
+              <td class="text-monospace text-center text-bold">-</td>
               <td>{{ s.nis_siswa.nama }}</td>
               <td class="text-monospace text-center">{{ s.nis_siswa.nis }}</td>
               <td class="text-monospace text-center">

@@ -47,7 +47,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   {% comment %} <link rel="stylesheet" href="{% static 'assets/dist/css/guruStyle.css' %}"> {% endcomment %}
 </head>
 
-<body class="hold-transition sidebar-mini layout-navbar-fixed sidebar-closed sidebar-collapse">
+<body class="hold-transition layout-fixed sidebar-mini layout-navbar-fixed sidebar-closed sidebar-collapse">
   <div class="wrapper">
 
     <!-- Navbar -->
@@ -58,8 +58,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="navbar-nav menu-item menu-item-submenu menu-item-rel menu-item-active"data-menu-toggle="click" aria-haspopup="true">
-          <a href="javascript:;" class="btn btn-outline-warning menu-link menu-toggle">
-            <span class="menu-text">Hi, {{ user.nama }}</span>
+          <a href="javascript:;" class="btn border-primary menu-link menu-toggle">
+            <span class="menu-text text-primary">{%block head%}{%endblock%}</span>
             <i class="menu-arrow"></i>
           </a>
         </li>
@@ -187,13 +187,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </a>
         </li> {% endcomment %}
         <li class="navbar-nav menu-item menu-item-submenu menu-item-rel menu-item-active"data-menu-toggle="click" aria-haspopup="true">
-          <a href="javascript:;" class="btn btn-primary menu-link menu-toggle">
-            <span class="menu-text">Welcome</span>
+          <a href="javascript:;" class="btn border-warning menu-link menu-toggle mr-2">
+            <span class="menu-text text-warning">Hi, {{ user.nama }}</span>
             <i class="menu-arrow"></i>
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+          <a class="nav-link btn btn-outline-danger" data-widget="control-sidebar" data-slide="true" href="#" role="button">
             <i class="fas fa-door-open"></i> Logout
           </a>
         </li>
@@ -211,7 +211,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
       </a>
 
       <!-- Sidebar -->
-      <div class="sidebar">
+      <div class="sidebar fixed">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
@@ -247,8 +247,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             </li>
             <li class="nav-item active">
               <a href="{% url 'penilaian' %}" class="nav-link">
-                <i class="nav-icon fas fa-pencil-alt"></i>
+                <i class="nav-icon fas fa-file"></i>
                 <p>Penilaian</p>
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a href="{% url 'siswawali' %}" class="nav-link">
+                <i class="nav-icon fas fa-user-graduate"></i>
+                <p>Nilai Siswa Wali</p>
               </a>
             </li>
           </ul>

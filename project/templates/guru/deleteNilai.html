@@ -1,0 +1,93 @@
+{% extends 'layout/baseGuru.html' %}
+{% block title %}
+Delete Nilai Page
+{% endblock %}
+{% block head %}
+Hapus Nilai Siswa
+{% endblock %}
+{% block name_profile %}
+{{ user.nama }}
+{% endblock %}
+{% block foto_profile %}
+{{ user.foto.url }}
+{% endblock %}
+{% block content %}
+{% for n in nilai %}
+  <div class="card ml-5 shadow center" style="width: 92%;">
+    <div class="card-header bg-danger">
+      <h4 class="text-center mt-2">Apakah Anda Yakin Ingin Menghapus Data Nilai Berikut Ini ?</h4>
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <p style="color: red;">*PERHATIAN !!! <br> Dengan Menekan Tombol <b>"Hapus"</b> Di Bawah, Akan Menghapus Semua Data Nilai yang Ditampilkan Di Bawah ini !!!</p>
+      </div>
+      <table class="mt-4">
+        <tbody>
+          <tr class="form-group">
+            <td class="col-3 text-bold">Nama</td>
+            <td>: {{ siswa.nama }}</td>
+          </tr>
+          <tr class="form-group">
+            <td class="col-3 text-bold">NIS</td>
+            <td>: {{ siswa.nis }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="mt-4 table table-hover table-striped">
+        <thead style="background-color: #819293;">
+          <tr style="color: white">
+            <th class="col-7"><h5 class="text-bold" >Jenis Nilai</h5></th>
+            <th class="col-5 text-center"><h5 class="text-bold">Nilai</h5></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rata-rata Ulangan</td>
+            <td class="text-center text-monospace">{{ n.nil_rata_ul }}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Rata-rata Tugas</td>
+            <td class="text-center text-monospace">{{ n.nil_rata_tg }}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Ujian Tengah Semester</td>
+            <td class="text-center text-monospace"> {{ n.nil_uts }}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Ujian Akhir Semester</td>
+            <td class="text-center text-monospace">{{ n.nil_uas }}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>.</td> 
+            <td class="text-center text-monospace">.</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td class="text-bold">Rata-rata Nilai</td>
+            <td class="text-center text-bold text-monospace">{{ n.nil_rata_rata }}</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td> 
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table><br>
+      <div class="form-group">
+        <a class="btn btn-warning ml-3" href="{% url 'detailnilai' siswa.nis mapel.id_mapel %}">
+          <i class="fas fa-caret-left"></i> Cancle
+        </a>
+        <a class="btn btn-danger ml-3" href="{% url 'pushdeletenilai' siswa.nis mapel.id_mapel %}">
+          <i class="fas fa-trash-alt"></i> Hapus
+        </a>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}
