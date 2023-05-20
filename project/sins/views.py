@@ -4,8 +4,22 @@ from .models import User, Guru, Kelas, Siswa, Mapel, Jadwal, Siswa_Kelas, Nilai
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from reportlab.pdfgen import canvas
 from django.shortcuts import get_object_or_404
+import io
+from io import BytesIO
+from django.http import FileResponse
+from reportlab.pdfgen import canvas
+from django.template.loader import get_template
+from django_xhtml2pdf.utils import pdf_decorator
+from django.template.loader import render_to_string
+from django.conf import settings
+from xhtml2pdf import pisa
+
+
+def index(request):
+    return render(request, 'aboutUs.html')
 
 # Views For Admin Pages
 
@@ -326,7 +340,6 @@ def kelas(request):
     return render(request, 'admin/kelas/index.html', context)
 
 
-
 def tambahKelas(request):
     if request.method == 'POST':
             id_kelas = request.POST['id_kelas']
@@ -418,20 +431,24 @@ def updateDatakelas(request, id_kelas):
 
         list_mapel = request.POST.getlist('mapel[]')
         list_guru = request.POST.getlist('guru[]')
+        kelas_id = request.POST['id_kelas']
 
         for m_id, g_nip in zip(list_mapel, list_guru):
             mapel = Mapel.objects.get(id_mapel=m_id)
             guru = Guru.objects.get(nip=g_nip)
-            jadwal = Jadwal.objects.get(id_mapel=mapel)
-            jadwal.nip_guru =guru
-            jadwal.id_kelas=data_kelas
-            jadwal.id_mapel=mapel
-            jadwal.save()
+            kelas = Kelas.objects.get(id_kelas=kelas_id)
+            jadwal = Jadwal.objects.filter(id_kelas=kelas, id_mapel=mapel)
+            for j in jadwal:
+                j.nip_guru =guru
+                j.id_kelas=data_kelas
+                j.id_mapel=mapel
+                j.save()
 
         messages.success(request,  'Data Kelas Berhasil Diupdate')
         return redirect('/indexKelas')
     else:
         data_mapel = Mapel.objects.all()
+        jadwal = Jadwal.objects.all()
         data_siswa = Siswa.objects.all()
         data_kelas = Kelas.objects.select_related('nip_waliKelas').get(id_kelas=id_kelas)
         data_siswaKelas = Siswa_Kelas.objects.values_list('nis_siswa', flat=True)
@@ -441,6 +458,7 @@ def updateDatakelas(request, id_kelas):
         user = User.objects.get(id_user = id_user)
         context = {
             'data_mapel' : data_mapel,
+            'jadwal' : jadwal,
             'data_siswa' : data_siswa,
             'data_kelas': data_kelas,
             'data_siswaKelas' : data_siswaKelas,
@@ -752,6 +770,110 @@ def siswakelas(request):
             'user' : user
         }
         return render(request, 'siswakelas.html', context)
+    
+#Create Views For Nilai Siswa di halaman Admin
+
+
+def exportPdfSiswa(request):
+    kelas = request.GET.get('kelas')
+    mapel = request.GET.get('mapel')
+    if not kelas and not mapel:
+        siswa = Siswa_Kelas.objects.all()
+        mapel = Mapel.objects.all()
+    elif not kelas :
+        siswa = Siswa_Kelas.objects.all()
+        mapel = Mapel.objects.filter(id_mapel=mapel)
+    elif not mapel:
+        siswa = Siswa_Kelas.objects.filter(id_kelas=kelas)
+        mapel = Mapel.objects.all()
+    else:
+        siswa = Siswa_Kelas.objects.filter(id_kelas=kelas)
+        mapel = Mapel.objects.filter(id_mapel=mapel)
+
+
+    # nilai = Nilai.objects.filter(id_siswa=siswa.nis)
+    nilai = Nilai.objects.all()
+
+    template = get_template('admin/export/pdf_siswa_template.html')
+
+    html_string = template.render({'siswa': siswa, 'nilai' : nilai, 'mapel' : mapel})
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="dataSiswa.pdf"'
+
+    pisa_status = pisa.CreatePDF(html_string, dest=response)
+
+    if pisa_status.err:
+        # Jika terjadi kesalahan saat konversi
+        return HttpResponse('Terjadi kesalahan saat mengonversi HTML ke PDF')
+
+    return response
+
+def exportSiswa(request):
+    id_user = request.session['id_user']
+    user = User.objects.get(id_user = id_user)
+    siswa = Siswa.objects.all()
+    kelas = Kelas.objects.all()
+    mapel = Mapel.objects.all()
+
+    context = {
+        'user' : user,
+        'siswa' : siswa,
+        'mapel' : mapel,
+        'kelas' : kelas
+    }
+    return render(request, 'admin/export/exportSiswa.html', context)
+
+def exportPdfGuru(request):
+    kelas = request.GET.get('kelas')
+    mapel = request.GET.get('mapel')
+
+    if not kelas and not mapel:
+        guru_list = Jadwal.objects.all().select_related('id_mapel')
+    elif not mapel:
+        guru_list = Jadwal.objects.filter(id_kelas=kelas)
+    elif not kelas:
+        guru_list = Jadwal.objects.filter(id_mapel=mapel)
+    else:
+        guru_list = Jadwal.objects.filter(id_mapel=mapel, id_kelas=kelas)
+
+
+    guru = set()
+    for g in guru_list:
+        guru.add((g.nip_guru.nama, g.nip_guru.nip))
+
+    one_guru = list(guru)
+
+    template = get_template('admin/export/pdf_guru_template.html')
+
+    html_string = template.render({'one_guru' : one_guru, 'guru_list' : guru_list})
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="dataGuru.pdf"'
+
+    pisa_status = pisa.CreatePDF(html_string, dest=response)
+
+    if pisa_status.err:
+        # Jika terjadi kesalahan saat konversi
+        return HttpResponse('Terjadi kesalahan saat mengonversi HTML ke PDF')
+
+    return response
+
+def exportGuru(request):
+    id_user = request.session['id_user']
+    user = User.objects.get(id_user = id_user)
+    guru = Guru.objects.all()
+    mapel = Mapel.objects.all()
+    kelas = Kelas.objects.all()
+
+    context = {
+        'user' : user,
+        'guru' : guru,
+        'mapel' : mapel,
+        'kelas' : kelas
+    }
+
+    return render(request, 'admin/export/exportGuru.html', context)
 
 #Create Views For Guru Pages
 #Create Viewa For Guru Dashboard
@@ -802,7 +924,6 @@ def guruDashboard(request):
         # 'siswa' : siswa
     }
     return render(request, 'guru/guru.html', context)
-
     
 def guruProfile(request):
     nip = request.session['nip']
@@ -995,10 +1116,125 @@ def siswaWali(request):
         }
     return render(request, 'guru/siswaWali.html', context)
 
-# def printNilaiWali(request, id_mapel):
-#     template = get_template('guru/printNilaiWali.html')
-#     html = template.render({'data': 'Some Data'})
-#     response = HttpResponse(content_type='application/pdf')
-#     response['Content-Disposition'] = 'attachment; filename="report.pdf"'
-#     HTML(string=html).write_pdf(response)
-#     return response
+def printNilaiWali(request, id_mapel):
+    nip = request.session['nip']
+    user = Guru.objects.get(nip = nip)
+    kelas = Kelas.objects.get(nip_waliKelas=user.nip)
+    mapel = Mapel.objects.get(id_mapel=id_mapel)
+    siswa = Siswa_Kelas.objects.filter(id_kelas=kelas)
+    nilai = Nilai.objects.select_related('id_siswa', 'id_mapel')
+
+    context = {
+            'user' : user,
+            'kelas' : kelas,
+            'siswa' : siswa,
+            'mapel' : mapel,
+            'nilai' : nilai
+        }
+    
+    template = get_template('guru/printNilaiWali.html')
+
+    html_string = template.render(context)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="nilaiSiswaWali.pdf"'
+
+    pisa_status = pisa.CreatePDF(html_string, dest=response)
+
+    if pisa_status.err:
+        # Jika terjadi kesalahan saat konversi
+        return HttpResponse('Terjadi kesalahan saat mengonversi HTML ke PDF')
+
+    return response
+
+#Create Views For Siswa Pages
+#Create Views For Siswa Dashboard
+
+def siswaLogin(request):
+    if request.method == 'POST':
+        nis = request.POST['nis']
+        password = request.POST['password']
+
+        try:
+            siswa = Siswa.objects.get(nis=nis)
+
+        except Siswa.DoesNotExist:
+            messages.error(request, 'NIS Tidak Ditemukan')
+            return render(request, 'siswa/siswaLogin.html')
+        
+        try:
+            user = User.objects.get(password=password, id_user=siswa.id_user.id_user)
+            sw_pss = user.password
+
+        except User.DoesNotExist:
+            messages.error(request, 'Passwoord Tidak Valid')
+            return render(request, 'siswa/siswaLogin.html')
+        
+        if password == sw_pss and user.role == 'Siswa':
+            request.session['nis'] = siswa.nis
+            return redirect('/siswaDashboard')
+        else:
+            messages.error(request, 'Hanya Siswa yang Dapat Mengakses Halaman Ini')
+            return render(request, 'siswa/siswaLogin.html')
+    else:
+        return render(request, 'siswa/siswaLogin.html')
+    
+def siswaLogout(request):
+    del request.session['nis']
+    return redirect('/siswaLogin')
+
+def siswaDashboard(request):
+    siswa = Siswa.objects.all()
+    nis = request.session['nis']
+    user = Siswa.objects.get(nis = nis)
+    context = {
+        'siswa' : siswa,
+        'user' : user
+    }
+    return render(request, 'siswa/siswa.html', context)
+
+def siswaProfile(request):
+    nis = request.session['nis']
+    user = Siswa.objects.get(nis = nis)
+    return render(request, 'siswa/siswaProfile.html', {'user': user})
+
+def nilai(request):
+    nis = request.session['nis']
+    user = Siswa.objects.get(nis = nis)
+    nilai = Nilai.objects.filter(id_siswa=nis).select_related('id_siswa', 'id_mapel')
+    siswa = Siswa_Kelas.objects.get(nis_siswa=nis)
+
+    context = {
+        'user': user,
+        'nilai': nilai,
+        'siswa' : siswa
+    }
+
+    return render(request, 'siswa/nilai.html', context)
+
+def exportNilaiPribadi(request):
+    nis = request.session['nis']
+    user = Siswa.objects.get(nis = nis)
+    nilai = Nilai.objects.filter(id_siswa=nis).select_related('id_siswa', 'id_mapel')
+    siswa = Siswa_Kelas.objects.get(nis_siswa=nis)
+
+    context = {
+        'user': user,
+        'nilai': nilai,
+        'siswa' : siswa
+    }
+
+    template = get_template('siswa/pdf_raport_template.html')
+
+    html_string = template.render(context)
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="nilaiRaport.pdf"'
+
+    pisa_status = pisa.CreatePDF(html_string, dest=response)
+
+    if pisa_status.err:
+        # Jika terjadi kesalahan saat konversi
+        return HttpResponse('Terjadi kesalahan saat mengonversi HTML ke PDF')
+
+    return response

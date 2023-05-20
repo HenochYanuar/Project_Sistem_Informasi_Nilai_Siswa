@@ -23,8 +23,8 @@ Tambah Data User Page
     <form action="{% url 'postdatauser' %}" method="POST">
       {% csrf_token %}
       <div class="form-group">
-        <label>User ID </label>
-        <input class="form-control" type="text" name="id_user" id="id_user" maxlength="10">
+        <label for="myInput">User ID </label>
+        <input class="form-control" type="text" name="id_user" id="id_user" maxlength="10" pattern="[^A-Za-z]+" title="ID Harus Berupa Angka">
       </div>
       <div class="form-group">
         <label>Username</label>

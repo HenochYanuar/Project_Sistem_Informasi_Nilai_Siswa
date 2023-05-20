@@ -46,12 +46,12 @@ Edit Data Kelas Page
               </thead>
               <tbody>
                 {% for siswa in data_siswa %}
-                {% comment %} {% if siswa.nis not in data_siswaKelas %} {% endcomment %}
+                {% if siswa.nis not in data_siswaKelas %}
                 <tr>
                   <td><input name="siswa[]" value="{{ siswa.nis }}" type="checkbox"></td>
                   <td>{{ siswa.nama }}</td>
                 </tr>
-                {% comment %} {% endif %} {% endcomment %}
+                {% endif %}
                 {% endfor %}
               </tbody>
             </table>
@@ -71,7 +71,7 @@ Edit Data Kelas Page
               <tbody>
                 {% for mapel in data_mapel %}
                 <tr>
-                  <td><input name="mapel[]" type="checkbox" value="{{ mapel.id_mapel }}" id="mapel_{{ mapel.id_kelas }}"></td>
+                  <td><input name="mapel[]" type="checkbox" value="{{ mapel.id_mapel }}" id="mapel_{{ mapel.id_kelas }} {% if mapel.id_mapel == jadwal.id_mapel %}checked{% endif %}"></td>
                   <td>{{ mapel.nama_mapel }}</td>
                   <td>
                     <select class="form-control" name="guru[]" id="guru_{{ data_guru.nip }}">

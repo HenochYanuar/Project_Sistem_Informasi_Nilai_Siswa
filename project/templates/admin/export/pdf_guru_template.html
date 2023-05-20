@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Data Guru</title>
+        <style>
+        @media screen, print {
+          * {
+              margin: 0;
+              padding: 0;
+  
+          }
+
+          body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+      }
+    
+    </style>
+        <link rel="stylesheet"
+            href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+        <link rel="stylesheet" href="/static/assets/dist/css/adminlte.min.css">
+    </head>
+    <body>
+        <h1 style="text-align: center; font-weight: bold;">Data Guru SMP N
+            Sumber Jaya</h1><br><br>
+        <table>
+            <thead>
+                <tr>
+                    <th>NIP</th>
+                    <th>Nama</th>
+                    <th>Kelas/Mapel Diampu</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for nama, nip in one_guru %}
+                <tr>
+                    <td>{{ nip }}</td>
+                    <td>{{ nama }}</td>
+                    <td>
+                        {% for g in guru_list %}
+                        {% if g.nip_guru.nip == nip %}
+                        {{ g.id_kelas.nama_kelas }} / {{ g.id_mapel.nama_mapel }} <br>
+                        {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table><br><br>
+    </body>
+</html>

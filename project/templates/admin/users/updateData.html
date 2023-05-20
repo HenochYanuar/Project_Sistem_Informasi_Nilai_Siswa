@@ -22,7 +22,7 @@ Edit Data User Page
       {% csrf_token %}
       <div class="form-group">
         <label>User ID </label>
-        <input readonly value="{{ data_user.id_user }}" class="form-control" type="text" name="id_user" id="id_user" maxlength="5" >
+        <input readonly value="{{ data_user.id_user }}" class="form-control" type="text" name="id_user" id="id_user" maxlength="5" pattern="[^A-Za-z]+" title="Masukkan karakter selain huruf" >
       </div>
       <div class="form-group">
         <label>Username</label>

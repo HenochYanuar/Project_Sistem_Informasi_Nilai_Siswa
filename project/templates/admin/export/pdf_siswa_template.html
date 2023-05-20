@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Data Siswa</title>
+    <style>
+        @media screen, print {
+          * {
+              margin: 0;
+              padding: 0;
+  
+          }
+
+          body {
+            font-family: Arial, sans-serif;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+  
+          /* body {
+              margin: 2.6cm 1.9cm 1.4cm 2.7cm;
+              font-family: 'Calibri', 'Helvetica', 'Arial', sans-serif;
+              font-size: 12pt;
+          }
+  
+  
+          table.data {
+              border: 1px solid;
+              width: 100%;
+              border-collapse: collapse;
+          }
+  
+          table.data > tbody > tr > td {
+              border: 1px solid;
+              padding: 1px 2px;
+          }
+  
+          table.data > thead > tr > th {
+              border: 1px solid;
+              background-color: #eaeaea;
+              padding: 1px 2px;
+          }
+  
+  
+          .left {
+              text-align: left;
+          }
+  
+          .right {
+              text-align: right;
+          }
+  
+          .center {
+              text-align: center;
+          }
+  
+          .bg-gray {
+              background-color: #eaeaea;
+              padding: 10px !important;
+              font-weight: bold;
+          } */
+      }
+    
+    </style>
+    <link rel="stylesheet" href="/static/assets/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="/static/assets/dist/css/adminlte.min.css">
+</head>
+<body>
+    <h1 style="text-align: center; font-weight: bold;">Data Nilai Siswa SMP N Sumber Jaya</h1><br><br>
+    <!-- <h2 style="text-align: center; font-weight: bold;">SMP N Sumber Jaya</h2> -->
+    {% for m in mapel %}
+    <table>
+        <h3>Nilai {{ m.nama_mapel }}</h3>
+        <thead>
+            <tr>
+                <th>NIM</th>
+                <th>Nama</th>
+                <th>Kelas</th>
+                <th>Nilai Tugas</th>
+                <th>Nilai Ulangan</th>
+                <th>Nilai UTS</th>
+                <th>Nilai UAS</th>
+                <th>Nilai Rata-rata</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for s in siswa %}
+            {% for n in nilai %}
+            {% if n.id_mapel.id_mapel == m.id_mapel %}
+            {% if n.id_siswa.nis == s.nis_siswa.nis %}
+                <tr>
+                    <td>{{ s.nis_siswa.nis }}</td>
+                    <td>{{ s.nis_siswa.nama }}</td>
+                    <td>{{ s.id_kelas.nama_kelas }}</td>
+                    <td>{{ n.nil_rata_tg }}</td>
+                    <td>{{ n.nil_rata_ul }}</td>
+                    <td>{{ n.nil_uts }}</td>
+                    <td>{{ n.nil_uas }}</td>
+                    <td>{{ n.nil_rata_rata }}</td>
+                </tr>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+        </tbody>
+    </table><br><br>
+    {% endfor %}
+</body>
+</html>

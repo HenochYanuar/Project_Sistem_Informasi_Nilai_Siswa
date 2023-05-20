@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Data Siswa Wali</title>
+    <style>
+        @media screen, print {
+          * {
+              margin: 0;
+              padding: 0;
+  
+          }
+
+          body {
+            font-family: Arial, sans-serif;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .list-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .list-item span {
+            width: 80px;
+            font-weight: bold;
+        }
+      }
+    
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align: center; font-weight: bold;">HASIL BELAJAR SISWA KELAS {{ kelas.nama_kelas }} <br> 
+    Mata Pelajaran {{ mapel.nama_mapel }}</h1><br><br><br>
+    <table>
+      <thead class="table">
+        <tr>
+          <th>NIS</th>
+          <th>Nama Siswa</th>
+          <th>Tugas</th>
+          <th>Ulangan</th>
+          <th>UTS</th>
+          <th>UAS</th>
+          <th>Rata-rata</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for s in siswa %}
+      {% for n in nilai %}
+      {% if n.id_mapel.id_mapel == mapel.id_mapel %}
+      {% if n.id_siswa.nis == s.nis_siswa.nis %}
+        <tr>
+          <td>{{ n.id_siswa.nis }}</td>
+          <td>{{ n.id_siswa.nama }}</td>
+          <td>{{ n.nil_rata_tg }}</td>
+          <td>{{ n.nil_rata_ul }}</td>
+          <td>{{ n.nil_uts }}</td>
+          <td>{{ n.nil_uas }}</td>
+          <td>{{ n.nil_rata_rata }}</td>
+        </tr>
+      {% endif %}
+      {% endif %}
+      {% empty %}
+      {% endfor %}
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+</html>
+{% comment %} <table class="table">
+  <thead class="">
+      <tr class="text-center">
+          <th></th>
+          <th>Nama Siswa</th>
+          <th>NIS</th>
+          <th>Tugas</th>
+          <th>Ulangan</th>
+          <th>UTS</th>
+          <th>UAS</th>
+          <th>Rata-rata</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for s in siswa %}
+      {% for n in nilai %}
+      {% if n.id_mapel.id_mapel == m.id_mapel %}
+      {% if n.id_siswa.nis == s.nis_siswa.nis %}
+      <tr>
+          <td class="text-center text-monospace text-bold">-</td>
+          <td>{{ n.id_siswa.nama }}</td>
+          <td class="text-center text-monospace">{{ n.id_siswa.nis }}</td>
+          <td class="text-center text-monospace">{{ n.nil_rata_tg }}</td>
+          <td class="text-center text-monospace">{{ n.nil_rata_ul }}</td>
+          <td class="text-center text-monospace">{{ n.nil_uts }}</td>
+          <td class="text-center text-monospace">{{ n.nil_uas }}</td>
+          <td class="text-center text-monospace">{{ n.nil_rata_rata }}</td>
+      </tr>
+      {% endif %}
+      {% endif %}
+      {% empty %}
+      {% endfor %}
+      {% endfor %}
+  </tbody>
+</table> {% endcomment %}

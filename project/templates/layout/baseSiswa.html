@@ -11,13 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SI Nilia Siswa | {% block title %}{% endblock %}</title>
 
-  <style>
-    ul li a .active {
-      color: aqua;
-    }
-  </style>
-  <link rel="shortcut icon" href="/static/assets/dist/img/f2399a3c-e44e-4e2a-82d0-520696ffad1b.png"/>
-
+  
   <link rel="stylesheet" href="/static/assets/dist/css/main.css">
 
   <!-- Google Font: Source Sans Pro -->
@@ -26,9 +20,34 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="{% static 'assets/plugins/fontawesome-free/css/all.min.css' %}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{% static 'assets/dist/css/adminlte.min.css' %}">
+  <link rel="canonical" href="https://keenthemes.com/metronic"/>
+  <!--begin::Fonts-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Code:300,400,500,600,700"/>
+  <!--end::Fonts-->
+
+  {% comment %} <link href="https://mhs.ukrim.ac.id/assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
+        type="text/css"/> {% endcomment %}
+  <!--begin::Global Theme Styles(used by all pages)-->
+  {% comment %} <link href="https://mhs.ukrim.ac.id/assets/plugins/global/plugins.bundle.css" rel="stylesheet"
+        type="text/css"/> {% endcomment %}
+  {% comment %} <link href="https://mhs.ukrim.ac.id/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet"
+        type="text/css"/>
+  <link href="https://mhs.ukrim.ac.id/assets/css/style.bundle.css" rel="stylesheet" type="text/css"/>
+  <!--end::Global Theme Styles-->
+  <!--begin::Layout Themes(used by all pages)-->
+  <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/header/base/light.css" rel="stylesheet"
+        type="text/css"/>
+  <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/header/menu/light.css" rel="stylesheet"
+        type="text/css"/>
+  <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/brand/dark.css" rel="stylesheet" type="text/css"/>
+  <link href="https://mhs.ukrim.ac.id/assets/css/themes/layout/aside/dark.css" rel="stylesheet" type="text/css"/> {% endcomment %}
+  <!--end::Layout Themes-->
+  <link rel="shortcut icon" href="/static/assets/dist/img/f2399a3c-e44e-4e2a-82d0-520696ffad1b.png"/>
+  {% comment %} <link rel="stylesheet" href="{% static 'assets/dist/css/guruStyle.css' %}"> {% endcomment %}
 </head>
 
-<body class="hold-transition layout-fixed sidebar-mini fixed layout-navbar-fixed sidebar-closed sidebar-collapse">
+<body class="hold-transition layout-fixed  sidebar-mini layout-navbar-fixed sidebar-closed sidebar-collapse">
   <div class="wrapper">
 
     <!-- Navbar -->
@@ -38,6 +57,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <li class="nav-item">
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
+        <li class="navbar-nav menu-item menu-item-submenu menu-item-rel menu-item-active"data-menu-toggle="click" aria-haspopup="true">
+          <a href="javascript:;" class="btn border-primary menu-link menu-toggle">
+            <span class="menu-text text-primary">{% block head %}{% endblock %}</span>
+            <i class="menu-arrow"></i>
+          </a>
+        </li>
+        
         {% comment %} <li class="nav-item d-none d-sm-inline-block">
           <a href="index3.html" class="nav-link">Home</a>
         </li>
@@ -48,6 +74,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
       <!-- Right navbar links -->
       <ul class="navbar-nav ml-auto">
+        
         <!-- Navbar Search -->
         {% comment %} <li class="nav-item">
           <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -160,8 +187,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <i class="fas fa-expand-arrows-alt"></i>
           </a>
         </li> {% endcomment %}
+        <li class="navbar-nav menu-item menu-item-submenu menu-item-rel menu-item-active"data-menu-toggle="click" aria-haspopup="true">
+          <a href="javascript:;" class="btn border-warning menu-link menu-toggle mr-2">
+            <span class="menu-text text-warning">Hi, {{ user.nama }}</span>
+            <i class="menu-arrow"></i>
+          </a>
+        </li>
         <li class="nav-item">
-          <a class="nav-link btn btn-outline-danger" data-widget="control-sidebar" data-slide="true" href="" role="button">
+          <a class="nav-link btn btn-outline-danger" data-widget="control-sidebar" data-slide="true" href="#" role="button">
             <i class="fas fa-door-open"></i> Logout
           </a>
         </li>
@@ -170,20 +203,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- /.navbar -->
 
     <!-- Main Sidebar Container -->
-    <aside class="main-sidebar sidebar-dark-primary elevation-4 fixed ">
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link ">
+      <a href="index3.html" class="brand-link">
         <img style="background-color: white;" src="/static/assets/dist/img/f2399a3c-e44e-4e2a-82d0-520696ffad1b.png" alt="AdminLTE Logo"
           class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">SMP N Sumber Jaya</span>
       </a>
 
       <!-- Sidebar -->
-      <div class="sidebar">
+      <div class="sidebar fixed">
         <!-- Sidebar user panel (optional) -->
-        <div class="user-panel mt-3 pb-3 mb-3 d-flex ">
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="/static/assets/dist/img/AdminLTELogo.png" class="img-circle elevation-2" alt="User Image">
+            <img src="{% block foto_profile %}{% endblock %}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
             <a href="#" class="d-block">{% block name_profile %}{% endblock %}</a>
@@ -208,64 +241,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Add icons to the links using the .nav-icon class
                  with font-awesome or any other icon font library -->
             <li class="nav-item active">
-              <a href="{% url 'admin' %}" class="nav-link">
+              <a href="{% url 'siswadashboard' %}" class="nav-link">
                 <i class="nav-icon fas fa-house-user"></i>
                 <p>Dashboard</p>
               </a>
             </li>
             <li class="nav-item active">
-              <a href="{% url 'indexusers' %}" class="nav-link">
+              <a href="{% url 'siswaprofile' %}" class="nav-link">
                 <i class="nav-icon fas fa-user-alt"></i>
-                <p>User</p>
+                <p>Profile</p>
               </a>
             </li>
             <li class="nav-item active">
-              <a href="{% url 'indexguru' %}" class="nav-link">
-                <i class="nav-icon fas fa-user-tie"></i>
-                <p>Guru</p>
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="{% url 'indexsiswa' %}" class="nav-link">
-                <i class="nav-icon fas fa-user-graduate"></i>
-                <p>Siswa</p>
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="{% url 'indexmapel' %}" class="nav-link">
-                <i class="nav-icon fas fa-book"></i>
-                <p>Mata Pelajaran
-                  {% comment %} <i class="right fas fa-angle-left"></i> {% endcomment %}
-                </p>
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="{% url 'indexkelas' %}" class="nav-link">
-                <i class="nav-icon fas fa-school"></i>
-                <p>Kelas</p>
-              </a>
-            </li>
-            <li class="nav-item active">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-file-export"></i>
-                <p>Export Data
-                  <i class="right fas fa-angle-left"></i>
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                <a href="{% url 'exportsiswa' %}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Data Nilai Siswa</p>
+                <a href="{% url 'nilai' %}" class="nav-link">
+                  <i class="nav-icon fas fa-file"></i>
+                  <p>Nilai</p>
                 </a>
-                </li>
-                <li class="nav-item">
-                <a href="{% url 'exportguru' %}" class="nav-link">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Data Guru</p>
-                </a>
-                </li>
-            </li>
+              </li>
           </ul>
         </nav>
 
@@ -298,12 +290,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
       <!-- /.content-wrapper -->
     </div>
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark" style="display: block";>
+    <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
       <div class="p-3">
         <h4>Log Out</h4><br>
         <h6>Click For LogOut</h6>
-        <a href="{% url 'adminlogout' %}" class="btn btn-danger font-weight-bolder ">
+        <a href="{% url 'siswalogout' %}" class="btn btn-danger font-weight-bolder ">
           <i class="nav-icon fas fa-door-open"></i>
           Log Out
         </a>
@@ -334,15 +326,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- AdminLTE App -->
   <script src="{% static 'assets/dist/js/adminlte.min.js' %}"></script>
 
-  <script>
-    $(document).ready(function () {
-        // Mendapatkan path dari URL
-        var current_path = window.location.pathname.split('/').pop();
-
-        // Menambahkan kelas "active" ke elemen "li" yang sesuai dengan path
-        $('#sidebar-menu a[href="' + current_path + '"]').parents('li').addClass('active');
-    });
-</script>
+  
 </body>
 
 </html>

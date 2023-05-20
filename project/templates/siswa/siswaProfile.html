@@ -1,0 +1,93 @@
+{% extends 'layout/baseSiswa.html' %}
+{% block title %}
+Profile Siswa Page
+{% endblock %}
+{% block head %}
+Profile Siswa
+{% endblock %}
+{% block name_profile %}
+{{ user.nama }}
+{% endblock %}
+{% block foto_profile %}
+{{ user.foto }}
+{% endblock %}
+{% block content %}
+<div class="card shadow-lg">
+  {% comment %} <div class="card-header bg-info">
+    <div class="text-center"><h2>Data Diri Anda</h2></div>
+  </div> {% endcomment %}
+  <div class="card-body">
+    <div class="row">
+      <div class="col-sm-6 ml-5">
+        <div class="card bg-secondary shadow">
+          <div class="card-body">
+            <table class="table">
+              <tbody>
+                <div class="form-group">
+                  <tr>
+                    <td><b>Nama</b></td>
+                    <td>: {{ user.nama }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>NIP</b></td>
+                    <td>: {{ user.nis }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Semester</b></td>
+                    <td>: {{ user.semester }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Jenis Kelamin</b></td>
+                    <td>: {{ user.jk }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Alamat</b></td>
+                    <td>: {{ user.alamat }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Agama</b></td>
+                    <td>: {{ user.agama }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>No.Tlpn</b></td>
+                    <td>: {{ user.no_tlpn }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>E-mail</b></td>
+                    <td>: {{ user.email }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>Tgl Lahir</b></td>
+                    <td>: {{ user.tgl_lahir }}</td>
+                  </tr>
+                  <tr>
+                    <td><b>ID User</b></td>
+                    <td>: {{ user.id_user.id_user }}</td>
+                  </tr>
+                </div>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-5 mb-sm-0 mt-5">
+        <div class="card text-center shadow-lg" style="background-color: #cce7e8;">
+          <div class="card-body">
+            <div class="form-group">
+              <img class="img-fluid img-circle position-relative" style="width: 200px;" src="{{ user.foto.url }}" alt="Foto : {{ data_siswa.nama }}">
+            </div>
+            <div class="form-group">
+              <h2>{{ user.nama }}</h2>
+            </div><br>
+            <div class="form-group">
+              <a class="btn btn-outline-info" href="{% url 'siswadashboard' %}">
+                <i class="fas fa-caret-left"></i> Selesai
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock%}

@@ -1,14 +1,16 @@
 from django.urls import path
-from . views import admin, adminLogin, adminLogout, guruLogin, guruLogout
+from . views import admin, adminLogin, adminLogout, guruLogin, guruLogout, siswaLogin, siswaLogout
 from . views import users, tambahUser, postDatauser, updateDatauser, postUpdateuser, deleteDatauser, postDeleteuser
 from . views import guru , tambahGuru, detailGuru, updateDataGuru, deleteDataGuru, postDeleteGuru
 from . views import kelas, tambahKelas, updateDatakelas, deleteDataKelas, postDeleteKelas, detailKelas
 from . views import mapel, tambahMapel, updateDataMapel, deleteDataMapel, postDeleteMapel
+from . views import exportSiswa, exportPdfSiswa, exportGuru, exportPdfGuru
 from . views import siswa , tambahSiswa, detailSiswa, updateDataSiswa, deleteDataSiswa, postDeleteSiswa
-from . views import guruDashboard, guruProfile, penilaian, nilaiSiswa, uploadNilai, detailNilai, updateNilai, deleteNilai, pushDeleteNilai, siswaWali
-from . views import siswakelas
+from . views import guruDashboard, guruProfile, penilaian, nilaiSiswa, uploadNilai, detailNilai, updateNilai, deleteNilai, pushDeleteNilai, siswaWali, printNilaiWali
+from . views import  siswaDashboard, siswaProfile, nilai, exportNilaiPribadi
+from . views import siswakelas, index
 urlpatterns = [
-   # path('',index,name='index'),
+   path('',index,name='index'),
    
    
    path('admin',admin, name="admin"),
@@ -56,9 +58,16 @@ urlpatterns = [
    path('deleteDataSiswa/<str:nis>', deleteDataSiswa, name="deletedatasiswa"),
    path('postDeleteSiswa/<str:nis>', postDeleteSiswa, name="postdeletesiswa"),
 
+   #Url For admin/export page
+   path('exportSiswa', exportSiswa, name="exportsiswa"),
+   path('exportPdfSiswa', exportPdfSiswa, name="exportpdfsiswa"),
+   path('exportGuru', exportGuru, name='exportguru'),
+   path('exportPdfGuru', exportPdfGuru, name="exportpdfguru"),
+   # path('indexNilaiSiswa', indexNilaiSiswa, name="indexnilaisiswa"),
+
    path('siswakelas',siswakelas, name="siswakelas"),
 
-   #Url For gutu/dashboard page
+   #Url For guru/dashboard page
    path('guruDashboard', guruDashboard, name="gurudashboard"),
    path('guruLogin',guruLogin, name="gurulogin"),
    path('guruLogout',guruLogout, name="gurulogout"),
@@ -71,5 +80,13 @@ urlpatterns = [
    path('deleteNilai/<str:nis_siswa>/<str:id_mapel>', deleteNilai, name="deletenilai"),
    path('pushDeleteNilai/<str:nis_siswa>/<str:id_mapel>', pushDeleteNilai, name="pushdeletenilai"),
    path('siswaWali', siswaWali, name="siswawali"),
-   # path('pushUploadNilai', pushUploadNilai, name="pushuploadnilai"),
+   path('printNilaiWali/<str:id_mapel>', printNilaiWali, name="printnilaiwali"),
+
+   #Url For siswa/dashboard page
+   path('siswaLogin',siswaLogin, name="siswalogin"),
+   path('siswaLogout', siswaLogout, name="siswalogout"),
+   path('siswaDashboard', siswaDashboard, name="siswadashboard"),
+   path('siswaProfile', siswaProfile, name="siswaprofile"),
+   path('nilai', nilai, name='nilai'),
+   path('exportNilaiPribadi', exportNilaiPribadi, name='exportnilaipribadi')
 ]

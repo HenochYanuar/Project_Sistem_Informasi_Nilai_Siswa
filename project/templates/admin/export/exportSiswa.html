@@ -1,0 +1,43 @@
+{% extends 'layout/baseAdmin.html' %}
+{% block title %}
+  Filter Export Data Siswa Page
+{% endblock %}
+{% block name_profile %}
+{{ user.username }}
+{% endblock %}
+{% block content %}
+<div class="card shadow ml-5" style="width: 92%;">
+  <div class="card-header">
+    <h4><b>Filter Data Nilai Siswa</b> </h4>
+  </div>
+  <div class="card-body">
+    <form action="{% url 'exportpdfsiswa' %}" method="GET">
+      <div class="row">
+        <div class="form-group col-4">
+          <label>Pilih Kelas</label>
+          <select class="form-control" name="kelas" id="kelas">
+            <option value="" disabled selected>Filter by Kelas</option>
+            {% for k in kelas %}
+            <option value="{{ k.id_kelas }}"> {{ k.nama_kelas }} </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group col-4">
+          <label>Pilih Mapel</label>
+          <select class="form-control" name="mapel" id="mapel">
+            <option value="" disabled selected>Filter by Mapel</option>
+            {% for m in mapel %}
+            <option value="{{ m.id_mapel }}"> {{ m.nama_mapel }} </option>
+            {% endfor %}
+          </select>
+        </div>
+      </div><br><br>
+      <div class="form-group">
+        <button class="btn btn-danger" type="submit">
+          <h6 class="mt-2"><i class="fas fa-file-export"></i> Export <i class="far fa-file-pdf"></i></h6>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
