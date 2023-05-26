@@ -14,30 +14,48 @@
 </div>
 {% endfor %}
 <div class="card shadow-lg">
+  <!-- <a href="{% url 'hapus' %}">hapus</a> -->
   <div class="card-header bg-info">
       <div class="text-center "><h2>Daftar Data User</h2></div> 
   </div>
   <div class="card-body">
-    <a class="btn btn-primary mb-3 shadow-lg p-2 " href="{% url 'tambahuser' %}"><i
-      class="fas fa-user-plus"></i> Tambah Data User</a>
+    <div class="row">
+      <div class="col-9">
+        <a class="btn btn-primary mb-3 shadow-lg p-2 " href="{% url 'tambahuser' %}"><i
+          class="fas fa-user-plus"></i> Tambah Data User</a>
+      </div>
+      <div class="col-3">
+        <form action="">
+          {% if query %}
+          <div class="input-group mb-3">
+            <input placeholder="Search User" value="{{ query }}" type="text" name="search" id="search" class="from-control">
+            <label class="input-group-text" for="search" style="width: 40px;"><i class="fas fa-search"></i></label>
+          </div>
+          {% else %}
+          <div class="input-group mb-3">
+            <input placeholder="Search User" type="text" name="search" id="search" class="from-control">
+            <label class="input-group-text" for="search" style="width: 40px;"><i class="fas fa-search"></i></label>
+          </div>
+          {% endif %}
+        </form>
+      </div>
+    </div>
     <table class="table table-bordered table-hover">
       <thead class="table-hover" style="background-color: #819293;">
-        <tr style="color: white">
-          <th>NO</th>
+        <tr style="color: white" class="text-center">
+          <th class="col-1">NO</th>
           <th class="col-2">ID User</th>
-          <th class="col-3">Username</th>
-          <th class="col-2">Password</th>
+          <th class="col-4">Username</th>
           <th class="col-2">Role</th>
           <th class="col-3">Action</th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
         {% for user in data_user %}
-        <tr>
+        <tr class="text-center">
           <td>{{ forloop.counter }}</td>
           <td>{{ user.id_user }}</td>
           <td>{{ user.username }}</td>
-          <td>{{ user.password }}</td>
           <td>{{ user.role }}</td>
           <td>
             <a class="btn btn-warning" href="{% url 'updatedatauser' user.id_user %}">

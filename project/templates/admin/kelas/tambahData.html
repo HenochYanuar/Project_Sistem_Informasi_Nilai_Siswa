@@ -57,7 +57,7 @@ Tambah Data Kelas Page
                 {% if siswa.nis not in data_siswaKelas %}
                 <tr>
                   <td><input name="siswa[]" value="{{ siswa.nis }}" type="checkbox"></td>
-                  <td>{{ siswa.nama }}</td>
+                  <td>{{ siswa.nama }} ( {{ siswa.semester }} )</td>
                 </tr>
                 {% endif %}
                 {% endfor %}
@@ -93,15 +93,15 @@ Tambah Data Kelas Page
                 {% endfor %}
               </tbody>
             </table><br><br>
+            <div class="form-group">
+              <button class="btn btn-warning" type="button" onclick="location.href='/indexKelas'">
+                <i class="fas fa-caret-left"></i> Kembali
+              </button> |
+              <button class="btn btn-success" type="submit">
+                <i class="fa fa-save"></i> Simpan
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <button class="btn btn-warning" type="button" onclick="location.href='/indexKelas'">
-            <i class="fas fa-caret-left"></i> Kembali
-          </button> |
-          <button class="btn btn-success" type="submit">
-            <i class="fa fa-save"></i> Simpan
-          </button>
         </div>
       </div>
     </form>

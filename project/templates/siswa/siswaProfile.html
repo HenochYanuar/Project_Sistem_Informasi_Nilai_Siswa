@@ -61,8 +61,8 @@ Profile Siswa
                     <td>: {{ user.tgl_lahir }}</td>
                   </tr>
                   <tr>
-                    <td><b>ID User</b></td>
-                    <td>: {{ user.id_user.id_user }}</td>
+                    <td><b>Kelas</b></td>
+                    <td>: {{ kelas.id_kelas.nama_kelas }}</td>
                   </tr>
                 </div>
               </tbody>
@@ -74,7 +74,7 @@ Profile Siswa
         <div class="card text-center shadow-lg" style="background-color: #cce7e8;">
           <div class="card-body">
             <div class="form-group">
-              <img class="img-fluid img-circle position-relative" style="width: 200px;" src="{{ user.foto.url }}" alt="Foto : {{ data_siswa.nama }}">
+              <img class="img-fluid img-circle position-relative" style="width: 200px; height: 200px;" src="{{ user.foto.url }}" alt="Foto : {{ data_siswa.nama }}">
             </div>
             <div class="form-group">
               <h2>{{ user.nama }}</h2>
@@ -91,3 +91,7 @@ Profile Siswa
   </div>
 </div>
 {% endblock%}
+
+{% comment %} for _ in range(1440):
+create_fake_nilai() {% endcomment %}
+

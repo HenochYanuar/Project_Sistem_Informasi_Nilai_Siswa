@@ -49,7 +49,7 @@ Edit Data Kelas Page
                 {% if siswa.nis not in data_siswaKelas %}
                 <tr>
                   <td><input name="siswa[]" value="{{ siswa.nis }}" type="checkbox"></td>
-                  <td>{{ siswa.nama }}</td>
+                  <td>{{ siswa.nama }} ( {{ siswa.semester }} )</td>
                 </tr>
                 {% endif %}
                 {% endfor %}

@@ -3,7 +3,7 @@
 Daftar Siswa Wali Page
 {% endblock %}
 {% block head %}
-Daftar Nilai Siswa Wali
+Daftar Nilai Siswa {{ kelas.nama_kelas }}
 {% endblock %}
 {% block name_profile %}
 {{ user.nama }}
@@ -12,11 +12,12 @@ Daftar Nilai Siswa Wali
 {{ user.foto.url }}
 {% endblock %}
 {% block content %}
-{% if message %}
+{% if message1 and message2 %}
 <div class="card-header bg-danger ml-5" style="width: 92%;">
-    <h4 class="text-center text-bold">{{ message }} <br>Hubungi Tata Usaha Jika Ini Sebuah Kesalahan !</h4>
+    <h4 class="text-center text-bold">{{ message1 }} <i> atau </i> {{ message2 }} <br>Hubungi Tata Usaha Jika Ini Sebuah Kesalahan !</h4>
 </div>
 {% endif %}
+<!-- <h1 class="text-center text-bold">Daftar Nilai {{ kelas.nama_kelas }}</h1>  <br> -->
 {% for m in mapel %}
 <div class="card ml-5 shadow" style="width: 92%;">
     <div class="card-header bg-secondary">
@@ -28,8 +29,8 @@ Daftar Nilai Siswa Wali
             <thead class="">
                 <tr class="text-center">
                     <th></th>
-                    <th>Nama Siswa</th>
                     <th>NIS</th>
+                    <th>Nama Siswa</th>
                     <th>Tugas</th>
                     <th>Ulangan</th>
                     <th>UTS</th>
@@ -43,9 +44,9 @@ Daftar Nilai Siswa Wali
                 {% if n.id_mapel.id_mapel == m.id_mapel %}
                 {% if n.id_siswa.nis == s.nis_siswa.nis %}
                 <tr>
-                    <td class="text-center text-monospace text-bold">-</td>
-                    <td>{{ n.id_siswa.nama }}</td>
+                    <td class="text-center text-monospace text-bold"></td>
                     <td class="text-center text-monospace">{{ n.id_siswa.nis }}</td>
+                    <td>{{ n.id_siswa.nama }}</td>
                     <td class="text-center text-monospace">{{ n.nil_rata_tg }}</td>
                     <td class="text-center text-monospace">{{ n.nil_rata_ul }}</td>
                     <td class="text-center text-monospace">{{ n.nil_uts }}</td>

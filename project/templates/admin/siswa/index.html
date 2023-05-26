@@ -19,14 +19,33 @@ Data Siswa Page
     <div class="text-center "><h2>Daftar Data Siswa</h2></div>
   </div>
   <div class="card-body">
-    <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahsiswa'%}"><i class="fas fa-user-plus"></i> Tambah Data Siswa</a>
+    <div class="row">
+      <div class="col-9">
+        <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahsiswa'%}"><i class="fas fa-user-plus"></i> Tambah Data Siswa</a>
+      </div>
+      <div class="col-3">
+        <form action="">
+          {% if query %}
+          <div class="input-group mb-3">
+            <input placeholder="Search Siswa" value="{{ query }}" type="text" name="search" id="search" class="from-control">
+            <label class="input-group-text" for="search" style="width: 40px;"><i class="fas fa-search"></i></label>
+          </div>
+          {% else %}
+          <div class="input-group mb-3">
+            <input placeholder="Search Siswa" type="text" name="search" id="search" class="from-control">
+            <label class="input-group-text" for="search" style="width: 40px;"><i class="fas fa-search"></i></label>
+          </div>
+          {% endif %}
+        </form>
+      </div>
+    </div>
     <table class="table table-bordered table-hover">
       <thead class="table-hover" style="background-color: #819293;">
         <tr style="color: white;">
           <th>NO</th>
           <th class="col-lg-3">Foto</th>
-          <th class="col-lg-3">NIS</th>
-          <th class="col-lg-2">Nama Siswa</th>
+          <th class="col-lg-2">NIS</th>
+          <th class="col-lg-3">Nama Siswa</th>
           <th class="col-lg-4">Action</th>
         </tr>
       </thead>
@@ -34,7 +53,7 @@ Data Siswa Page
         {% for siswa in data_siswa %}
         <tr>
           <td>{{ forloop.counter }}</td>
-          <td><img style="width: 100px;" src="{{ siswa.foto }}" alt="Foto : {{ siswa.nama }}"> </td>
+          <td><img style="width: 100px; height: 100px;" src="{{ siswa.foto }}" alt="Foto : {{ siswa.nama }}"> </td>
           <td>{{ siswa.nis }}</td>
           <td>{{ siswa.nama }}</td>
           <td>

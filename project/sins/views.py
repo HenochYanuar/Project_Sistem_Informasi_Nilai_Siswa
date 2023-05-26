@@ -3,7 +3,7 @@ from django.urls import reverse
 from .models import User, Guru, Kelas, Siswa, Mapel, Jadwal, Siswa_Kelas, Nilai
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
+from django.db.models import Count, Q
 from django.http import HttpResponseRedirect, HttpResponse
 from reportlab.pdfgen import canvas
 from django.shortcuts import get_object_or_404
@@ -25,6 +25,7 @@ def index(request):
 
 
 def admin(request):
+    data_nilai = Nilai.objects.count()
     data_guru = Guru.objects.count()
     data_siswa = Siswa.objects.count()
     data_kelas = Kelas.objects.count()
@@ -36,6 +37,7 @@ def admin(request):
         'data_siswa': data_siswa,
         'data_kelas': data_kelas,
         'data_mapel': data_mapel,
+        'data_nilai': data_nilai,
         'user' : user
     }
     return render(request, 'admin/admin.html', context)
@@ -69,15 +71,38 @@ def adminLogout(request):
 
 
 # Create Views For Users CRUD
+# def produk(request):
+#     search_term = request.GET.get('search')
+#     produk = UserProduct.objects.all()
 
+#     if search_term:
+#         produk = produk.filter(namaproduct__icontains=search_term)
+
+#     context = {
+#         'produk': produk,
+#         'search_term': search_term
+#     }
+
+#     return render(request, 'user/produk.html', context
 
 def users(request):
-    data_user = User.objects.all()
     id_user = request.session['id_user']
     user = User.objects.get(id_user = id_user)
+    query = request.GET.get('search')  # Mendapatkan nilai parameter pencarian dari URL
+    data_user = User.objects.all()
+    
+    if query:
+        # Lakukan pencarian menggunakan model atau sumber data Anda
+        data_user = data_user.filter(
+                Q(role__icontains=query) |
+                Q(username__icontains=query) |
+                Q(id_user__icontains=query) 
+            )
+    
     context = {
         'data_user': data_user,
-        'user': user
+        'user': user,
+        'query': query
     }
     return render(request, 'admin/users/index.html', context)
 
@@ -178,12 +203,22 @@ def postDeleteuser(request, id_user):
 # Cerate Views For Guru CRUD
 
 def guru(request):
+    query = request.GET.get('search')
     data_guru = Guru.objects.all()
     id_user = request.session['id_user']
     user = User.objects.get(id_user = id_user)
+
+    if query:
+        # Lakukan pencarian menggunakan model atau sumber data Anda
+        data_guru = data_guru.filter(
+                Q(nip__icontains=query) |
+                Q(nama__icontains=query)
+            )
+        
     context = {
         'data_guru': data_guru,
-        'user' : user
+        'user' : user,
+        'query': query
     }
     return render(request, 'admin/guru/index.html', context)
 
@@ -328,14 +363,24 @@ def postDeleteGuru(request, nip):
 
 
 def kelas(request):
-    jumlahSiswa = Siswa_Kelas.objects.values('id_kelas').annotate(jumlah_siswa=Count('nis_siswa'))
+    # jumlahSiswa = Siswa_Kelas.objects.values('id_kelas').annotate(jumlah_siswa=Count('nis_siswa'))
     data_kelas = Kelas.objects.all()
     id_user = request.session['id_user']
+    query = request.GET.get('search')
     user = User.objects.get(id_user = id_user)
+
+    if query:
+        # Lakukan pencarian menggunakan model atau sumber data Anda
+        data_kelas = data_kelas.filter(
+                Q(id_kelas__icontains=query) |
+                Q(nama_kelas__icontains=query) 
+            )
+
     context = {
-        'jumlahSiswa': jumlahSiswa,
+        # 'jumlahSiswa': jumlahSiswa,
         'data_kelas': data_kelas,
-        'user' : user
+        'user' : user,
+        'query': query
     }
     return render(request, 'admin/kelas/index.html', context)
 
@@ -509,10 +554,20 @@ def detailKelas(request, id_kelas):
 def mapel(request):
     data_mapel = Mapel.objects.all()
     id_user = request.session['id_user']
+    query = request.GET.get('search')
     user = User.objects.get(id_user = id_user)
+
+    if query:
+        # Lakukan pencarian menggunakan model atau sumber data Anda
+        data_mapel = data_mapel.filter(
+                Q(id_mapel__icontains=query) |
+                Q(nama_mapel__icontains=query)
+            )
+        
     context = {
         'data_mapel': data_mapel,
-        'user' : user
+        'user' : user,
+        'query': query
     }
     return render(request, 'admin/mapel/index.html', context)
 
@@ -591,10 +646,20 @@ def postDeleteMapel(request, id_mapel):
 def siswa(request):
     data_siswa = Siswa.objects.all()
     id_user = request.session['id_user']
+    query = request.GET.get('search')
     user = User.objects.get(id_user = id_user)
+
+    if query:
+        # Lakukan pencarian menggunakan model atau sumber data Anda
+        data_siswa = data_siswa.filter(
+                Q(nis__icontains=query) |
+                Q(nama__icontains=query)
+            )
+        
     context = {
         'data_siswa': data_siswa,
-        'user' : user
+        'user' : user,
+        'query': query
     }
     return render(request, 'admin/siswa/index.html', context)
 
@@ -809,6 +874,15 @@ def exportPdfSiswa(request):
 
     return response
 
+def hapus(request):
+    user = User.objects.all()
+
+    for u in user:
+        if u.role == "Siswa":
+            u.delete()
+    
+    return render(request, 'admin/user/index.html')
+
 def exportSiswa(request):
     id_user = request.session['id_user']
     user = User.objects.get(id_user = id_user)
@@ -928,7 +1002,13 @@ def guruDashboard(request):
 def guruProfile(request):
     nip = request.session['nip']
     user = Guru.objects.get(nip = nip)
-    return render(request, 'guru/guruProfile.html', {'user': user})
+    wali = Kelas.objects.values_list('nip_waliKelas', flat=True)
+    if nip in wali:
+        kelas = Kelas.objects.get(nip_waliKelas=nip)
+        return render(request, 'guru/guruProfile.html', {'user': user, 'kelas' : kelas, 'wali' : wali})
+    else:
+        kelas = "--Anda Bukan Wali Kelas--"
+        return render(request, 'guru/guruProfile.html', {'user': user, 'kelas' : kelas, 'wali' : wali})
 
 def penilaian(request):
     nip = request.session['nip']
@@ -1092,7 +1172,7 @@ def pushDeleteNilai(request, nis_siswa, id_mapel):
 def siswaWali(request):
     nip = request.session['nip']
     user = Guru.objects.get(nip = nip)
-    wali = Jadwal.objects.values_list('nip_guru', flat=True)
+    wali = Kelas.objects.values_list('nip_waliKelas', flat=True)
 
     if nip in wali:
         kelas = Kelas.objects.get(nip_waliKelas=user.nip)
@@ -1109,10 +1189,12 @@ def siswaWali(request):
             'nilai' : nilai
         }
     else:
-        message = '-- Anda Bukan Guru Wali Kelas --'
+        message1 = 'Belum Ada Nilai Untuk Siswa Wali Anda'
+        message2 = 'Mungkin Anda Bukan Wali Kelas'
         context = {
             'user' : user,
-            'message' : message
+            'message1' : message1,
+            'message2' : message2,
         }
     return render(request, 'guru/siswaWali.html', context)
 
@@ -1196,7 +1278,8 @@ def siswaDashboard(request):
 def siswaProfile(request):
     nis = request.session['nis']
     user = Siswa.objects.get(nis = nis)
-    return render(request, 'siswa/siswaProfile.html', {'user': user})
+    kelas = Siswa_Kelas.objects.get(nis_siswa=nis)
+    return render(request, 'siswa/siswaProfile.html', {'user': user, 'kelas' : kelas})
 
 def nilai(request):
     nis = request.session['nis']

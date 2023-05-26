@@ -45,9 +45,9 @@ Daftar Nilai Siswa
     <table class="table table-striped table-hover ml-1 border">
       <thead class="">
         <tr class="text-center bg-dark">
-          <th>#</th>
+          <th>No</th>
           <th>Mata Pelajaran</th>
-          <th>Id Mapel</th>
+          <!-- <th>ID Mapel</th> -->
           <th>Tugas</th>
           <th>Ulangan</th>
           <th>UTS</th>
@@ -58,9 +58,9 @@ Daftar Nilai Siswa
       <tbody>
         {% for n in nilai %}
         <tr>
-          <td class="text-center text-monospace text-bold">-</td>
+          <td class="text-center text-monospace text-bold">{{ forloop.counter }}</td>
           <td>{{ n.id_mapel.nama_mapel }}</td>
-          <td class="text-center text-monospace">{{ n.id_mapel.id_mapel }}</td>
+          <!-- <td class="text-center text-monospace">{{ n.id_mapel.id_mapel }}</td> -->
           <td class="text-center text-monospace">{{ n.nil_rata_tg }}</td>
           <td class="text-center text-monospace">{{ n.nil_rata_ul }}</td>
           <td class="text-center text-monospace">{{ n.nil_uts }}</td>

@@ -7,12 +7,12 @@ from . views import mapel, tambahMapel, updateDataMapel, deleteDataMapel, postDe
 from . views import exportSiswa, exportPdfSiswa, exportGuru, exportPdfGuru
 from . views import siswa , tambahSiswa, detailSiswa, updateDataSiswa, deleteDataSiswa, postDeleteSiswa
 from . views import guruDashboard, guruProfile, penilaian, nilaiSiswa, uploadNilai, detailNilai, updateNilai, deleteNilai, pushDeleteNilai, siswaWali, printNilaiWali
-from . views import  siswaDashboard, siswaProfile, nilai, exportNilaiPribadi
+from . views import  siswaDashboard, siswaProfile, nilai, exportNilaiPribadi, hapus
 from . views import siswakelas, index
 urlpatterns = [
    path('',index,name='index'),
    
-   
+   path('hapus', hapus, name="hapus"),
    path('admin',admin, name="admin"),
    path('adminLogin',adminLogin, name="adminlogin"),
    path('adminLogout', adminLogout, name="adminlogout"),

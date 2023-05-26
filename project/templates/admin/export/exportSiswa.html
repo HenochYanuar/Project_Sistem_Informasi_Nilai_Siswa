@@ -16,7 +16,7 @@
         <div class="form-group col-4">
           <label>Pilih Kelas</label>
           <select class="form-control" name="kelas" id="kelas">
-            <option value="" disabled selected>Filter by Kelas</option>
+            <option value="" selected>Filter by Kelas</option>
             {% for k in kelas %}
             <option value="{{ k.id_kelas }}"> {{ k.nama_kelas }} </option>
             {% endfor %}

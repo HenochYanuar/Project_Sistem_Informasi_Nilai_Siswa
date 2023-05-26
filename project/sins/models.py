@@ -1,6 +1,13 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 import os
+import random
 from django.conf import settings
+from faker import Faker
+
+fake = Faker()
+photo_dir = 'static/assets/dist/img'
+photo_choice = 'static/assets/dist/foto_dummy'
 
 class User(models.Model):
     id_user = models.CharField(max_length=10, primary_key=True)
@@ -9,7 +16,7 @@ class User(models.Model):
     role = models.CharField(max_length=5)
 
 class Guru(models.Model):
-    nip = models.CharField(max_length=118, primary_key=True)
+    nip = models.CharField(max_length=18, primary_key=True)
     nama = models.CharField(max_length=255)
     jk = models.CharField(max_length=10)
     alamat = models.TextField()
@@ -38,6 +45,29 @@ class Guru(models.Model):
                 os.remove(os.path.join(settings.MEDIA_ROOT, old_image.name))
 
         super().save(*args, **kwargs)
+
+def create_fake_guru():
+    guru = Guru()
+    guru.nip = fake.random_int(min=100000000000000001, max=999999999999999999)
+    guru.nama = fake.name()
+    guru.jk = fake.random_element(elements=('Laki-laki', 'Perempuan'))
+    guru.alamat = fake.address()
+    guru.agama = fake.random_element(elements=('Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'))
+    guru.no_tlpn = fake.phone_number()
+    guru.email = fake.email()
+    # guru.foto = fake.image_url()
+    guru.tgl_lahir = fake.date_of_birth(minimum_age=25, maximum_age=60)
+    guru.id_user = User.objects.create(
+        id_user=str(guru.nip),
+        username=fake.user_name(),
+        password=fake.password(length=8),
+        role='Guru'
+    )
+    guru.save()
+
+# # Membuat 10 data faker untuk Guru
+# for _ in range(20):
+#     create_fake_guru()
 
 class Kelas(models.Model):
     id_kelas = models.CharField(max_length=10, primary_key=True)
@@ -76,6 +106,30 @@ class Siswa(models.Model):
 
         super().save(*args, **kwargs)
 
+def create_fake_siswa():
+    siswa = Siswa()
+    siswa.nis = fake.random_int(min=1001111001, max=2099999999)
+    siswa.nama = fake.name()
+    siswa.jk = fake.random_element(elements=('Laki-laki', 'Perempuan'))
+    siswa.alamat = fake.address()
+    siswa.agama = fake.random_element(elements=('Islam', 'Kristen', 'Katolik', 'Hindu', 'Buddha', 'Konghucu'))
+    siswa.semester = fake.random_element(elements=('Semester 1', 'Semester 3', 'Semester 5'))
+    siswa.no_tlpn = fake.phone_number()
+    siswa.email = fake.email()
+    foto_name = random.choice(os.listdir(photo_choice))
+    siswa.foto.name = os.path.join(photo_choice, foto_name)
+    siswa.tgl_lahir = fake.date_of_birth(minimum_age=12, maximum_age=18)
+    siswa.id_user = User.objects.create(
+        id_user=str(siswa.nis),
+        username=fake.user_name(),
+        password=fake.password(length=8),
+        role='Siswa'
+    )
+    siswa.save()
+
+# for _ in range(10):
+#     create_fake_siswa()
+
 class Siswa_Kelas(models.Model):
     nis_siswa = models.ForeignKey(Siswa, on_delete=models.CASCADE)
     id_kelas = models.ForeignKey(Kelas, on_delete=models.CASCADE)
@@ -97,3 +151,23 @@ class Nilai(models.Model):
     nil_rata_rata = models.FloatField()
     id_siswa = models.ForeignKey(Siswa, on_delete=models.CASCADE)
     id_mapel = models.ForeignKey(Mapel, on_delete=models.CASCADE)
+
+    def clean(self):
+        # Validasi apakah kombinasi id_siswa dan id_mapel sudah ada pada model Nilai
+        if Nilai.objects.filter(id_siswa=self.id_siswa, id_mapel=self.id_mapel).exists():
+            raise ValidationError("Kombinasi id_siswa dan id_mapel sudah ada.")
+
+def create_fake_nilai():
+    nilai = Nilai()
+    nilai.nil_uts = fake.random_int(min=20, max=100)
+    nilai.nil_uas = fake.random_int(min=20, max=100)
+    nilai.nil_rata_ul = fake.random_int(min=20, max=100)
+    nilai.nil_rata_tg = fake.random_int(min=20, max=100)
+    nilai.nil_rata_rata = (nilai.nil_uts + nilai.nil_uas + nilai.nil_rata_ul + nilai.nil_rata_tg) / 4
+    nilai.id_siswa = Siswa.objects.order_by('?').first()
+    nilai.id_mapel = Mapel.objects.order_by('?').first()
+    nilai.full_clean()  # Melakukan validasi sebelum menyimpan objek Nilai
+    nilai.save()
+
+# for _ in range(1440):
+#     create_fake_nilai()

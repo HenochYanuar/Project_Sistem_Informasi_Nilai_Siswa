@@ -18,7 +18,26 @@
       <div class="text-center "><h2>Daftar Data Guru</h2></div> 
     </div>
     <div class="card-body">
-      <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahguru' %}"><i class="fas fa-user-plus"></i> Tambah Data Guru</a>
+      <div class="row">
+        <div class="col-9">
+          <a class="btn btn-primary mb-3 shadow-lg p-2" href="{% url 'tambahguru' %}"><i class="fas fa-user-plus"></i> Tambah Data Guru</a>
+        </div>
+        <div class="col-3">
+          <form action="">
+            {% if query %}
+          <div class="input-group mb-3">
+            <input placeholder="Search Guru" value="{{ query }}" type="text" name="search" id="search" class="from-control">
+            <label class="input-group-text" for="search" style="width: 40px;"><i class="fas fa-search"></i></label>
+          </div>
+          {% else %}
+          <div class="input-group mb-3">
+            <input placeholder="Search Guru" type="text" name="search" id="search" class="from-control">
+            <label class="input-group-text" for="search" style="width: 40px;"><i class="fas fa-search"></i></label>
+          </div>
+          {% endif %}
+          </form>
+        </div>
+      </div>
       <table class="table table-bordered table-hover">
         <thead class="table-hover" style="background-color: #819293;">
           <tr style="color: white;">
@@ -33,7 +52,7 @@
           {% for guru in data_guru %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td><img class="img-fluid" style="width: 100px;" src="{{ guru.foto }}" alt="Foto : {{ guru.nama }}"></td>
+            <td><img class="img-fluid" style="width: 100px; height: 100px;" src="{{ guru.foto }}" alt="Foto : {{ guru.nama }}"></td>
             <td>{{ guru.nip }}</td>
             <td>{{ guru.nama }}</td>
             <td>

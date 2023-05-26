@@ -16,7 +16,7 @@
         <div class="form-group col-4">
           <label>Pilih Kelas</label>
           <select class="form-control" name="kelas" id="kelas">
-            <option value="" disabled selected>Filter by Kelas</option>
+            <option value="" selected>Filter by Kelas</option>
             {% for k in kelas %}
             <option value="{{ k.id_kelas }}"> {{ k.nama_kelas }} </option>
             {% endfor %}
@@ -33,7 +33,7 @@
         </div>
       </div><br><br>
       <div class="form-group">
-        <button class="btn btn-danger" type="submit">
+        <button target="_blank" class="btn btn-danger" type="submit">
           <h6 class="mt-2"><i class="fas fa-file-export"></i> Export <i class="far fa-file-pdf"></i></h6>
         </button>
       </div>

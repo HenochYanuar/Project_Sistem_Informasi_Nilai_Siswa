@@ -58,7 +58,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="navbar-nav menu-item menu-item-submenu menu-item-rel menu-item-active"data-menu-toggle="click" aria-haspopup="true">
-          <a href="javascript:;" class="btn border-primary menu-link menu-toggle">
+          <a class="btn border-primary menu-link menu-toggle">
             <span class="menu-text text-primary">{% block head %}{% endblock %}</span>
             <i class="menu-arrow"></i>
           </a>
@@ -188,7 +188,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
           </a>
         </li> {% endcomment %}
         <li class="navbar-nav menu-item menu-item-submenu menu-item-rel menu-item-active"data-menu-toggle="click" aria-haspopup="true">
-          <a href="javascript:;" class="btn border-warning menu-link menu-toggle mr-2">
+          <a class="btn border-warning menu-link menu-toggle mr-2">
             <span class="menu-text text-warning">Hi, {{ user.nama }}</span>
             <i class="menu-arrow"></i>
           </a>
@@ -205,7 +205,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="{% url 'index' %}" class="brand-link">
         <img style="background-color: white;" src="/static/assets/dist/img/f2399a3c-e44e-4e2a-82d0-520696ffad1b.png" alt="AdminLTE Logo"
           class="brand-image img-circle elevation-3" style="opacity: .8">
         <span class="brand-text font-weight-light">SMP N Sumber Jaya</span>
@@ -216,10 +216,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="{% block foto_profile %}{% endblock %}" class="img-circle elevation-2" alt="User Image">
+            <img src="{% block foto_profile %}{% endblock %}" class="img-circle elevation-2" alt="User Image" style="width: 40px; height:40px;">
           </div>
           <div class="info">
-            <a href="#" class="d-block">{% block name_profile %}{% endblock %}</a>
+            <a class="d-block">{% block name_profile %}{% endblock %}</a>
           </div>
         </div>
 
